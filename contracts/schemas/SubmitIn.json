@@ -1,0 +1,11 @@
+{
+  "properties": {
+    "note": {
+      "type": "string",
+      "title": "Note",
+      "default": ""
+    }
+  },
+  "type": "object",
+  "title": "SubmitIn"
+}

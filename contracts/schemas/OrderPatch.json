@@ -1,0 +1,158 @@
+{
+  "properties": {
+    "order_no": {
+      "type": "string",
+      "title": "Order No",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "title": "Title",
+      "default": ""
+    },
+    "order_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Order Type"
+    },
+    "survey_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Survey Type"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address",
+      "default": ""
+    },
+    "city": {
+      "type": "string",
+      "title": "City",
+      "default": ""
+    },
+    "county": {
+      "type": "string",
+      "title": "County",
+      "default": ""
+    },
+    "county_fips": {
+      "type": "string",
+      "title": "County Fips",
+      "default": ""
+    },
+    "state": {
+      "type": "string",
+      "title": "State",
+      "default": ""
+    },
+    "postal": {
+      "type": "string",
+      "title": "Postal",
+      "default": ""
+    },
+    "parcel_id": {
+      "type": "string",
+      "title": "Parcel Id",
+      "default": ""
+    },
+    "lot_area_sqft": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Lot Area Sqft"
+    },
+    "client": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Client"
+    },
+    "access_contact": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Access Contact"
+    },
+    "buyer_owner": {
+      "type": "string",
+      "title": "Buyer Owner",
+      "default": ""
+    },
+    "lender": {
+      "type": "string",
+      "title": "Lender",
+      "default": ""
+    },
+    "title_company": {
+      "type": "string",
+      "title": "Title Company",
+      "default": ""
+    },
+    "underwriter": {
+      "type": "string",
+      "title": "Underwriter",
+      "default": ""
+    },
+    "client_notes": {
+      "type": "string",
+      "title": "Client Notes",
+      "default": ""
+    },
+    "legal_description": {
+      "type": "string",
+      "title": "Legal Description",
+      "default": ""
+    },
+    "scope_tags": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "title": "Scope Tags"
+    },
+    "received_at": {
+      "type": "string",
+      "title": "Received At",
+      "default": ""
+    },
+    "due_at": {
+      "type": "string",
+      "title": "Due At",
+      "default": ""
+    },
+    "researcher": {
+      "type": "string",
+      "title": "Researcher",
+      "default": ""
+    },
+    "stage": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Stage"
+    }
+  },
+  "type": "object",
+  "title": "OrderPatch",
+  "description": "Partial update: only the fields actually sent are applied, so nothing is required."
+}

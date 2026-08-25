@@ -1,0 +1,140 @@
+{
+  "properties": {
+    "order_no": {
+      "type": "string",
+      "title": "Order No",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "title": "Title",
+      "default": ""
+    },
+    "order_type": {
+      "type": "string",
+      "title": "Order Type",
+      "default": "Boundary Survey"
+    },
+    "survey_type": {
+      "type": "string",
+      "title": "Survey Type",
+      "default": "Residential Land Survey"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address",
+      "default": ""
+    },
+    "city": {
+      "type": "string",
+      "title": "City",
+      "default": ""
+    },
+    "county": {
+      "type": "string",
+      "title": "County",
+      "default": ""
+    },
+    "county_fips": {
+      "type": "string",
+      "title": "County Fips",
+      "default": ""
+    },
+    "state": {
+      "type": "string",
+      "title": "State",
+      "default": ""
+    },
+    "postal": {
+      "type": "string",
+      "title": "Postal",
+      "default": ""
+    },
+    "parcel_id": {
+      "type": "string",
+      "title": "Parcel Id",
+      "default": ""
+    },
+    "lot_area_sqft": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Lot Area Sqft"
+    },
+    "client": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Client"
+    },
+    "access_contact": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Access Contact"
+    },
+    "buyer_owner": {
+      "type": "string",
+      "title": "Buyer Owner",
+      "default": ""
+    },
+    "lender": {
+      "type": "string",
+      "title": "Lender",
+      "default": ""
+    },
+    "title_company": {
+      "type": "string",
+      "title": "Title Company",
+      "default": ""
+    },
+    "underwriter": {
+      "type": "string",
+      "title": "Underwriter",
+      "default": ""
+    },
+    "client_notes": {
+      "type": "string",
+      "title": "Client Notes",
+      "default": ""
+    },
+    "legal_description": {
+      "type": "string",
+      "title": "Legal Description",
+      "default": ""
+    },
+    "scope_tags": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "title": "Scope Tags"
+    },
+    "received_at": {
+      "type": "string",
+      "title": "Received At",
+      "default": ""
+    },
+    "due_at": {
+      "type": "string",
+      "title": "Due At",
+      "default": ""
+    },
+    "researcher": {
+      "type": "string",
+      "title": "Researcher",
+      "default": ""
+    },
+    "stage": {
+      "type": "string",
+      "title": "Stage",
+      "default": "placed"
+    }
+  },
+  "type": "object",
+  "title": "OrderIn",
+  "description": "Creating an order needs at least one thing that identifies it. A blank order is\nnot a draft \u2014 it is a row nobody can find again."
+}

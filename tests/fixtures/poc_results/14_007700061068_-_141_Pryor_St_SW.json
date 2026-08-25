@@ -1,0 +1,645 @@
+{
+  "job_number": "14 007700061068",
+  "order": "14 007700061068",
+  "parcel_id": "14 007700061068",
+  "address": "141 Pryor St SW, Atlanta, GA 30303",
+  "matched_address": "141 PRYOR ST SW, ATLANTA, GA, 30303",
+  "county": "Fulton",
+  "county_fips": "13121",
+  "state": "GA",
+  "lat": 33.752698290392,
+  "lon": -84.390033348919,
+  "name": "14 007700061068 - 141 Pryor St SW",
+  "geocoder": "census",
+  "map_links": [
+    {
+      "label": "Google Maps",
+      "url": "https://www.google.com/maps/search/?api=1&query=33.752698290392,-84.390033348919"
+    },
+    {
+      "label": "Google Street View",
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=33.752698290392,-84.390033348919"
+    },
+    {
+      "label": "Bing Maps (aerial)",
+      "url": "https://www.bing.com/maps?cp=33.752698290392~-84.390033348919&lvl=19&style=a"
+    },
+    {
+      "label": "County Property Appraiser",
+      "url": "https://publicrecords.netronline.com/state/GA/county/fulton"
+    },
+    {
+      "label": "Search address on Google",
+      "url": "https://www.google.com/search?q=141+PRYOR+ST+SW%2C+ATLANTA%2C+GA%2C+30303"
+    }
+  ],
+  "folder": "E:\\DPR\\2026\\Q2\\August\\ResearchHub\\poc01\\SurveyResearch\\jobs\\14 007700061068 - 141 Pryor St SW",
+  "steps": [
+    {
+      "key": "parcel",
+      "label": "Parcel record & Parcel ID",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The Property Appraiser's record for the parcel \u2014 its unique Parcel ID, owner, legal description, subdivision and (often) the deed & plat book/page. It's the anchor that identifies the property and seeds every other lookup.",
+      "summary": "Parcel ID: 14 007700061068 \u00b7 Lot 158,846 sq ft (3.6466 ac)",
+      "link": "https://publicrecords.netronline.com/state/GA/county/fulton",
+      "link_label": "Open County Property Appraiser",
+      "source_url": "https://gismaps.fultoncountyga.gov/arcgispub2/rest/services/PropertyMapViewer/PropertyMapViewer/MapServer/11",
+      "saved_file": "parcel.json",
+      "data": {
+        "county_fips": "13121",
+        "hints": {
+          "ParcelID": "14 007700061068",
+          "Owner": "FULTON COUNTY ",
+          "OwnerAddr1": "141 PRYOR ST STE 8021",
+          "OwnerAddr2": "ATLANTA GA 30303"
+        },
+        "method": "arcgis-rest",
+        "source": "https://gismaps.fultoncountyga.gov/arcgispub2/rest/services/PropertyMapViewer/PropertyMapViewer/MapServer/11",
+        "service": "https://gismaps.fultoncountyga.gov/arcgispub2/rest/services/PropertyMapViewer/PropertyMapViewer/MapServer/11",
+        "layer_name": "Tax Parcel",
+        "parcels": [
+          {
+            "OBJECTID": 142785,
+            "ParcelID": "14 007700061068",
+            "TaxYear": 2026,
+            "Address": "141 PRYOR ST SW",
+            "AddrNumber": "141",
+            "AddrPreDir": null,
+            "AddrStreet": "PRYOR",
+            "AddrSuffix": "ST",
+            "AddrPosDir": "SW",
+            "AddrUntTyp": null,
+            "AddrUnit": null,
+            "Owner": "FULTON COUNTY ",
+            "OwnerAddr1": "141 PRYOR ST STE 8021",
+            "OwnerAddr2": "ATLANTA GA 30303",
+            "TaxDist": "05W",
+            "TotAssess": 0,
+            "LandAssess": 4752760,
+            "ImprAssess": 20960000,
+            "TotAppr": 64281900,
+            "LandAppr": 11881900,
+            "ImprAppr": 52400000,
+            "LUCode": "699",
+            "ClassCode": "E1",
+            "ExCode": null,
+            "LivUnits": 0,
+            "LandAcres": 3.6466,
+            "NbrHood": "CB04",
+            "Subdiv": null,
+            "SubdivNum": null,
+            "SubdivLot": null,
+            "SubdivBlck": null,
+            "FeatureID": "14 007700061068",
+            "Shape.STArea()": 158280.17023315481,
+            "Shape.STLength()": 1595.1502917423513
+          }
+        ],
+        "candidate_count": 51,
+        "situs": "141 PRYOR ST SW",
+        "land_sqft": 158846,
+        "land_acres": 3.6466,
+        "buffered_match": false,
+        "address_match": true,
+        "parcel_id": "14 007700061068"
+      },
+      "status": "ok",
+      "situs": "141 PRYOR ST SW",
+      "land_sqft": 158846,
+      "land_acres": 3.6466,
+      "address_match": true,
+      "downloaded": [
+        "Parcel_Record.html"
+      ]
+    },
+    {
+      "key": "appraiser",
+      "label": "Property Appraiser / Tax record",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The county tax-roll record \u2014 owner, situs, use code, land & living area, just/assessed/taxable values and the last recorded sale (OR book/page). Used to confirm identity, size and the authoritative deed reference.",
+      "summary": "Owner, values & last sale from the county tax roll",
+      "link": "https://publicrecords.netronline.com/state/GA/county/fulton",
+      "link_label": "Open County Property Appraiser",
+      "source_url": "https://publicrecords.netronline.com/state/GA/county/fulton",
+      "saved_file": "parcel.json",
+      "data": {
+        "OBJECTID": 142785,
+        "ParcelID": "14 007700061068",
+        "TaxYear": 2026,
+        "Address": "141 PRYOR ST SW",
+        "AddrNumber": "141",
+        "AddrPreDir": null,
+        "AddrStreet": "PRYOR",
+        "AddrSuffix": "ST",
+        "AddrPosDir": "SW",
+        "AddrUntTyp": null,
+        "AddrUnit": null,
+        "Owner": "FULTON COUNTY ",
+        "OwnerAddr1": "141 PRYOR ST STE 8021",
+        "OwnerAddr2": "ATLANTA GA 30303",
+        "TaxDist": "05W",
+        "TotAssess": 0,
+        "LandAssess": 4752760,
+        "ImprAssess": 20960000,
+        "TotAppr": 64281900,
+        "LandAppr": 11881900,
+        "ImprAppr": 52400000,
+        "LUCode": "699",
+        "ClassCode": "E1",
+        "ExCode": null,
+        "LivUnits": 0,
+        "LandAcres": 3.6466,
+        "NbrHood": "CB04",
+        "Subdiv": null,
+        "SubdivNum": null,
+        "SubdivLot": null,
+        "SubdivBlck": null,
+        "FeatureID": "14 007700061068",
+        "Shape.STArea()": 158280.17023315481,
+        "Shape.STLength()": 1595.1502917423513
+      },
+      "status": "ok",
+      "downloaded": [
+        "Property_Appraiser.html"
+      ]
+    },
+    {
+      "key": "deed",
+      "label": "Deed \u2014 subject parcel",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The recorded instrument that conveys ownership. It carries the record legal description the survey must retrace, plus the OR book/page reference.",
+      "summary": "Current vesting deed \u2014 search Official Records by OR book/page or owner name.  \u00b7  hints: ParcelID, Owner, OwnerAddr1, OwnerAddr2",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Deed \u2014 subject parcel",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Fulton",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "appraiser_url": null,
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/fulton",
+        "note": "Georgia statewide GSCCCA real-estate index (all counties).",
+        "search_hints": {
+          "ParcelID": "14 007700061068",
+          "Owner": "FULTON COUNTY ",
+          "OwnerAddr1": "141 PRYOR ST STE 8021",
+          "OwnerAddr2": "ATLANTA GA 30303"
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "plat",
+      "label": "Recorded plat / subdivision map",
+      "requirement": "mandatory",
+      "condition": "if the parcel is in a recorded subdivision",
+      "description": "The recorded map that created the subdivision's lots, blocks, streets and easements \u2014 giving platted lot dimensions, bearings and dedicated easements.",
+      "summary": "Search the Plat Book / subdivision name for the recorded plat.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Recorded plat / subdivision map",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Fulton",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "appraiser_url": null,
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/fulton",
+        "note": "Georgia statewide GSCCCA real-estate index (all counties).",
+        "search_hints": {
+          "ParcelID": "14 007700061068",
+          "Owner": "FULTON COUNTY ",
+          "OwnerAddr1": "141 PRYOR ST STE 8021",
+          "OwnerAddr2": "ATLANTA GA 30303"
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "adjoiners",
+      "label": "Deeds \u2014 adjoining parcels",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The deeds of the neighboring parcels \u2014 used to resolve gaps, overlaps and boundary conflicts with adjoiners (required by FL Rule 5J-17.052).",
+      "summary": "Retrieve deeds for the abutting parcels to resolve boundary calls.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Deeds \u2014 adjoining parcels",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Fulton",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "appraiser_url": null,
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/fulton",
+        "note": "Georgia statewide GSCCCA real-estate index (all counties).",
+        "search_hints": {
+          "ParcelID": "14 007700061068",
+          "Owner": "FULTON COUNTY ",
+          "OwnerAddr1": "141 PRYOR ST STE 8021",
+          "OwnerAddr2": "ATLANTA GA 30303"
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "easements",
+      "label": "Easements / ROW / covenants (CC&Rs)",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "Recorded rights that affect the land \u2014 utility/access easements, rights-of-way and restrictive covenants \u2014 which must be located and shown on the survey.",
+      "summary": "Search Official Records for recorded easements, rights-of-way and restrictive covenants.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Easements / ROW / covenants (CC&Rs)",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Fulton",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "appraiser_url": null,
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/fulton",
+        "note": "Georgia statewide GSCCCA real-estate index (all counties).",
+        "search_hints": {
+          "ParcelID": "14 007700061068",
+          "Owner": "FULTON COUNTY ",
+          "OwnerAddr1": "141 PRYOR ST STE 8021",
+          "OwnerAddr2": "ATLANTA GA 30303"
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "prior_survey",
+      "label": "Prior recorded surveys",
+      "requirement": "recommended",
+      "condition": "",
+      "description": "Earlier recorded surveys of the parcel or subdivision \u2014 prior monumentation and measurements to compare against and reconcile.",
+      "summary": "Search Official Records for previously recorded surveys of the parcel or subdivision.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Prior recorded surveys",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Fulton",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "appraiser_url": null,
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/fulton",
+        "note": "Georgia statewide GSCCCA real-estate index (all counties).",
+        "search_hints": {
+          "ParcelID": "14 007700061068",
+          "Owner": "FULTON COUNTY ",
+          "OwnerAddr1": "141 PRYOR ST STE 8021",
+          "OwnerAddr2": "ATLANTA GA 30303"
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "flood",
+      "label": "FEMA flood zone / FIRM",
+      "requirement": "conditional",
+      "condition": "lender-required; if near a Special Flood Hazard Area",
+      "description": "The FEMA flood-hazard designation for the parcel \u2014 flood zone (e.g. X, AE, VE), FIRM panel and Base Flood Elevation \u2014 i.e. whether it sits in a Special Flood Hazard Area. Lenders and insurers require this determination.",
+      "summary": "Couldn't reach FEMA NFHL from this network \u2014 open the FIRM directly",
+      "link": "https://msc.fema.gov/portal/home",
+      "link_label": "Open FEMA Map Service Center (FIRMette)",
+      "source_url": "",
+      "saved_file": null,
+      "data": null,
+      "status": "link"
+    },
+    {
+      "key": "benchmarks",
+      "label": "NGS geodetic control (benchmarks)",
+      "requirement": "recommended",
+      "condition": "",
+      "description": "Nearby NGS survey monuments with published coordinates and elevations \u2014 used to tie the survey to the correct datum (e.g. NAVD88) and horizontal control.",
+      "summary": "147 NGS control marks within 3000 m  \u00b7  downloaded 3 datasheet(s)",
+      "link": "https://geodesy.noaa.gov/",
+      "link_label": "Open NGS datasheets",
+      "source_url": "https://geodesy.noaa.gov/api/nde/radial",
+      "saved_file": "benchmarks.json",
+      "data": {
+        "radius_m": 3000,
+        "count": 147,
+        "marks": [
+          {
+            "pid": "DG0239",
+            "name": "CAIN",
+            "lat": "33.7596796139",
+            "lon": "-84.3889780833",
+            "datum": "NAD 83(1994)",
+            "vert_source": "319.850",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0239"
+          },
+          {
+            "pid": "DG0590",
+            "name": "N 14",
+            "lat": "33.7794760417",
+            "lon": "-84.3871699361",
+            "datum": "NAD 83(1994)",
+            "vert_source": "289.810",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0590"
+          },
+          {
+            "pid": "DG0589",
+            "name": "N 13",
+            "lat": "33.7772847778",
+            "lon": "-84.3871790306",
+            "datum": "NAD 83(1994)",
+            "vert_source": "297.523",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0589"
+          },
+          {
+            "pid": "DG0587",
+            "name": "N 11",
+            "lat": "33.7713492167",
+            "lon": "-84.3875378639",
+            "datum": "NAD 83(1994)",
+            "vert_source": "304.762",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0587"
+          },
+          {
+            "pid": "DG2803",
+            "name": "N 12A MARTA",
+            "lat": "33.7763937833",
+            "lon": "-84.3871907611",
+            "datum": "NAD 83(1994)",
+            "vert_source": "298.",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG2803"
+          },
+          {
+            "pid": "DG0588",
+            "name": "N 12",
+            "lat": "33.7738855833",
+            "lon": "-84.3872237000",
+            "datum": "NAD 83(1994)",
+            "vert_source": "298.074",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0588"
+          },
+          {
+            "pid": "DG0580",
+            "name": "N 4",
+            "lat": "33.7577198667",
+            "lon": "-84.3879771972",
+            "datum": "NAD 83(1994)",
+            "vert_source": "325.161",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0580"
+          },
+          {
+            "pid": "DG2779",
+            "name": "CANDLER",
+            "lat": "33.7566866611",
+            "lon": "-84.3877143361",
+            "datum": "NAD 83(1994)",
+            "vert_source": "323.",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG2779"
+          },
+          {
+            "pid": "DG0264",
+            "name": "KIMBALL",
+            "lat": "33.7722122667",
+            "lon": "-84.3854875222",
+            "datum": "NAD 83(1994)",
+            "vert_source": "312.666",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0264"
+          },
+          {
+            "pid": "DG0265",
+            "name": "MYRTLE",
+            "lat": "33.7727021639",
+            "lon": "-84.3797606333",
+            "datum": "NAD 83(1994)",
+            "vert_source": "291.861",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0265"
+          },
+          {
+            "pid": "DH6033",
+            "name": "BAKER",
+            "lat": "33.7615047778",
+            "lon": "-84.3786388167",
+            "datum": "NAD 83(2011)",
+            "vert_source": "300.9",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DH6033"
+          },
+          {
+            "pid": "DG0266",
+            "name": "DURANT",
+            "lat": "33.7722173083",
+            "lon": "-84.3760153389",
+            "datum": "NAD 83(1994)",
+            "vert_source": "293.143",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0266"
+          },
+          {
+            "pid": "DG0267",
+            "name": "GRAY",
+            "lat": "33.7730662861",
+            "lon": "-84.3735053194",
+            "datum": "NAD 83(1994)",
+            "vert_source": "297.025",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0267"
+          },
+          {
+            "pid": "DG0285",
+            "name": "ANGIER",
+            "lat": "33.7664375917",
+            "lon": "-84.3720223611",
+            "datum": "NAD 83(1994)",
+            "vert_source": "310.944",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0285"
+          },
+          {
+            "pid": "DG2350",
+            "name": "NORTH",
+            "lat": "33.7713102472",
+            "lon": "-84.3716951833",
+            "datum": "NAD 83(1994)",
+            "vert_source": "301.683",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG2350"
+          },
+          {
+            "pid": "DG0286",
+            "name": "NORTH RESET",
+            "lat": "33.7713111111",
+            "lon": "-84.3716944444",
+            "datum": "NAD 83(1986)",
+            "vert_source": "301.23",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0286"
+          },
+          {
+            "pid": "DG0284",
+            "name": "JOHNSON",
+            "lat": "33.7600528083",
+            "lon": "-84.3721520806",
+            "datum": "NAD 83(1994)",
+            "vert_source": "319.714",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0284"
+          },
+          {
+            "pid": "DG0268",
+            "name": "PAN AM",
+            "lat": "33.7737148861",
+            "lon": "-84.3711118417",
+            "datum": "NAD 83(1994)",
+            "vert_source": "290.102",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0268"
+          },
+          {
+            "pid": "DG0283",
+            "name": "WHITE",
+            "lat": "33.7567395000",
+            "lon": "-84.3722077556",
+            "datum": "NAD 83(1994)",
+            "vert_source": "307.195",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0283"
+          },
+          {
+            "pid": "DG0048",
+            "name": "SUNSET",
+            "lat": "33.7633930889",
+            "lon": "-84.4100811806",
+            "datum": "NAD 83(1994)",
+            "vert_source": "290.044",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0048"
+          },
+          {
+            "pid": "DG0047",
+            "name": "WALNUT",
+            "lat": "33.7634704639",
+            "lon": "-84.4064170806",
+            "datum": "NAD 83(1994)",
+            "vert_source": "287.398",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0047"
+          },
+          {
+            "pid": "DG0315",
+            "name": "RV 2",
+            "lat": "33.7716666667",
+            "lon": "-84.4052777778",
+            "datum": "NAD 83(1986)",
+            "vert_source": "302.539",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG0315"
+          },
+          {
+            "pid": "DG2798",
+            "name": "M J FLYNN",
+            "lat": "33.7770556750",
+            "lon": "-84.4011345611",
+            "datum": "NAD 83(1994)",
+            "vert_source": "294.7",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG2798"
+          },
+          {
+            "pid": "DG2496",
+            "name": "J 388",
+            "lat": "33.7700000000",
+            "lon": "-84.4013888889",
+            "datum": "NAD 83(1986)",
+            "vert_source": "299.501",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG2496"
+          },
+          {
+            "pid": "DG2797",
+            "name": "SOLAR POINT 1979",
+            "lat": "33.7769409944",
+            "lon": "-84.4007194444",
+            "datum": "NAD 83(1994)",
+            "vert_source": "295.0",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG2797"
+          }
+        ]
+      },
+      "status": "ok",
+      "downloaded": [
+        "NGS_datasheet_DG0239.html",
+        "NGS_datasheet_DG0590.html",
+        "NGS_datasheet_DG0589.html"
+      ]
+    },
+    {
+      "key": "glo",
+      "label": "GLO / PLSS plats & field notes",
+      "requirement": "conditional",
+      "condition": "if the legal is section-township-range (PLSS) / metes-and-bounds",
+      "description": "The original U.S. General Land Office township plats and field notes that established the PLSS section corners \u2014 the basis for section / metes-and-bounds descriptions.",
+      "summary": "BLM GLO original township plats & field notes for the section.",
+      "link": "https://glorecords.blm.gov/",
+      "link_label": "Open BLM GLO Records",
+      "source_url": "https://glorecords.blm.gov/",
+      "saved_file": null,
+      "data": null,
+      "status": "link"
+    },
+    {
+      "key": "condo",
+      "label": "Condominium declaration & exhibits",
+      "requirement": "conditional",
+      "condition": "if the property is a condominium unit",
+      "description": "The recorded declaration (with its survey / plot-plan exhibits) that legally creates the condominium and defines the units and common elements (FL s.718.104).",
+      "summary": "Search Official Records for the recorded condo declaration and survey exhibits.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Condominium declaration & exhibits",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Fulton",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "appraiser_url": null,
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/fulton",
+        "note": "Georgia statewide GSCCCA real-estate index (all counties).",
+        "search_hints": {
+          "ParcelID": "14 007700061068",
+          "Owner": "FULTON COUNTY ",
+          "OwnerAddr1": "141 PRYOR ST STE 8021",
+          "OwnerAddr2": "ATLANTA GA 30303"
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    }
+  ],
+  "warnings": []
+}

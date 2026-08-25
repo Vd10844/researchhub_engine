@@ -1,0 +1,290 @@
+{
+  "job_number": "",
+  "order": "113 Merry Valley Dr",
+  "parcel_id": "",
+  "address": "113 Merry Valley Dr, Warner Robins, GA 31088, USA",
+  "matched_address": "113 Merry Valley Dr, Warner Robins, Georgia, 31088",
+  "county": "Houston",
+  "county_fips": "13153",
+  "state": "GA",
+  "lat": 32.604147122523,
+  "lon": -83.64396313375,
+  "name": "113 Merry Valley Dr",
+  "geocoder": "arcgis",
+  "map_links": [
+    {
+      "label": "Google Maps",
+      "url": "https://www.google.com/maps/search/?api=1&query=32.604147122523,-83.64396313375"
+    },
+    {
+      "label": "Google Street View",
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=32.604147122523,-83.64396313375"
+    },
+    {
+      "label": "Bing Maps (aerial)",
+      "url": "https://www.bing.com/maps?cp=32.604147122523~-83.64396313375&lvl=19&style=a"
+    },
+    {
+      "label": "County Property Appraiser",
+      "url": "https://qpublic.net/ga/houston/"
+    },
+    {
+      "label": "Search address on Google",
+      "url": "https://www.google.com/search?q=113+Merry+Valley+Dr%2C+Warner+Robins%2C+Georgia%2C+31088"
+    }
+  ],
+  "folder": "E:\\DPR\\2026\\Q2\\August\\ResearchHub\\poc01\\SurveyResearch\\jobs\\113 Merry Valley Dr",
+  "steps": [
+    {
+      "key": "parcel",
+      "label": "Parcel record & Parcel ID",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The Property Appraiser's record for the parcel \u2014 its unique Parcel ID, owner, legal description, subdivision and (often) the deed & plat book/page. It's the anchor that identifies the property and seeds every other lookup.",
+      "summary": "Parcel record not found for this address \u2014 open the County Property Appraiser to look it up.",
+      "link": "https://qpublic.net/ga/houston/",
+      "link_label": "Open County Property Appraiser",
+      "source_url": "https://qpublic.net/ga/houston/",
+      "saved_file": null,
+      "data": null,
+      "status": "link",
+      "situs": "",
+      "land_sqft": null,
+      "land_acres": null,
+      "address_match": null
+    },
+    {
+      "key": "appraiser",
+      "label": "Property Appraiser / Tax record",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The county tax-roll record \u2014 owner, situs, use code, land & living area, just/assessed/taxable values and the last recorded sale (OR book/page). Used to confirm identity, size and the authoritative deed reference.",
+      "summary": "Open the County Property Appraiser",
+      "link": "https://qpublic.net/ga/houston/",
+      "link_label": "Open County Property Appraiser",
+      "source_url": "https://qpublic.net/ga/houston/",
+      "saved_file": null,
+      "data": null,
+      "status": "link"
+    },
+    {
+      "key": "deed",
+      "label": "Deed \u2014 subject parcel",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The recorded instrument that conveys ownership. It carries the record legal description the survey must retrace, plus the OR book/page reference.",
+      "summary": "Current vesting deed \u2014 search Official Records by OR book/page or owner name.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Deed \u2014 subject parcel",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Houston",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "appraiser_url": "https://qpublic.net/ga/houston/",
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/houston",
+        "note": "",
+        "search_hints": {},
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "plat",
+      "label": "Recorded plat / subdivision map",
+      "requirement": "mandatory",
+      "condition": "if the parcel is in a recorded subdivision",
+      "description": "The recorded map that created the subdivision's lots, blocks, streets and easements \u2014 giving platted lot dimensions, bearings and dedicated easements.",
+      "summary": "Search the Plat Book / subdivision name for the recorded plat.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Recorded plat / subdivision map",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Houston",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "appraiser_url": "https://qpublic.net/ga/houston/",
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/houston",
+        "note": "",
+        "search_hints": {},
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "adjoiners",
+      "label": "Deeds \u2014 adjoining parcels",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The deeds of the neighboring parcels \u2014 used to resolve gaps, overlaps and boundary conflicts with adjoiners (required by FL Rule 5J-17.052).",
+      "summary": "Retrieve deeds for the abutting parcels to resolve boundary calls.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Deeds \u2014 adjoining parcels",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Houston",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "appraiser_url": "https://qpublic.net/ga/houston/",
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/houston",
+        "note": "",
+        "search_hints": {},
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "easements",
+      "label": "Easements / ROW / covenants (CC&Rs)",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "Recorded rights that affect the land \u2014 utility/access easements, rights-of-way and restrictive covenants \u2014 which must be located and shown on the survey.",
+      "summary": "Search Official Records for recorded easements, rights-of-way and restrictive covenants.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Easements / ROW / covenants (CC&Rs)",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Houston",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "appraiser_url": "https://qpublic.net/ga/houston/",
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/houston",
+        "note": "",
+        "search_hints": {},
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "prior_survey",
+      "label": "Prior recorded surveys",
+      "requirement": "recommended",
+      "condition": "",
+      "description": "Earlier recorded surveys of the parcel or subdivision \u2014 prior monumentation and measurements to compare against and reconcile.",
+      "summary": "Search Official Records for previously recorded surveys of the parcel or subdivision.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Prior recorded surveys",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Houston",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "appraiser_url": "https://qpublic.net/ga/houston/",
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/houston",
+        "note": "",
+        "search_hints": {},
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "flood",
+      "label": "FEMA flood zone / FIRM",
+      "requirement": "conditional",
+      "condition": "lender-required; if near a Special Flood Hazard Area",
+      "description": "The FEMA flood-hazard designation for the parcel \u2014 flood zone (e.g. X, AE, VE), FIRM panel and Base Flood Elevation \u2014 i.e. whether it sits in a Special Flood Hazard Area. Lenders and insurers require this determination.",
+      "summary": "Couldn't reach FEMA NFHL from this network \u2014 open the FIRM directly",
+      "link": "https://msc.fema.gov/portal/home",
+      "link_label": "Open FEMA Map Service Center (FIRMette)",
+      "source_url": "",
+      "saved_file": null,
+      "data": null,
+      "status": "link"
+    },
+    {
+      "key": "benchmarks",
+      "label": "NGS geodetic control (benchmarks)",
+      "requirement": "recommended",
+      "condition": "",
+      "description": "Nearby NGS survey monuments with published coordinates and elevations \u2014 used to tie the survey to the correct datum (e.g. NAVD88) and horizontal control.",
+      "summary": "0 NGS control marks within 3000 m",
+      "link": "https://geodesy.noaa.gov/",
+      "link_label": "Open NGS datasheets",
+      "source_url": "https://geodesy.noaa.gov/api/nde/radial",
+      "saved_file": "benchmarks.json",
+      "data": {
+        "radius_m": 3000,
+        "count": 0,
+        "marks": []
+      },
+      "status": "empty",
+      "downloaded": []
+    },
+    {
+      "key": "glo",
+      "label": "GLO / PLSS plats & field notes",
+      "requirement": "conditional",
+      "condition": "if the legal is section-township-range (PLSS) / metes-and-bounds",
+      "description": "The original U.S. General Land Office township plats and field notes that established the PLSS section corners \u2014 the basis for section / metes-and-bounds descriptions.",
+      "summary": "BLM GLO original township plats & field notes for the section.",
+      "link": "https://glorecords.blm.gov/",
+      "link_label": "Open BLM GLO Records",
+      "source_url": "https://glorecords.blm.gov/",
+      "saved_file": null,
+      "data": null,
+      "status": "link"
+    },
+    {
+      "key": "condo",
+      "label": "Condominium declaration & exhibits",
+      "requirement": "conditional",
+      "condition": "if the property is a condominium unit",
+      "description": "The recorded declaration (with its survey / plot-plan exhibits) that legally creates the condominium and defines the units and common elements (FL s.718.104).",
+      "summary": "Search Official Records for the recorded condo declaration and survey exhibits.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Condominium declaration & exhibits",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Houston",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "appraiser_url": "https://qpublic.net/ga/houston/",
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/houston",
+        "note": "",
+        "search_hints": {},
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    }
+  ],
+  "warnings": [
+    "Address not in the US Census file \u2014 matched via ARCGIS instead. Please confirm the pinned location on the map is the correct property.",
+    "Couldn't confirm a parcel matching this address \u2014 showing reference links only. Parcel ID, lot area, and deed/plat auto-fetch are skipped to avoid wrong data; use the County Property Appraiser link to look up the parcel."
+  ]
+}

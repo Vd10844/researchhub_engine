@@ -1,0 +1,11 @@
+{
+  "properties": {
+    "reason": {
+      "type": "string",
+      "title": "Reason",
+      "default": ""
+    }
+  },
+  "type": "object",
+  "title": "ReasonIn"
+}

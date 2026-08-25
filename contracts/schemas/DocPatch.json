@@ -1,0 +1,11 @@
+{
+  "properties": {
+    "doc_type": {
+      "type": "string",
+      "title": "Doc Type",
+      "default": ""
+    }
+  },
+  "type": "object",
+  "title": "DocPatch"
+}

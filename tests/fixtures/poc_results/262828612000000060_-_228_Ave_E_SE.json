@@ -1,0 +1,666 @@
+{
+  "job_number": "262828612000000060",
+  "order": "262828612000000060",
+  "parcel_id": "262828612000000060",
+  "address": "228 Ave E SE, Winter Haven, FL 33880, USA",
+  "matched_address": "228 AVE E SE, WINTER HAVEN, FL, 33880",
+  "county": "Polk",
+  "county_fips": "12105",
+  "state": "FL",
+  "lat": 28.01671249691,
+  "lon": -81.724392345904,
+  "name": "262828612000000060 - 228 Ave E SE",
+  "geocoder": "census",
+  "map_links": [
+    {
+      "label": "Google Maps",
+      "url": "https://www.google.com/maps/search/?api=1&query=28.01671249691,-81.724392345904"
+    },
+    {
+      "label": "Google Street View",
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=28.01671249691,-81.724392345904"
+    },
+    {
+      "label": "Bing Maps (aerial)",
+      "url": "https://www.bing.com/maps?cp=28.01671249691~-81.724392345904&lvl=19&style=a"
+    },
+    {
+      "label": "County Property Appraiser",
+      "url": "https://www.polkflpa.gov/CamaSearch.aspx"
+    },
+    {
+      "label": "Search address on Google",
+      "url": "https://www.google.com/search?q=228+AVE+E+SE%2C+WINTER+HAVEN%2C+FL%2C+33880"
+    }
+  ],
+  "folder": "E:\\DPR\\2026\\Q2\\August\\ResearchHub\\poc01\\SurveyResearch\\jobs\\262828612000000060 - 228 Ave E SE",
+  "steps": [
+    {
+      "key": "parcel",
+      "label": "Parcel record & Parcel ID",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The Property Appraiser's record for the parcel \u2014 its unique Parcel ID, owner, legal description, subdivision and (often) the deed & plat book/page. It's the anchor that identifies the property and seeds every other lookup.",
+      "summary": "Parcel ID: 262828612000000060 \u00b7 Lot 6,965 sq ft (0.16 ac)",
+      "link": "https://www.polkflpa.gov/CamaSearch.aspx",
+      "link_label": "Open County Property Appraiser",
+      "source_url": "https://services9.arcgis.com/Gh9awoU677aKree0/arcgis/rest/services/Florida_Statewide_Cadastral/FeatureServer/0",
+      "saved_file": "parcel.json",
+      "data": {
+        "county_fips": "12105",
+        "hints": {
+          "PARCEL_ID": "262828612000000060",
+          "PARCEL_ID_": " ",
+          "PARCELNO": "262828612000000060",
+          "S_LEGAL": "BERRY J B SUB PB 14 PG 26 LOT",
+          "OR_BOOK1": " ",
+          "OR_BOOK2": " ",
+          "OR_PAGE1": " ",
+          "OR_PAGE2": " "
+        },
+        "parcel_source_label": "FL DOR Statewide Cadastral (FGIO)",
+        "method": "arcgis-rest",
+        "source": "https://services9.arcgis.com/Gh9awoU677aKree0/arcgis/rest/services/Florida_Statewide_Cadastral/FeatureServer/0",
+        "service": "https://services9.arcgis.com/Gh9awoU677aKree0/arcgis/rest/services/Florida_Statewide_Cadastral/FeatureServer/0",
+        "layer_name": null,
+        "parcels": [
+          {
+            "OWN_ADDR1": "228 AVENUE E SE",
+            "OWN_ADDR2": " ",
+            "FIDU_ADDR1": " ",
+            "FIDU_ADDR2": " ",
+            "PHY_ADDR1": "228 AVENUE E SE",
+            "PHY_ADDR2": " ",
+            "PHY_CITY": "WINTER HAVEN",
+            "PHY_ZIPCD": 33880,
+            "OWN_NAME": "VALENCIA NORMA YENI VEGA",
+            "FIDU_NAME": " ",
+            "PARCEL_ID": "262828612000000060",
+            "PARCEL_ID_": " ",
+            "PARCELNO": "262828612000000060",
+            "S_LEGAL": "BERRY J B SUB PB 14 PG 26 LOT",
+            "OR_BOOK1": " ",
+            "OR_BOOK2": " ",
+            "OR_PAGE1": " ",
+            "OR_PAGE2": " ",
+            "LND_SQFOOT": 6965,
+            "OBJECTID": 8718929,
+            "FIDU_CITY": " ",
+            "FIDU_STATE": " ",
+            "FIDU_ZIPCD": " ",
+            "FIDU_CD": 0,
+            "RS_ID": "2B6C",
+            "MP_ID": "0079D415",
+            "OID_": 219345
+          }
+        ],
+        "candidate_count": 31,
+        "situs": "228 AVENUE E SE",
+        "land_sqft": 6965.0,
+        "land_acres": 0.16,
+        "buffered_match": false,
+        "address_match": true,
+        "parcel_id": "262828612000000060"
+      },
+      "status": "ok",
+      "situs": "228 AVENUE E SE",
+      "land_sqft": 6965.0,
+      "land_acres": 0.16,
+      "address_match": true,
+      "downloaded": [
+        "Parcel_Record.html"
+      ]
+    },
+    {
+      "key": "appraiser",
+      "label": "Property Appraiser / Tax record",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The county tax-roll record \u2014 owner, situs, use code, land & living area, just/assessed/taxable values and the last recorded sale (OR book/page). Used to confirm identity, size and the authoritative deed reference.",
+      "summary": "Owner, values & last sale from the county tax roll",
+      "link": "https://www.polkflpa.gov/CamaSearch.aspx",
+      "link_label": "Open County Property Appraiser",
+      "source_url": "https://www.polkflpa.gov/CamaSearch.aspx",
+      "saved_file": "parcel.json",
+      "data": {
+        "OWN_ADDR1": "228 AVENUE E SE",
+        "OWN_ADDR2": " ",
+        "FIDU_ADDR1": " ",
+        "FIDU_ADDR2": " ",
+        "PHY_ADDR1": "228 AVENUE E SE",
+        "PHY_ADDR2": " ",
+        "PHY_CITY": "WINTER HAVEN",
+        "PHY_ZIPCD": 33880,
+        "OWN_NAME": "VALENCIA NORMA YENI VEGA",
+        "FIDU_NAME": " ",
+        "PARCEL_ID": "262828612000000060",
+        "PARCEL_ID_": " ",
+        "PARCELNO": "262828612000000060",
+        "S_LEGAL": "BERRY J B SUB PB 14 PG 26 LOT",
+        "OR_BOOK1": " ",
+        "OR_BOOK2": " ",
+        "OR_PAGE1": " ",
+        "OR_PAGE2": " ",
+        "LND_SQFOOT": 6965,
+        "OBJECTID": 8718929,
+        "FIDU_CITY": " ",
+        "FIDU_STATE": " ",
+        "FIDU_ZIPCD": " ",
+        "FIDU_CD": 0,
+        "RS_ID": "2B6C",
+        "MP_ID": "0079D415",
+        "OID_": 219345
+      },
+      "status": "ok",
+      "downloaded": [
+        "Property_Appraiser.html"
+      ]
+    },
+    {
+      "key": "deed",
+      "label": "Deed \u2014 subject parcel",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The recorded instrument that conveys ownership. It carries the record legal description the survey must retrace, plus the OR book/page reference.",
+      "summary": "Current vesting deed \u2014 search Official Records by OR book/page or owner name.  \u00b7  hints: PARCEL_ID, PARCEL_ID_, PARCELNO, S_LEGAL",
+      "link": "https://apps.polkcountyclerk.net/browserviewor/",
+      "link_label": "Open Clerk Official Records \u2014 Deed \u2014 subject parcel",
+      "source_url": "https://apps.polkcountyclerk.net/browserviewor/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Polk",
+        "platform": "inhouse",
+        "platform_label": "In-house / county-built",
+        "official_records_search": "https://apps.polkcountyclerk.net/browserviewor/",
+        "plat_search": "https://apps.polkcountyclerk.net/browserviewor/",
+        "appraiser_url": "https://www.polkflpa.gov/CamaSearch.aspx",
+        "directory_url": "https://publicrecords.netronline.com/state/FL/county/polk",
+        "note": "",
+        "search_hints": {
+          "PARCEL_ID": "262828612000000060",
+          "PARCEL_ID_": " ",
+          "PARCELNO": "262828612000000060",
+          "S_LEGAL": "BERRY J B SUB PB 14 PG 26 LOT",
+          "OR_BOOK1": " ",
+          "OR_BOOK2": " ",
+          "OR_PAGE1": " ",
+          "OR_PAGE2": " "
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "auto-download available (deed + plat)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "plat",
+      "label": "Recorded plat / subdivision map",
+      "requirement": "mandatory",
+      "condition": "if the parcel is in a recorded subdivision",
+      "description": "The recorded map that created the subdivision's lots, blocks, streets and easements \u2014 giving platted lot dimensions, bearings and dedicated easements.",
+      "summary": "Search the Plat Book / subdivision name for the recorded plat.",
+      "link": "https://apps.polkcountyclerk.net/browserviewor/",
+      "link_label": "Open Clerk Official Records \u2014 Recorded plat / subdivision map",
+      "source_url": "https://apps.polkcountyclerk.net/browserviewor/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Polk",
+        "platform": "inhouse",
+        "platform_label": "In-house / county-built",
+        "official_records_search": "https://apps.polkcountyclerk.net/browserviewor/",
+        "plat_search": "https://apps.polkcountyclerk.net/browserviewor/",
+        "appraiser_url": "https://www.polkflpa.gov/CamaSearch.aspx",
+        "directory_url": "https://publicrecords.netronline.com/state/FL/county/polk",
+        "note": "",
+        "search_hints": {
+          "PARCEL_ID": "262828612000000060",
+          "PARCEL_ID_": " ",
+          "PARCELNO": "262828612000000060",
+          "S_LEGAL": "BERRY J B SUB PB 14 PG 26 LOT",
+          "OR_BOOK1": " ",
+          "OR_BOOK2": " ",
+          "OR_PAGE1": " ",
+          "OR_PAGE2": " "
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "auto-download available (deed + plat)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "adjoiners",
+      "label": "Deeds \u2014 adjoining parcels",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The deeds of the neighboring parcels \u2014 used to resolve gaps, overlaps and boundary conflicts with adjoiners (required by FL Rule 5J-17.052).",
+      "summary": "Retrieve deeds for the abutting parcels to resolve boundary calls.",
+      "link": "https://apps.polkcountyclerk.net/browserviewor/",
+      "link_label": "Open Clerk Official Records \u2014 Deeds \u2014 adjoining parcels",
+      "source_url": "https://apps.polkcountyclerk.net/browserviewor/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Polk",
+        "platform": "inhouse",
+        "platform_label": "In-house / county-built",
+        "official_records_search": "https://apps.polkcountyclerk.net/browserviewor/",
+        "plat_search": "https://apps.polkcountyclerk.net/browserviewor/",
+        "appraiser_url": "https://www.polkflpa.gov/CamaSearch.aspx",
+        "directory_url": "https://publicrecords.netronline.com/state/FL/county/polk",
+        "note": "",
+        "search_hints": {
+          "PARCEL_ID": "262828612000000060",
+          "PARCEL_ID_": " ",
+          "PARCELNO": "262828612000000060",
+          "S_LEGAL": "BERRY J B SUB PB 14 PG 26 LOT",
+          "OR_BOOK1": " ",
+          "OR_BOOK2": " ",
+          "OR_PAGE1": " ",
+          "OR_PAGE2": " "
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "auto-download available (deed + plat)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "easements",
+      "label": "Easements / ROW / covenants (CC&Rs)",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "Recorded rights that affect the land \u2014 utility/access easements, rights-of-way and restrictive covenants \u2014 which must be located and shown on the survey.",
+      "summary": "Search Official Records for recorded easements, rights-of-way and restrictive covenants.",
+      "link": "https://apps.polkcountyclerk.net/browserviewor/",
+      "link_label": "Open Clerk Official Records \u2014 Easements / ROW / covenants (CC&Rs)",
+      "source_url": "https://apps.polkcountyclerk.net/browserviewor/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Polk",
+        "platform": "inhouse",
+        "platform_label": "In-house / county-built",
+        "official_records_search": "https://apps.polkcountyclerk.net/browserviewor/",
+        "plat_search": "https://apps.polkcountyclerk.net/browserviewor/",
+        "appraiser_url": "https://www.polkflpa.gov/CamaSearch.aspx",
+        "directory_url": "https://publicrecords.netronline.com/state/FL/county/polk",
+        "note": "",
+        "search_hints": {
+          "PARCEL_ID": "262828612000000060",
+          "PARCEL_ID_": " ",
+          "PARCELNO": "262828612000000060",
+          "S_LEGAL": "BERRY J B SUB PB 14 PG 26 LOT",
+          "OR_BOOK1": " ",
+          "OR_BOOK2": " ",
+          "OR_PAGE1": " ",
+          "OR_PAGE2": " "
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "auto-download available (deed + plat)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "prior_survey",
+      "label": "Prior recorded surveys",
+      "requirement": "recommended",
+      "condition": "",
+      "description": "Earlier recorded surveys of the parcel or subdivision \u2014 prior monumentation and measurements to compare against and reconcile.",
+      "summary": "Search Official Records for previously recorded surveys of the parcel or subdivision.",
+      "link": "https://apps.polkcountyclerk.net/browserviewor/",
+      "link_label": "Open Clerk Official Records \u2014 Prior recorded surveys",
+      "source_url": "https://apps.polkcountyclerk.net/browserviewor/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Polk",
+        "platform": "inhouse",
+        "platform_label": "In-house / county-built",
+        "official_records_search": "https://apps.polkcountyclerk.net/browserviewor/",
+        "plat_search": "https://apps.polkcountyclerk.net/browserviewor/",
+        "appraiser_url": "https://www.polkflpa.gov/CamaSearch.aspx",
+        "directory_url": "https://publicrecords.netronline.com/state/FL/county/polk",
+        "note": "",
+        "search_hints": {
+          "PARCEL_ID": "262828612000000060",
+          "PARCEL_ID_": " ",
+          "PARCELNO": "262828612000000060",
+          "S_LEGAL": "BERRY J B SUB PB 14 PG 26 LOT",
+          "OR_BOOK1": " ",
+          "OR_BOOK2": " ",
+          "OR_PAGE1": " ",
+          "OR_PAGE2": " "
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "auto-download available (deed + plat)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "flood",
+      "label": "FEMA flood zone / FIRM",
+      "requirement": "conditional",
+      "condition": "lender-required; if near a Special Flood Hazard Area",
+      "description": "The FEMA flood-hazard designation for the parcel \u2014 flood zone (e.g. X, AE, VE), FIRM panel and Base Flood Elevation \u2014 i.e. whether it sits in a Special Flood Hazard Area. Lenders and insurers require this determination.",
+      "summary": "Couldn't reach FEMA NFHL from this network \u2014 open the FIRM directly",
+      "link": "https://msc.fema.gov/portal/home",
+      "link_label": "Open FEMA Map Service Center (FIRMette)",
+      "source_url": "",
+      "saved_file": null,
+      "data": null,
+      "status": "link"
+    },
+    {
+      "key": "benchmarks",
+      "label": "NGS geodetic control (benchmarks)",
+      "requirement": "recommended",
+      "condition": "",
+      "description": "Nearby NGS survey monuments with published coordinates and elevations \u2014 used to tie the survey to the correct datum (e.g. NAVD88) and horizontal control.",
+      "summary": "46 NGS control marks within 3000 m  \u00b7  downloaded 3 datasheet(s)",
+      "link": "https://geodesy.noaa.gov/",
+      "link_label": "Open NGS datasheets",
+      "source_url": "https://geodesy.noaa.gov/api/nde/radial",
+      "saved_file": "benchmarks.json",
+      "data": {
+        "radius_m": 3000,
+        "count": 46,
+        "marks": [
+          {
+            "pid": "DO2120",
+            "name": "24756 B",
+            "lat": "27.9933055556",
+            "lon": "-81.7106944444",
+            "datum": "NAD 83(1986)",
+            "vert_source": "43.774",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO2120"
+          },
+          {
+            "pid": "DO2119",
+            "name": "24756 A",
+            "lat": "27.9935277778",
+            "lon": "-81.7107500000",
+            "datum": "NAD 83(1986)",
+            "vert_source": "43.507",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO2119"
+          },
+          {
+            "pid": "DO2116",
+            "name": "PA 20",
+            "lat": "27.9967222222",
+            "lon": "-81.7127222222",
+            "datum": "NAD 83(1986)",
+            "vert_source": "43.074",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO2116"
+          },
+          {
+            "pid": "DO2118",
+            "name": "25369 B",
+            "lat": "27.9974444444",
+            "lon": "-81.7144722222",
+            "datum": "NAD 83(1986)",
+            "vert_source": "40.256",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO2118"
+          },
+          {
+            "pid": "DO2117",
+            "name": "25369 A",
+            "lat": "27.9980000000",
+            "lon": "-81.7139722222",
+            "datum": "NAD 83(1986)",
+            "vert_source": "43.258",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO2117"
+          },
+          {
+            "pid": "DO2114",
+            "name": "25368 A",
+            "lat": "27.9994722222",
+            "lon": "-81.7080555556",
+            "datum": "NAD 83(1986)",
+            "vert_source": "42.824",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO2114"
+          },
+          {
+            "pid": "DO2115",
+            "name": "25368 B",
+            "lat": "28.0000555556",
+            "lon": "-81.7081111111",
+            "datum": "NAD 83(1986)",
+            "vert_source": "40.501",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO2115"
+          },
+          {
+            "pid": "AK1712",
+            "name": "C 118",
+            "lat": "28.0113888889",
+            "lon": "-81.7305555556",
+            "datum": "NAD 83(1986)",
+            "vert_source": "47.989",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=AK1712"
+          },
+          {
+            "pid": "DO1911",
+            "name": "25371 B",
+            "lat": "28.0178333333",
+            "lon": "-81.7080277778",
+            "datum": "NAD 83(1986)",
+            "vert_source": "41.202",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1911"
+          },
+          {
+            "pid": "DO1910",
+            "name": "25371 A",
+            "lat": "28.0178888889",
+            "lon": "-81.7080833333",
+            "datum": "NAD 83(1986)",
+            "vert_source": "41.219",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1910"
+          },
+          {
+            "pid": "DO1913",
+            "name": "25372 B",
+            "lat": "28.0204166667",
+            "lon": "-81.6959722222",
+            "datum": "NAD 83(1986)",
+            "vert_source": "37.655",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1913"
+          },
+          {
+            "pid": "DO1912",
+            "name": "25372 A",
+            "lat": "28.0208333333",
+            "lon": "-81.6957500000",
+            "datum": "NAD 83(1986)",
+            "vert_source": "39.815",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1912"
+          },
+          {
+            "pid": "DN9728",
+            "name": "C 744",
+            "lat": "28.0222777778",
+            "lon": "-81.7167222222",
+            "datum": "NAD 83(1986)",
+            "vert_source": "42.819",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DN9728"
+          },
+          {
+            "pid": "DN9729",
+            "name": "D 744",
+            "lat": "28.0223888889",
+            "lon": "-81.7008055556",
+            "datum": "NAD 83(1986)",
+            "vert_source": "40.170",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DN9729"
+          },
+          {
+            "pid": "DO1897",
+            "name": "25377 A",
+            "lat": "28.0293333333",
+            "lon": "-81.7116666667",
+            "datum": "NAD 83(1986)",
+            "vert_source": "41.460",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1897"
+          },
+          {
+            "pid": "DO1898",
+            "name": "25377 B",
+            "lat": "28.0296111111",
+            "lon": "-81.7113611111",
+            "datum": "NAD 83(1986)",
+            "vert_source": "40.302",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1898"
+          },
+          {
+            "pid": "DO1896",
+            "name": "25376 B",
+            "lat": "28.0317500000",
+            "lon": "-81.7195555556",
+            "datum": "NAD 83(1986)",
+            "vert_source": "43.849",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1896"
+          },
+          {
+            "pid": "DO1895",
+            "name": "25376 A",
+            "lat": "28.0318888889",
+            "lon": "-81.7197222222",
+            "datum": "NAD 83(1986)",
+            "vert_source": "43.669",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1895"
+          },
+          {
+            "pid": "DO1894",
+            "name": "25375 B",
+            "lat": "28.0371111111",
+            "lon": "-81.7217500000",
+            "datum": "NAD 83(1986)",
+            "vert_source": "42.236",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1894"
+          },
+          {
+            "pid": "DO1893",
+            "name": "25375 A",
+            "lat": "28.0371111111",
+            "lon": "-81.7220277778",
+            "datum": "NAD 83(1986)",
+            "vert_source": "42.760",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1893"
+          },
+          {
+            "pid": "DO1899",
+            "name": "25379 A",
+            "lat": "28.0402777778",
+            "lon": "-81.7123888889",
+            "datum": "NAD 83(1986)",
+            "vert_source": "40.630",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1899"
+          },
+          {
+            "pid": "DO1900",
+            "name": "25379 B",
+            "lat": "28.0403333333",
+            "lon": "-81.7126388889",
+            "datum": "NAD 83(1986)",
+            "vert_source": "40.599",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1900"
+          },
+          {
+            "pid": "DO1891",
+            "name": "759480 A",
+            "lat": "28.0312500000",
+            "lon": "-81.7309444444",
+            "datum": "NAD 83(1986)",
+            "vert_source": "45.795",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1891"
+          },
+          {
+            "pid": "DO1892",
+            "name": "759480 B",
+            "lat": "28.0313333333",
+            "lon": "-81.7311111111",
+            "datum": "NAD 83(1986)",
+            "vert_source": "45.953",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1892"
+          },
+          {
+            "pid": "DO1935",
+            "name": "24849 A",
+            "lat": "28.0367777778",
+            "lon": "-81.7335277778",
+            "datum": "NAD 83(1986)",
+            "vert_source": "43.160",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DO1935"
+          }
+        ]
+      },
+      "status": "ok",
+      "downloaded": [
+        "NGS_datasheet_DO2120.html",
+        "NGS_datasheet_DO2119.html",
+        "NGS_datasheet_DO2116.html"
+      ]
+    },
+    {
+      "key": "glo",
+      "label": "GLO / PLSS plats & field notes",
+      "requirement": "conditional",
+      "condition": "if the legal is section-township-range (PLSS) / metes-and-bounds",
+      "description": "The original U.S. General Land Office township plats and field notes that established the PLSS section corners \u2014 the basis for section / metes-and-bounds descriptions.",
+      "summary": "BLM GLO original township plats & field notes for the section.",
+      "link": "https://glorecords.blm.gov/",
+      "link_label": "Open BLM GLO Records",
+      "source_url": "https://glorecords.blm.gov/",
+      "saved_file": null,
+      "data": null,
+      "status": "link"
+    },
+    {
+      "key": "condo",
+      "label": "Condominium declaration & exhibits",
+      "requirement": "conditional",
+      "condition": "if the property is a condominium unit",
+      "description": "The recorded declaration (with its survey / plot-plan exhibits) that legally creates the condominium and defines the units and common elements (FL s.718.104).",
+      "summary": "Search Official Records for the recorded condo declaration and survey exhibits.",
+      "link": "https://apps.polkcountyclerk.net/browserviewor/",
+      "link_label": "Open Clerk Official Records \u2014 Condominium declaration & exhibits",
+      "source_url": "https://apps.polkcountyclerk.net/browserviewor/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Polk",
+        "platform": "inhouse",
+        "platform_label": "In-house / county-built",
+        "official_records_search": "https://apps.polkcountyclerk.net/browserviewor/",
+        "plat_search": "https://apps.polkcountyclerk.net/browserviewor/",
+        "appraiser_url": "https://www.polkflpa.gov/CamaSearch.aspx",
+        "directory_url": "https://publicrecords.netronline.com/state/FL/county/polk",
+        "note": "",
+        "search_hints": {
+          "PARCEL_ID": "262828612000000060",
+          "PARCEL_ID_": " ",
+          "PARCELNO": "262828612000000060",
+          "S_LEGAL": "BERRY J B SUB PB 14 PG 26 LOT",
+          "OR_BOOK1": " ",
+          "OR_BOOK2": " ",
+          "OR_PAGE1": " ",
+          "OR_PAGE2": " "
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "auto-download available (deed + plat)"
+      },
+      "status": "link"
+    }
+  ],
+  "warnings": []
+}

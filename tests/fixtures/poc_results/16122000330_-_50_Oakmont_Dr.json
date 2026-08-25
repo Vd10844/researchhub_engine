@@ -1,0 +1,519 @@
+{
+  "job_number": "16122000330",
+  "order": "16122000330",
+  "parcel_id": "16122000330",
+  "address": "50 Oakmont Dr, Marietta, GA 30064, USA",
+  "matched_address": "50 OAKMONT DR, MARIETTA, GA, 30064",
+  "county": "Cobb",
+  "county_fips": "13067",
+  "state": "GA",
+  "lat": 33.952649945705,
+  "lon": -84.558138794786,
+  "name": "16122000330 - 50 Oakmont Dr",
+  "geocoder": "census",
+  "map_links": [
+    {
+      "label": "Google Maps",
+      "url": "https://www.google.com/maps/search/?api=1&query=33.952649945705,-84.558138794786"
+    },
+    {
+      "label": "Google Street View",
+      "url": "https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=33.952649945705,-84.558138794786"
+    },
+    {
+      "label": "Bing Maps (aerial)",
+      "url": "https://www.bing.com/maps?cp=33.952649945705~-84.558138794786&lvl=19&style=a"
+    },
+    {
+      "label": "County Property Appraiser",
+      "url": "https://www.cobbcounty.gov"
+    },
+    {
+      "label": "Search address on Google",
+      "url": "https://www.google.com/search?q=50+OAKMONT+DR%2C+MARIETTA%2C+GA%2C+30064"
+    }
+  ],
+  "folder": "E:\\DPR\\2026\\Q2\\August\\ResearchHub\\poc01\\SurveyResearch\\jobs\\16122000330 - 50 Oakmont Dr",
+  "steps": [
+    {
+      "key": "parcel",
+      "label": "Parcel record & Parcel ID",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The Property Appraiser's record for the parcel \u2014 its unique Parcel ID, owner, legal description, subdivision and (often) the deed & plat book/page. It's the anchor that identifies the property and seeds every other lookup.",
+      "summary": "Parcel ID: 16122000330",
+      "link": "https://www.cobbcounty.gov",
+      "link_label": "Open County Property Appraiser",
+      "source_url": "https://gis.cobbcounty.gov/gisserver/rest/services/cobbpublic/cobbparcelsmapwm_public/MapServer/3",
+      "saved_file": "parcel.json",
+      "data": {
+        "county_fips": "13067",
+        "hints": {
+          "OWNER_ADDR": " 50   OAKMONT  DR ",
+          "SUBDIVNUM": "4026",
+          "OWNER_NAM1": "SPRAGUE WILLIAM J & KATHLEEN W",
+          "OWNER_CITY": "MARIETTA",
+          "OWNER_STAT": "GA",
+          "OWNER_ZIP": "30064"
+        },
+        "method": "arcgis-rest",
+        "source": "https://gis.cobbcounty.gov/gisserver/rest/services/cobbpublic/cobbparcelsmapwm_public/MapServer/3",
+        "service": "https://gis.cobbcounty.gov/gisserver/rest/services/cobbpublic/cobbparcelsmapwm_public/MapServer/3",
+        "layer_name": "Parcels",
+        "parcels": [
+          {
+            "SITUS_ADDR": "50   OAKMONT  DR ",
+            "OWNER_ADDR": " 50   OAKMONT  DR ",
+            "LOTNUM": null,
+            "NBHOOD_NUM": "0401",
+            "SUBDIVNUM": "4026",
+            "ST_NUMBER": 50,
+            "BLDG_NUM": null,
+            "UNIT_NUM": null,
+            "MLOTNUM": null,
+            "OWNER_NAM1": "SPRAGUE WILLIAM J & KATHLEEN W",
+            "OWNER_NAM2": null,
+            "OWNER_CITY": "MARIETTA",
+            "OWNER_STAT": "GA",
+            "OWNER_ZIP": "30064",
+            "NAME": null,
+            "PARCEL_TYPE": 0,
+            "PIN": "16122000330",
+            "ACRE_DEEDED": 0.0,
+            "BLOCK": null,
+            "ACRES": 0.0,
+            "LAND_SQFT": null,
+            "NBHDSUBD_ID": "04014026",
+            "PARID": "16122000330",
+            "OBJECTID": 98492
+          }
+        ],
+        "candidate_count": 15,
+        "situs": "50 OAKMONT DR",
+        "land_sqft": null,
+        "land_acres": null,
+        "buffered_match": false,
+        "address_match": true,
+        "parcel_id": "16122000330"
+      },
+      "status": "ok",
+      "situs": "50 OAKMONT DR",
+      "land_sqft": null,
+      "land_acres": null,
+      "address_match": true,
+      "downloaded": [
+        "Parcel_Record.html"
+      ]
+    },
+    {
+      "key": "appraiser",
+      "label": "Property Appraiser / Tax record",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The county tax-roll record \u2014 owner, situs, use code, land & living area, just/assessed/taxable values and the last recorded sale (OR book/page). Used to confirm identity, size and the authoritative deed reference.",
+      "summary": "Owner, values & last sale from the county tax roll",
+      "link": "https://www.cobbcounty.gov",
+      "link_label": "Open County Property Appraiser",
+      "source_url": "https://www.cobbcounty.gov",
+      "saved_file": "parcel.json",
+      "data": {
+        "SITUS_ADDR": "50   OAKMONT  DR ",
+        "OWNER_ADDR": " 50   OAKMONT  DR ",
+        "LOTNUM": null,
+        "NBHOOD_NUM": "0401",
+        "SUBDIVNUM": "4026",
+        "ST_NUMBER": 50,
+        "BLDG_NUM": null,
+        "UNIT_NUM": null,
+        "MLOTNUM": null,
+        "OWNER_NAM1": "SPRAGUE WILLIAM J & KATHLEEN W",
+        "OWNER_NAM2": null,
+        "OWNER_CITY": "MARIETTA",
+        "OWNER_STAT": "GA",
+        "OWNER_ZIP": "30064",
+        "NAME": null,
+        "PARCEL_TYPE": 0,
+        "PIN": "16122000330",
+        "ACRE_DEEDED": 0.0,
+        "BLOCK": null,
+        "ACRES": 0.0,
+        "LAND_SQFT": null,
+        "NBHDSUBD_ID": "04014026",
+        "PARID": "16122000330",
+        "OBJECTID": 98492
+      },
+      "status": "ok",
+      "downloaded": [
+        "Property_Appraiser.html"
+      ]
+    },
+    {
+      "key": "deed",
+      "label": "Deed \u2014 subject parcel",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The recorded instrument that conveys ownership. It carries the record legal description the survey must retrace, plus the OR book/page reference.",
+      "summary": "Current vesting deed \u2014 search Official Records by OR book/page or owner name.  \u00b7  hints: OWNER_ADDR, SUBDIVNUM, OWNER_NAM1, OWNER_CITY",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Deed \u2014 subject parcel",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Cobb",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "plat_search": "https://search.gsccca.org/Plat/",
+        "appraiser_url": "https://www.cobbcounty.gov",
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/cobb",
+        "note": "Georgia statewide GSCCCA real-estate index (all counties).",
+        "search_hints": {
+          "OWNER_ADDR": " 50   OAKMONT  DR ",
+          "SUBDIVNUM": "4026",
+          "OWNER_NAM1": "SPRAGUE WILLIAM J & KATHLEEN W",
+          "OWNER_CITY": "MARIETTA",
+          "OWNER_STAT": "GA",
+          "OWNER_ZIP": "30064"
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "plat",
+      "label": "Recorded plat / subdivision map",
+      "requirement": "mandatory",
+      "condition": "if the parcel is in a recorded subdivision",
+      "description": "The recorded map that created the subdivision's lots, blocks, streets and easements \u2014 giving platted lot dimensions, bearings and dedicated easements.",
+      "summary": "Search the Plat Book / subdivision name for the recorded plat.",
+      "link": "https://search.gsccca.org/Plat/",
+      "link_label": "Open Clerk Official Records \u2014 Recorded plat / subdivision map",
+      "source_url": "https://search.gsccca.org/Plat/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Cobb",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "plat_search": "https://search.gsccca.org/Plat/",
+        "appraiser_url": "https://www.cobbcounty.gov",
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/cobb",
+        "note": "Georgia statewide GSCCCA real-estate index (all counties).",
+        "search_hints": {
+          "OWNER_ADDR": " 50   OAKMONT  DR ",
+          "SUBDIVNUM": "4026",
+          "OWNER_NAM1": "SPRAGUE WILLIAM J & KATHLEEN W",
+          "OWNER_CITY": "MARIETTA",
+          "OWNER_STAT": "GA",
+          "OWNER_ZIP": "30064"
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "adjoiners",
+      "label": "Deeds \u2014 adjoining parcels",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "The deeds of the neighboring parcels \u2014 used to resolve gaps, overlaps and boundary conflicts with adjoiners (required by FL Rule 5J-17.052).",
+      "summary": "Retrieve deeds for the abutting parcels to resolve boundary calls.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Deeds \u2014 adjoining parcels",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Cobb",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "plat_search": "https://search.gsccca.org/Plat/",
+        "appraiser_url": "https://www.cobbcounty.gov",
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/cobb",
+        "note": "Georgia statewide GSCCCA real-estate index (all counties).",
+        "search_hints": {
+          "OWNER_ADDR": " 50   OAKMONT  DR ",
+          "SUBDIVNUM": "4026",
+          "OWNER_NAM1": "SPRAGUE WILLIAM J & KATHLEEN W",
+          "OWNER_CITY": "MARIETTA",
+          "OWNER_STAT": "GA",
+          "OWNER_ZIP": "30064"
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "easements",
+      "label": "Easements / ROW / covenants (CC&Rs)",
+      "requirement": "mandatory",
+      "condition": "",
+      "description": "Recorded rights that affect the land \u2014 utility/access easements, rights-of-way and restrictive covenants \u2014 which must be located and shown on the survey.",
+      "summary": "Search Official Records for recorded easements, rights-of-way and restrictive covenants.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Easements / ROW / covenants (CC&Rs)",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Cobb",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "plat_search": "https://search.gsccca.org/Plat/",
+        "appraiser_url": "https://www.cobbcounty.gov",
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/cobb",
+        "note": "Georgia statewide GSCCCA real-estate index (all counties).",
+        "search_hints": {
+          "OWNER_ADDR": " 50   OAKMONT  DR ",
+          "SUBDIVNUM": "4026",
+          "OWNER_NAM1": "SPRAGUE WILLIAM J & KATHLEEN W",
+          "OWNER_CITY": "MARIETTA",
+          "OWNER_STAT": "GA",
+          "OWNER_ZIP": "30064"
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "prior_survey",
+      "label": "Prior recorded surveys",
+      "requirement": "recommended",
+      "condition": "",
+      "description": "Earlier recorded surveys of the parcel or subdivision \u2014 prior monumentation and measurements to compare against and reconcile.",
+      "summary": "Search Official Records for previously recorded surveys of the parcel or subdivision.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Prior recorded surveys",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Cobb",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "plat_search": "https://search.gsccca.org/Plat/",
+        "appraiser_url": "https://www.cobbcounty.gov",
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/cobb",
+        "note": "Georgia statewide GSCCCA real-estate index (all counties).",
+        "search_hints": {
+          "OWNER_ADDR": " 50   OAKMONT  DR ",
+          "SUBDIVNUM": "4026",
+          "OWNER_NAM1": "SPRAGUE WILLIAM J & KATHLEEN W",
+          "OWNER_CITY": "MARIETTA",
+          "OWNER_STAT": "GA",
+          "OWNER_ZIP": "30064"
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    },
+    {
+      "key": "flood",
+      "label": "FEMA flood zone / FIRM",
+      "requirement": "conditional",
+      "condition": "lender-required; if near a Special Flood Hazard Area",
+      "description": "The FEMA flood-hazard designation for the parcel \u2014 flood zone (e.g. X, AE, VE), FIRM panel and Base Flood Elevation \u2014 i.e. whether it sits in a Special Flood Hazard Area. Lenders and insurers require this determination.",
+      "summary": "Couldn't reach FEMA NFHL from this network \u2014 open the FIRM directly",
+      "link": "https://msc.fema.gov/portal/home",
+      "link_label": "Open FEMA Map Service Center (FIRMette)",
+      "source_url": "",
+      "saved_file": null,
+      "data": null,
+      "status": "link"
+    },
+    {
+      "key": "benchmarks",
+      "label": "NGS geodetic control (benchmarks)",
+      "requirement": "recommended",
+      "condition": "",
+      "description": "Nearby NGS survey monuments with published coordinates and elevations \u2014 used to tie the survey to the correct datum (e.g. NAVD88) and horizontal control.",
+      "summary": "11 NGS control marks within 3000 m  \u00b7  downloaded 3 datasheet(s)",
+      "link": "https://geodesy.noaa.gov/",
+      "link_label": "Open NGS datasheets",
+      "source_url": "https://geodesy.noaa.gov/api/nde/radial",
+      "saved_file": "benchmarks.json",
+      "data": {
+        "radius_m": 3000,
+        "count": 11,
+        "marks": [
+          {
+            "pid": "DG3188",
+            "name": "MARIETTA HICKORY HILL MUN TANK",
+            "lat": "33.9392890056",
+            "lon": "-84.5614688528",
+            "datum": "NAD 83(1994)",
+            "vert_source": "",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG3188"
+          },
+          {
+            "pid": "DG1115",
+            "name": "W 87",
+            "lat": "33.9625000000",
+            "lon": "-84.5561111111",
+            "datum": "NAD 83(1986)",
+            "vert_source": "344.802",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG1115"
+          },
+          {
+            "pid": "DG3172",
+            "name": "MARIETTA MUNICIPAL TANK",
+            "lat": "33.9655516444",
+            "lon": "-84.5531530222",
+            "datum": "NAD 83(1994)",
+            "vert_source": "",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG3172"
+          },
+          {
+            "pid": "DG1142",
+            "name": "U 56",
+            "lat": "33.9750000000",
+            "lon": "-84.5513888889",
+            "datum": "NAD 83(1986)",
+            "vert_source": "361.734",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG1142"
+          },
+          {
+            "pid": "DG1121",
+            "name": "R 56",
+            "lat": "33.9528388889",
+            "lon": "-84.5510638889",
+            "datum": "NAD 83(1986)",
+            "vert_source": "342.236",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG1121"
+          },
+          {
+            "pid": "DG3173",
+            "name": "MARIETTA PRESBYTERIAN CHURCH",
+            "lat": "33.9564862250",
+            "lon": "-84.5503853528",
+            "datum": "NAD 83(1994)",
+            "vert_source": "",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG3173"
+          },
+          {
+            "pid": "AB4856",
+            "name": "T 56 RESET",
+            "lat": "33.9526500000",
+            "lon": "-84.5492416667",
+            "datum": "NAD 83(1986)",
+            "vert_source": "342.62",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=AB4856"
+          },
+          {
+            "pid": "DG1124",
+            "name": "S 56",
+            "lat": "33.9514055556",
+            "lon": "-84.5491555556",
+            "datum": "NAD 83(1986)",
+            "vert_source": "344.475",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG1124"
+          },
+          {
+            "pid": "DG3174",
+            "name": "MARIETTA CTHSE",
+            "lat": "33.9523876000",
+            "lon": "-84.5488546917",
+            "datum": "NAD 83(1994)",
+            "vert_source": "",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG3174"
+          },
+          {
+            "pid": "DG3176",
+            "name": "MARIETTA NATL CEMETERY FLAG",
+            "lat": "33.9511125778",
+            "lon": "-84.5418377389",
+            "datum": "NAD 83(1994)",
+            "vert_source": "",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG3176"
+          },
+          {
+            "pid": "DG1165",
+            "name": "L 185",
+            "lat": "33.9355555556",
+            "lon": "-84.5416666667",
+            "datum": "NAD 83(1986)",
+            "vert_source": "335.349",
+            "datasheet": "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl?PidBox=DG1165"
+          }
+        ]
+      },
+      "status": "ok",
+      "downloaded": [
+        "NGS_datasheet_DG3188.html",
+        "NGS_datasheet_DG1115.html",
+        "NGS_datasheet_DG3172.html"
+      ]
+    },
+    {
+      "key": "glo",
+      "label": "GLO / PLSS plats & field notes",
+      "requirement": "conditional",
+      "condition": "if the legal is section-township-range (PLSS) / metes-and-bounds",
+      "description": "The original U.S. General Land Office township plats and field notes that established the PLSS section corners \u2014 the basis for section / metes-and-bounds descriptions.",
+      "summary": "BLM GLO original township plats & field notes for the section.",
+      "link": "https://glorecords.blm.gov/",
+      "link_label": "Open BLM GLO Records",
+      "source_url": "https://glorecords.blm.gov/",
+      "saved_file": null,
+      "data": null,
+      "status": "link"
+    },
+    {
+      "key": "condo",
+      "label": "Condominium declaration & exhibits",
+      "requirement": "conditional",
+      "condition": "if the property is a condominium unit",
+      "description": "The recorded declaration (with its survey / plot-plan exhibits) that legally creates the condominium and defines the units and common elements (FL s.718.104).",
+      "summary": "Search Official Records for the recorded condo declaration and survey exhibits.",
+      "link": "https://search.gsccca.org/RealEstate/",
+      "link_label": "Open Clerk Official Records \u2014 Condominium declaration & exhibits",
+      "source_url": "https://search.gsccca.org/RealEstate/",
+      "saved_file": "clerk_search_refs.json",
+      "data": {
+        "county": "Cobb",
+        "platform": "unknown",
+        "platform_label": "Unknown - use directory link",
+        "official_records_search": "https://search.gsccca.org/RealEstate/",
+        "plat_search": "https://search.gsccca.org/Plat/",
+        "appraiser_url": "https://www.cobbcounty.gov",
+        "directory_url": "https://publicrecords.netronline.com/state/GA/county/cobb",
+        "note": "Georgia statewide GSCCCA real-estate index (all counties).",
+        "search_hints": {
+          "OWNER_ADDR": " 50   OAKMONT  DR ",
+          "SUBDIVNUM": "4026",
+          "OWNER_NAM1": "SPRAGUE WILLIAM J & KATHLEEN W",
+          "OWNER_CITY": "MARIETTA",
+          "OWNER_STAT": "GA",
+          "OWNER_ZIP": "30064"
+        },
+        "targets": [
+          "deed",
+          "plat"
+        ],
+        "automation_status": "deep-link only (adapter not yet built for this platform)"
+      },
+      "status": "link"
+    }
+  ],
+  "warnings": []
+}

@@ -1,0 +1,3213 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Survey Research Automation",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v2/meta": {
+      "get": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Meta",
+        "description": "What the client needs to know about this deployment: tenant, providers, stages.",
+        "operationId": "meta_api_v2_meta_get",
+        "parameters": [
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/doc-types": {
+      "get": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Doc Types",
+        "operationId": "doc_types_api_v2_doc_types_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders": {
+      "get": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "List Orders",
+        "operationId": "list_orders_api_v2_orders_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "stage",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Stage"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Create Order",
+        "operationId": "create_order_api_v2_orders_post",
+        "parameters": [
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          },
+          {
+            "name": "x-actor",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Actor"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}": {
+      "get": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Get Order",
+        "operationId": "get_order_api_v2_orders__order_id__get",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Patch Order",
+        "operationId": "patch_order_api_v2_orders__order_id__patch",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          },
+          {
+            "name": "x-actor",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Actor"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Delete Order",
+        "operationId": "delete_order_api_v2_orders__order_id__delete",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/log": {
+      "get": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Order Log",
+        "description": "Change log. scope=order \u2192 \"Order information \u2014 change log\";\nscope=locker \u2192 \"Evidence locker \u2014 change log\"; scope=all \u2192 both.",
+        "operationId": "order_log_api_v2_orders__order_id__log_get",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "order",
+              "title": "Scope"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/sources": {
+      "get": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Get Sources",
+        "operationId": "get_sources_api_v2_orders__order_id__sources_get",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/research/start": {
+      "post": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Research Start",
+        "description": "Move the order into Research and kick off the first auto-fetch.",
+        "operationId": "research_start_api_v2_orders__order_id__research_start_post",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          },
+          {
+            "name": "x-actor",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Actor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/sources/{key}/fetch": {
+      "post": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Source Fetch",
+        "description": "Auto-fetch one source. The pipeline resolves the parcel first either way, so this\nruns the same job but only re-scores the requested registry row.",
+        "operationId": "source_fetch_api_v2_orders__order_id__sources__key__fetch_post",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Key"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          },
+          {
+            "name": "x-actor",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Actor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/sources/fetch-all": {
+      "post": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Source Fetch All",
+        "operationId": "source_fetch_all_api_v2_orders__order_id__sources_fetch_all_post",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          },
+          {
+            "name": "x-actor",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Actor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/research/status": {
+      "get": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Research Status",
+        "operationId": "research_status_api_v2_orders__order_id__research_status_get",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/checklist": {
+      "get": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Checklist",
+        "description": "Research Checklist drawer: one row per required source, ticked when a LOCKED\ndocument of that type is in the locker.",
+        "operationId": "checklist_api_v2_orders__order_id__checklist_get",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/research/submit": {
+      "post": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Research Submit",
+        "description": "Hand the order to the field survey team. Requires at least one locked document \u2014\nan empty evidence set is not a research hand-off.",
+        "operationId": "research_submit_api_v2_orders__order_id__research_submit_post",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          },
+          {
+            "name": "x-actor",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Actor"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/research/summary": {
+      "get": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Research Summary",
+        "description": "Numbers for the \"Hand this order to the field survey team?\" confirmation.",
+        "operationId": "research_summary_api_v2_orders__order_id__research_summary_get",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/documents": {
+      "get": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "List Documents",
+        "operationId": "list_documents_api_v2_orders__order_id__documents_get",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Q"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Upload Documents",
+        "description": "Manual upload. Accepts several files at once (the upload modal queues them);\n`doc_type` applies to all of them and may be left blank to classify later.",
+        "operationId": "upload_documents_api_v2_orders__order_id__documents_post",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          },
+          {
+            "name": "x-actor",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Actor"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_documents_api_v2_orders__order_id__documents_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/documents/{doc_id}": {
+      "patch": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Patch Document",
+        "operationId": "patch_document_api_v2_orders__order_id__documents__doc_id__patch",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          },
+          {
+            "name": "x-actor",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Actor"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Delete Document",
+        "operationId": "delete_document_api_v2_orders__order_id__documents__doc_id__delete",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "reason",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Reason"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          },
+          {
+            "name": "x-actor",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Actor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/documents/{doc_id}/lock": {
+      "post": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Lock Document",
+        "description": "Approve & Lock. All three reviewer confirmations are required and are stored with\nthe document, so the locker can show *why* a file was accepted as evidence.",
+        "operationId": "lock_document_api_v2_orders__order_id__documents__doc_id__lock_post",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          },
+          {
+            "name": "x-actor",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Actor"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LockIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/documents/{doc_id}/unlock": {
+      "post": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Unlock Document",
+        "operationId": "unlock_document_api_v2_orders__order_id__documents__doc_id__unlock_post",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          },
+          {
+            "name": "x-actor",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Actor"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReasonIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/documents/{doc_id}/file": {
+      "get": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Document File",
+        "operationId": "document_file_api_v2_orders__order_id__documents__doc_id__file_get",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "doc_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doc Id"
+            }
+          },
+          {
+            "name": "download",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Download"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/orders/{order_id}/locker/log": {
+      "get": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Locker Log",
+        "operationId": "locker_log_api_v2_orders__order_id__locker_log_get",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Order Id"
+            }
+          },
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/demo/seed": {
+      "post": {
+        "tags": [
+          "quickplot"
+        ],
+        "summary": "Demo Seed",
+        "description": "Create the sample order used by the QuickPlot demo. Idempotent.",
+        "operationId": "demo_seed_api_v2_demo_seed_post",
+        "parameters": [
+          {
+            "name": "x-org-id",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/stats": {
+      "get": {
+        "summary": "Stats",
+        "description": "Index/analytics counts from the database (jobs, searches, evidence).",
+        "operationId": "stats_api_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/research": {
+      "post": {
+        "summary": "Research",
+        "operationId": "research_api_research_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs": {
+      "get": {
+        "summary": "Get Jobs",
+        "operationId": "get_jobs_api_jobs_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Job",
+        "description": "Delete a saved job/search record (its whole folder).",
+        "operationId": "delete_job_api_jobs_delete",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/feedback": {
+      "post": {
+        "summary": "Post Feedback",
+        "description": "Record the surveyor's match/mismatch verdict (+ optional note) on a fetched document.",
+        "operationId": "post_feedback_api_feedback_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/upload": {
+      "post": {
+        "summary": "Upload Doc",
+        "description": "Attach a manually-downloaded document to a job's doc step (one upload per doc; replaces\nany previous one and syncs the locker). Returns {file, removed:[...]}.",
+        "operationId": "upload_doc_api_jobs_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_doc_api_jobs_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/doc": {
+      "delete": {
+        "summary": "Delete Job Doc",
+        "description": "Delete one document file from a job (and remove it from its Evidence Locker).",
+        "operationId": "delete_job_doc_api_jobs_doc_delete",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Name"
+            }
+          },
+          {
+            "name": "file",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "File"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/evidence/send": {
+      "post": {
+        "summary": "Evidence Send",
+        "description": "Send selected job documents to the order's Evidence Locker.",
+        "operationId": "evidence_send_api_evidence_send_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvidenceSendRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/evidence": {
+      "get": {
+        "summary": "Evidence List",
+        "operationId": "evidence_list_api_evidence_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Evidence Delete Order",
+        "description": "Delete an entire Evidence Locker order (folder + all its documents).",
+        "operationId": "evidence_delete_order_api_evidence_delete",
+        "parameters": [
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Order"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/evidence/detail": {
+      "get": {
+        "summary": "Evidence Detail",
+        "operationId": "evidence_detail_api_evidence_detail_get",
+        "parameters": [
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Order"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/evidence/item": {
+      "delete": {
+        "summary": "Evidence Delete Item",
+        "description": "Remove one document from an order's Evidence Locker.",
+        "operationId": "evidence_delete_item_api_evidence_item_delete",
+        "parameters": [
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Order"
+            }
+          },
+          {
+            "name": "file",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "File"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/evidence/file": {
+      "get": {
+        "summary": "Evidence File",
+        "operationId": "evidence_file_api_evidence_file_get",
+        "parameters": [
+          {
+            "name": "order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Order"
+            }
+          },
+          {
+            "name": "file",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "File"
+            }
+          },
+          {
+            "name": "download",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Download"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/detail": {
+      "get": {
+        "summary": "Get Job Detail",
+        "operationId": "get_job_detail_api_jobs_detail_get",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/jobs/file": {
+      "get": {
+        "summary": "Get Job File",
+        "description": "Serve a job document. Inline by default so PDFs/HTML render in the in-app viewer;\npass ?download=1 for the download buttons to force a save.",
+        "operationId": "get_job_file_api_jobs_file_get",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "Name"
+            }
+          },
+          {
+            "name": "file",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "File"
+            }
+          },
+          {
+            "name": "download",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Download"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reference/survey-types": {
+      "get": {
+        "summary": "Survey Types",
+        "operationId": "survey_types_api_reference_survey_types_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reference/matrix": {
+      "get": {
+        "summary": "Matrix",
+        "operationId": "matrix_api_reference_matrix_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reference/sources": {
+      "get": {
+        "summary": "Sources",
+        "operationId": "sources_api_reference_sources_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reference/states": {
+      "get": {
+        "summary": "States",
+        "operationId": "states_api_reference_states_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reference/parcel-states": {
+      "get": {
+        "summary": "Parcel States",
+        "description": "States where Parcel-ID search works (a statewide parcel service is wired).",
+        "operationId": "parcel_states_api_reference_parcel_states_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reference/coverage": {
+      "get": {
+        "summary": "Coverage",
+        "description": "Per-state build-out tracker (computed live from the registry, so it never goes stale).\n\n'Development %' = share of a state's counties whose PARCEL record auto-fetches for free:\n100% where a statewide parcel service is wired, else (counties wired county-by-county /\ntotal counties). Federal layers (FEMA flood + NGS control) are nationwide/free everywhere\nand are reported separately, not folded into the %.",
+        "operationId": "coverage_api_reference_coverage_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/linkcheck": {
+      "get": {
+        "summary": "Linkcheck",
+        "description": "Probe the data sources from THIS machine so the user can see which URLs their\nown network / antivirus (e.g. K7) is blocking. Runs the checks in parallel.\n\n- core (always): the federal/statewide APIs the app auto-fetches.\n- one county's clerk+appraiser when `county_fips` is given.\n- every registered clerk+appraiser portal when `portals=true`.",
+        "operationId": "linkcheck_api_linkcheck_get",
+        "parameters": [
+          {
+            "name": "county_fips",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "County Fips"
+            }
+          },
+          {
+            "name": "portals",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Portals"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reference/cities": {
+      "get": {
+        "summary": "Cities",
+        "description": "Cities/places inside a county, to populate the address City dropdown.",
+        "operationId": "cities_api_reference_cities_get",
+        "parameters": [
+          {
+            "name": "county_fips",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "County Fips"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/reference/counties": {
+      "get": {
+        "summary": "Counties",
+        "description": "Counties for the guided-form dropdown.\n\nPass ?state=FL (USPS abbr or FIPS) for the full annotated county list of that\nstate. With no state, returns just the counties that have a records platform\nregistered (the ones with the richest auto-fetch support).",
+        "operationId": "counties_api_reference_counties_get",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": "State"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Index",
+        "operationId": "index__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/quickplot/{_path}": {
+      "get": {
+        "summary": "Quickplot",
+        "description": "The Mapperty QuickPlot research hub (order-centric UI on API v2). Served as a\nsingle page; the client routes on the hash, so every sub-path returns the same shell.",
+        "operationId": "quickplot_quickplot___path__get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/quickplot": {
+      "get": {
+        "summary": "Quickplot",
+        "description": "The Mapperty QuickPlot research hub (order-centric UI on API v2). Served as a\nsingle page; the client routes on the hash, so every sub-path returns the same shell.",
+        "operationId": "quickplot_quickplot_get",
+        "parameters": [
+          {
+            "name": "_path",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "",
+              "title": " Path"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_upload_doc_api_jobs_upload_post": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "key",
+          "file"
+        ],
+        "title": "Body_upload_doc_api_jobs_upload_post"
+      },
+      "Body_upload_documents_api_v2_orders__order_id__documents_post": {
+        "properties": {
+          "files": {
+            "items": {
+              "type": "string",
+              "contentMediaType": "application/octet-stream"
+            },
+            "type": "array",
+            "title": "Files"
+          },
+          "doc_type": {
+            "type": "string",
+            "title": "Doc Type",
+            "default": ""
+          },
+          "source_key": {
+            "type": "string",
+            "title": "Source Key",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "files"
+        ],
+        "title": "Body_upload_documents_api_v2_orders__order_id__documents_post"
+      },
+      "DocPatch": {
+        "properties": {
+          "doc_type": {
+            "type": "string",
+            "title": "Doc Type",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "DocPatch"
+      },
+      "EvidenceItem": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key",
+            "description": "Document step key, e.g. 'deed'"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label",
+            "description": "Human label, e.g. 'Deed'",
+            "default": ""
+          },
+          "file": {
+            "type": "string",
+            "title": "File",
+            "description": "Filename within the job's documents/ dir"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url",
+            "description": "County source URL for provenance",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "file"
+        ],
+        "title": "EvidenceItem"
+      },
+      "EvidenceSendRequest": {
+        "properties": {
+          "order": {
+            "type": "string",
+            "title": "Order",
+            "description": "Order # the Evidence Locker is keyed by"
+          },
+          "job_name": {
+            "type": "string",
+            "title": "Job Name",
+            "description": "Source job folder name"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceItem"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "new_order": {
+            "type": "boolean",
+            "title": "New Order",
+            "description": "First send of a session \u2014 allocate a fresh (suffixed) order",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "order",
+          "job_name"
+        ],
+        "title": "EvidenceSendRequest"
+      },
+      "FeedbackRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Job folder name (as returned in the result)"
+          },
+          "key": {
+            "type": "string",
+            "title": "Key",
+            "description": "Document/step key, e.g. 'deed', 'parcel', 'location'"
+          },
+          "verdict": {
+            "type": "string",
+            "title": "Verdict",
+            "description": "'match' | 'mismatch'"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note",
+            "description": "Optional free-text note from the surveyor",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "key",
+          "verdict"
+        ],
+        "title": "FeedbackRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "LockIn": {
+        "properties": {
+          "legible": {
+            "type": "boolean",
+            "title": "Legible",
+            "default": false
+          },
+          "matches_parcel": {
+            "type": "boolean",
+            "title": "Matches Parcel",
+            "default": false
+          },
+          "source_recorded": {
+            "type": "boolean",
+            "title": "Source Recorded",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "LockIn"
+      },
+      "OrderIn": {
+        "properties": {
+          "order_no": {
+            "type": "string",
+            "title": "Order No",
+            "default": ""
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": ""
+          },
+          "order_type": {
+            "type": "string",
+            "title": "Order Type",
+            "default": "Boundary Survey"
+          },
+          "survey_type": {
+            "type": "string",
+            "title": "Survey Type",
+            "default": "Residential Land Survey"
+          },
+          "address": {
+            "type": "string",
+            "title": "Address",
+            "default": ""
+          },
+          "city": {
+            "type": "string",
+            "title": "City",
+            "default": ""
+          },
+          "county": {
+            "type": "string",
+            "title": "County",
+            "default": ""
+          },
+          "county_fips": {
+            "type": "string",
+            "title": "County Fips",
+            "default": ""
+          },
+          "state": {
+            "type": "string",
+            "title": "State",
+            "default": ""
+          },
+          "postal": {
+            "type": "string",
+            "title": "Postal",
+            "default": ""
+          },
+          "parcel_id": {
+            "type": "string",
+            "title": "Parcel Id",
+            "default": ""
+          },
+          "lot_area_sqft": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lot Area Sqft"
+          },
+          "client": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Client"
+          },
+          "access_contact": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Access Contact"
+          },
+          "buyer_owner": {
+            "type": "string",
+            "title": "Buyer Owner",
+            "default": ""
+          },
+          "lender": {
+            "type": "string",
+            "title": "Lender",
+            "default": ""
+          },
+          "title_company": {
+            "type": "string",
+            "title": "Title Company",
+            "default": ""
+          },
+          "underwriter": {
+            "type": "string",
+            "title": "Underwriter",
+            "default": ""
+          },
+          "client_notes": {
+            "type": "string",
+            "title": "Client Notes",
+            "default": ""
+          },
+          "legal_description": {
+            "type": "string",
+            "title": "Legal Description",
+            "default": ""
+          },
+          "scope_tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Scope Tags"
+          },
+          "received_at": {
+            "type": "string",
+            "title": "Received At",
+            "default": ""
+          },
+          "due_at": {
+            "type": "string",
+            "title": "Due At",
+            "default": ""
+          },
+          "researcher": {
+            "type": "string",
+            "title": "Researcher",
+            "default": ""
+          },
+          "stage": {
+            "type": "string",
+            "title": "Stage",
+            "default": "placed"
+          }
+        },
+        "type": "object",
+        "title": "OrderIn",
+        "description": "Creating an order needs at least one thing that identifies it. A blank order is\nnot a draft \u2014 it is a row nobody can find again."
+      },
+      "OrderPatch": {
+        "properties": {
+          "order_no": {
+            "type": "string",
+            "title": "Order No",
+            "default": ""
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": ""
+          },
+          "order_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order Type"
+          },
+          "survey_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Survey Type"
+          },
+          "address": {
+            "type": "string",
+            "title": "Address",
+            "default": ""
+          },
+          "city": {
+            "type": "string",
+            "title": "City",
+            "default": ""
+          },
+          "county": {
+            "type": "string",
+            "title": "County",
+            "default": ""
+          },
+          "county_fips": {
+            "type": "string",
+            "title": "County Fips",
+            "default": ""
+          },
+          "state": {
+            "type": "string",
+            "title": "State",
+            "default": ""
+          },
+          "postal": {
+            "type": "string",
+            "title": "Postal",
+            "default": ""
+          },
+          "parcel_id": {
+            "type": "string",
+            "title": "Parcel Id",
+            "default": ""
+          },
+          "lot_area_sqft": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lot Area Sqft"
+          },
+          "client": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Client"
+          },
+          "access_contact": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Access Contact"
+          },
+          "buyer_owner": {
+            "type": "string",
+            "title": "Buyer Owner",
+            "default": ""
+          },
+          "lender": {
+            "type": "string",
+            "title": "Lender",
+            "default": ""
+          },
+          "title_company": {
+            "type": "string",
+            "title": "Title Company",
+            "default": ""
+          },
+          "underwriter": {
+            "type": "string",
+            "title": "Underwriter",
+            "default": ""
+          },
+          "client_notes": {
+            "type": "string",
+            "title": "Client Notes",
+            "default": ""
+          },
+          "legal_description": {
+            "type": "string",
+            "title": "Legal Description",
+            "default": ""
+          },
+          "scope_tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Scope Tags"
+          },
+          "received_at": {
+            "type": "string",
+            "title": "Received At",
+            "default": ""
+          },
+          "due_at": {
+            "type": "string",
+            "title": "Due At",
+            "default": ""
+          },
+          "researcher": {
+            "type": "string",
+            "title": "Researcher",
+            "default": ""
+          },
+          "stage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage"
+          }
+        },
+        "type": "object",
+        "title": "OrderPatch",
+        "description": "Partial update: only the fields actually sent are applied, so nothing is required."
+      },
+      "ReasonIn": {
+        "properties": {
+          "reason": {
+            "type": "string",
+            "title": "Reason",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "ReasonIn"
+      },
+      "ResearchRequest": {
+        "properties": {
+          "job_number": {
+            "type": "string",
+            "title": "Job Number",
+            "description": "e.g. 25-1229 (optional)",
+            "default": ""
+          },
+          "order_number": {
+            "type": "string",
+            "title": "Order Number",
+            "description": "Order # for the Evidence Locker (optional)",
+            "default": ""
+          },
+          "address": {
+            "type": "string",
+            "title": "Address",
+            "description": "Full street address (or use parcel_id)",
+            "default": ""
+          },
+          "parcel_id": {
+            "type": "string",
+            "title": "Parcel Id",
+            "description": "Search by Parcel ID / APN instead of address (needs state)",
+            "default": ""
+          },
+          "state": {
+            "type": "string",
+            "title": "State",
+            "description": "Selected state (FIPS or USPS abbr)",
+            "default": ""
+          },
+          "county_fips": {
+            "type": "string",
+            "title": "County Fips",
+            "description": "Selected 5-digit county FIPS",
+            "default": ""
+          },
+          "survey_type": {
+            "type": "string",
+            "title": "Survey Type",
+            "default": "Residential Land Survey"
+          },
+          "include": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Include",
+            "description": "Unused in the FL residential POC \u2014 the full residential doc set always runs."
+          }
+        },
+        "type": "object",
+        "title": "ResearchRequest"
+      },
+      "SubmitIn": {
+        "properties": {
+          "note": {
+            "type": "string",
+            "title": "Note",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "SubmitIn"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
