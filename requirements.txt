@@ -1,18 +1,25 @@
-fastapi>=0.115
-uvicorn[standard]>=0.30
-requests>=2.32
-pydantic>=2.9
-pillow>=11.0
-# Clerk deed/plat auto-download drives the county portal in a headless browser.
-# After installing, fetch the browser once:  python -m playwright install chromium
-playwright>=1.40
-python-multipart>=0.0.9
-# Database index/analytics — SQLite in dev, Postgres in prod (psycopg2 only needed for Postgres).
-SQLAlchemy>=2.0
-psycopg2-binary>=2.9
+# --- Core (pinned to match mapperty/quickplot-api pyproject.toml) ----------
+fastapi==0.111.0
+uvicorn[standard]==0.30.0
+pydantic==2.10.0
+pydantic-settings==2.3.4
+python-multipart==0.0.9
 
-# --- test only -------------------------------------------------------------
-# The QuickPlot suites need these; the app itself does not.
-#   pytest tests -q      (53 API + 15 browser + 34 unit)
+# --- Database (pinned to match parent) ------------------------------------
+sqlalchemy==2.0.46
+alembic==1.13.2
+psycopg2-binary==2.9.10
+# psycopg 3.x binary — parent uses ^3.2.0; only needed for real Postgres
+psycopg[binary]>=3.2.0
+
+# --- HTTP -----------------------------------------------------------------
+httpx==0.28.1
+requests>=2.32              # us only (Playwright deps, not in parent)
+
+# --- Engine-only (parent does NOT use these) ------------------------------
+pillow>=11.0                # flood map compositing
+playwright>=1.40            # clerk deed/plat scraper (python -m playwright install chromium)
+
+# --- test only ------------------------------------------------------------
 pytest>=8.0
-httpx>=0.27          # fastapi.testclient transport
+httpx>=0.27                 # fastapi.testclient transport
