@@ -1,0 +1,2999 @@
+{
+ "34001": {
+  "_src_clerk_url": "nj-clerk-verified",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.atlanticcountyclerk.org/",
+  "county": "Atlantic",
+  "state": "NJ"
+ },
+ "34003": {
+  "_src_clerk_url": "nj-clerk-verified",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.bergencountyclerk.gov/",
+  "county": "Bergen",
+  "state": "NJ"
+ },
+ "34007": {
+  "_src_clerk_url": "nj-clerk-verified",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.camdencounty.com/service/county-clerk/",
+  "county": "Camden",
+  "state": "NJ"
+ },
+ "34013": {
+  "_src_clerk_url": "nj-clerk-verified",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.essexclerk.com/",
+  "county": "Essex",
+  "state": "NJ"
+ },
+ "34017": {
+  "_src_clerk_url": "nj-clerk-verified",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.hudsoncountyclerk.org/",
+  "county": "Hudson",
+  "state": "NJ"
+ },
+ "34023": {
+  "_src_clerk_url": "nj-clerk-verified",
+  "clerk_note": "NewVision BrowserView; deeds 1929+, mortgages 1950+.",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://mcrecords.co.middlesex.nj.us/publicsearch1/",
+  "county": "Middlesex",
+  "state": "NJ"
+ },
+ "34025": {
+  "_src_clerk_url": "nj-clerk-verified",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.monmouthcountyclerk.gov/",
+  "county": "Monmouth",
+  "state": "NJ"
+ },
+ "34027": {
+  "_src_clerk_url": "nj-clerk-verified",
+  "clerk_note": "NewVision BrowserView - same platform as the Polk FL adapter.",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://mcclerksng.co.morris.nj.us/publicsearch/",
+  "county": "Morris",
+  "state": "NJ"
+ },
+ "34029": {
+  "_src_clerk_url": "nj-clerk-verified",
+  "clerk_note": "Official records from 1977-04-01.",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://sng.co.ocean.nj.us/searchapplication/",
+  "county": "Ocean",
+  "state": "NJ"
+ },
+ "34031": {
+  "_src_clerk_url": "nj-clerk-verified",
+  "clerk_note": "Land Records / PRESS grantor-grantee index (2000-12 onward).",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.passaiccountynj.org/government/passaic-county-clerk/land-records",
+  "county": "Passaic",
+  "state": "NJ"
+ },
+ "34037": {
+  "_src_clerk_url": "nj-clerk-verified",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.sussexcountyclerk.org",
+  "county": "Sussex",
+  "state": "NJ"
+ },
+ "34039": {
+  "_src_clerk_url": "nj-clerk-verified",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://ucnj.org/county-clerk/",
+  "county": "Union",
+  "state": "NJ"
+ },
+ "39001": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-pattern-final",
+  "appraiser_url": "https://www.adamscountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://adamscountyoh.gov/recorder/",
+  "county": "Adams",
+  "state": "OH"
+ },
+ "39003": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://allencountyohauditor.com/",
+  "county": "Allen",
+  "state": "OH"
+ },
+ "39005": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://auditor.ashlandcountyoh.us//",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.ashlandcounty.org/recorder/",
+  "county": "Ashland",
+  "state": "OH"
+ },
+ "39007": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://www.ashtabulacountyauditor.com/",
+  "county": "Ashtabula",
+  "state": "OH"
+ },
+ "39009": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://www.athenscountyauditor.org/",
+  "county": "Athens",
+  "state": "OH"
+ },
+ "39011": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "kofile-county-fusion",
+  "appraiser_url": "https://auglaizecountyauditor.org/",
+  "clerk_note": "Kofile County Fusion - a multi-county recorder platform; one adapter would serve every county on it.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://countyfusion1.kofiletech.us/countyweb/loginDisplay.action?countyname=AuglaizeOH",
+  "county": "Auglaize",
+  "state": "OH"
+ },
+ "39013": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://belmontcountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://belmontcountyrecorder.org/",
+  "county": "Belmont",
+  "state": "OH"
+ },
+ "39015": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://realestate.browncountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.browncountyrecorder.org/",
+  "county": "Brown",
+  "state": "OH"
+ },
+ "39017": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://auditor.bcohio.gov/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://butler.oh.publicsearch.us/",
+  "county": "Butler",
+  "state": "OH"
+ },
+ "39019": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.carrollcountyauditor.us/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://carroll.oh.publicsearch.us/",
+  "county": "Carroll",
+  "state": "OH"
+ },
+ "39021": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-homepage-discovery",
+  "appraiser_url": "https://auditor.co.champaign.oh.us/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://countyfusion9.kofiletech.us/countyweb/login.do?countyname=ChampaignOH",
+  "county": "Champaign",
+  "state": "OH"
+ },
+ "39023": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.clarkcountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://recorder.clarkcounty.us/",
+  "county": "Clark",
+  "state": "OH"
+ },
+ "39025": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.clermontauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://recorder.clermontcountyohio.gov/",
+  "county": "Clermont",
+  "state": "OH"
+ },
+ "39027": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://clintoncountyauditor.org/",
+  "county": "Clinton",
+  "state": "OH"
+ },
+ "39029": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://columbianacountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.columbianacountyrecorder.org/",
+  "county": "Columbiana",
+  "state": "OH"
+ },
+ "39031": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "kofile-county-fusion",
+  "appraiser_url": "https://www.coshoctoncounty.net/auditor/",
+  "clerk_note": "Kofile County Fusion - a multi-county recorder platform; one adapter would serve every county on it.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://countyfusion1.kofiletech.us/countyweb/loginDisplay.action?countyname=CoshoctonOH",
+  "county": "Coshocton",
+  "state": "OH"
+ },
+ "39035": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.cuyahogacounty.gov/fiscal-officer",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://cuyahoga.oh.publicsearch.us/",
+  "county": "Cuyahoga",
+  "state": "OH"
+ },
+ "39037": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://www.darkecountyauditor.com/",
+  "county": "Darke",
+  "state": "OH"
+ },
+ "39039": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-homepage-discovery",
+  "appraiser_url": "https://www.defiance-county.com/auditor/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.defiance-county.com/recorder/index.php",
+  "county": "Defiance",
+  "state": "OH"
+ },
+ "39041": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://www.delawarecountyauditor.org/",
+  "county": "Delaware",
+  "state": "OH"
+ },
+ "39043": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://www.eriecountyauditor.org/",
+  "county": "Erie",
+  "state": "OH"
+ },
+ "39045": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-homepage-discovery",
+  "appraiser_url": "https://www.fairfieldcountyohio.gov/auditor/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.fairfield.oh.us/Recorder/",
+  "county": "Fairfield",
+  "state": "OH"
+ },
+ "39047": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.fayettecountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://fayette.oh.publicsearch.us/",
+  "county": "Fayette",
+  "state": "OH"
+ },
+ "39049": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "official-county-gov",
+  "appraiser_url": "https://realestate.franklincountyauditor.org/",
+  "clerk_note": "Official county .gov; the lookalike franklincountyrecorder.com is an ad redirect.",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://recorder.franklincountyohio.gov/",
+  "county": "Franklin",
+  "state": "OH"
+ },
+ "39051": {
+  "_src_clerk_url": "kofile-county-fusion",
+  "clerk_note": "Kofile County Fusion - a multi-county recorder platform; one adapter would serve every county on it.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://countyfusion1.kofiletech.us/countyweb/loginDisplay.action?countyname=FultonOH",
+  "county": "Fulton",
+  "state": "OH"
+ },
+ "39053": {
+  "_src_clerk_url": "oh-recorder-sweep",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.galliacountyrecorder.us/",
+  "county": "Gallia",
+  "state": "OH"
+ },
+ "39055": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://auditor.geauga.oh.gov/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://recorder.co.geauga.oh.us/",
+  "county": "Geauga",
+  "state": "OH"
+ },
+ "39057": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.greenecountyohio.gov/366/Auditor",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.greenecountyohio.gov/473/Recorder",
+  "county": "Greene",
+  "state": "OH"
+ },
+ "39059": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://guernseycounty.gov",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://guernseycounty.gov/recorders-office/",
+  "county": "Guernsey",
+  "state": "OH"
+ },
+ "39061": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-homepage-discovery",
+  "appraiser_url": "https://www.hamiltoncountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.hamiltoncountyohio.gov/government/departments/recorder/index.php",
+  "county": "Hamilton",
+  "state": "OH"
+ },
+ "39063": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-homepage-discovery",
+  "appraiser_url": "https://www.hancockcountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://countyfusion2.kofiletech.us/countyweb/loginDisplay.action?countyname=HancockOH",
+  "county": "Hancock",
+  "state": "OH"
+ },
+ "39065": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://hardincountyohio.gov/auditor-dog-search/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://hardincountyohio.gov/recorder/",
+  "county": "Hardin",
+  "state": "OH"
+ },
+ "39067": {
+  "_src_clerk_url": "oh-recorder-sweep",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://harrison.oh.publicsearch.us/",
+  "county": "Harrison",
+  "state": "OH"
+ },
+ "39069": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "kofile-county-fusion",
+  "appraiser_url": "https://www.henrycountyohio.gov/182/Auditor",
+  "clerk_note": "Kofile County Fusion - a multi-county recorder platform; one adapter would serve every county on it.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://countyfusion1.kofiletech.us/countyweb/loginDisplay.action?countyname=HenryOH",
+  "county": "Henry",
+  "state": "OH"
+ },
+ "39071": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "kofile-county-fusion",
+  "appraiser_url": "https://www.highlandcountyauditor.org/",
+  "clerk_note": "Kofile County Fusion - a multi-county recorder platform; one adapter would serve every county on it.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://countyfusion1.kofiletech.us/countyweb/loginDisplay.action?countyname=HighlandOH",
+  "county": "Highland",
+  "state": "OH"
+ },
+ "39073": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://hockingcountyauditor.com",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.hocking.oh.us/recorder",
+  "county": "Hocking",
+  "state": "OH"
+ },
+ "39075": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-homepage-discovery",
+  "appraiser_url": "https://www.holmescountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.holmes.oh.us/recorder-overview",
+  "county": "Holmes",
+  "state": "OH"
+ },
+ "39077": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://www.huroncountyauditor.org/",
+  "county": "Huron",
+  "state": "OH"
+ },
+ "39079": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.jacksoncountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.jacksoncountyrecorder.us/",
+  "county": "Jackson",
+  "state": "OH"
+ },
+ "39081": {
+  "_src_clerk_url": "oh-recorder-sweep",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://jefferson.oh.publicsearch.us/",
+  "county": "Jefferson",
+  "state": "OH"
+ },
+ "39083": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.knoxcountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://co.knox.oh.us/recorder/",
+  "county": "Knox",
+  "state": "OH"
+ },
+ "39085": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.lakecountyohio.gov/auditor/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.lakecountyohio.gov/recorder/",
+  "county": "Lake",
+  "state": "OH"
+ },
+ "39087": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://www.lawrencecountyauditor.org/",
+  "county": "Lawrence",
+  "state": "OH"
+ },
+ "39091": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.logancountyohio.gov/auditor.html",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.logancountyohio.gov/recorder.html",
+  "county": "Logan",
+  "state": "OH"
+ },
+ "39093": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://loraincountyauditor.gov",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.loraincountyrecorder.gov/",
+  "county": "Lorain",
+  "state": "OH"
+ },
+ "39095": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.lucascountyohioauditor.gov/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.lucas.oh.us/675/Recorder",
+  "county": "Lucas",
+  "state": "OH"
+ },
+ "39097": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://auditor.co.madison.oh.us/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.madisoncounty.org/recorder/",
+  "county": "Madison",
+  "state": "OH"
+ },
+ "39099": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "targeted-search",
+  "appraiser_url": "https://auditor.mahoningcountyoh.gov/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.mahoningcountyoh.gov/925/Record-Searches",
+  "county": "Mahoning",
+  "state": "OH"
+ },
+ "39101": {
+  "_src_appraiser_url": "oh-homepage-discovery",
+  "_src_clerk_url": "oh-homepage-discovery",
+  "appraiser_url": "https://www.co.marion.oh.us/elected_offices/auditor/index.php",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.marion.oh.us/elected_offices/recorder/index.php",
+  "county": "Marion",
+  "state": "OH"
+ },
+ "39103": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://auditor.medinacounty.gov",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://recorder.medinacounty.gov/",
+  "county": "Medina",
+  "state": "OH"
+ },
+ "39105": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://www.meigscountyauditor.org/",
+  "county": "Meigs",
+  "state": "OH"
+ },
+ "39107": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://auditor.mercercountyohio.gov/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.mercercountyoh.gov/elected-officials/recorder/",
+  "county": "Mercer",
+  "state": "OH"
+ },
+ "39109": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.miamicountyohioauditor.gov",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.miamicountyohio.gov/recorder/",
+  "county": "Miami",
+  "state": "OH"
+ },
+ "39111": {
+  "_src_appraiser_url": "oh-homepage-discovery",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.monroecountyohio.com/government/auditor_s_office/index.php",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://monroe.oh.publicsearch.us/",
+  "county": "Monroe",
+  "state": "OH"
+ },
+ "39113": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "targeted-search",
+  "appraiser_url": "https://www.montgomerycountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://riss.mcrecorder.org/",
+  "county": "Montgomery",
+  "state": "OH"
+ },
+ "39115": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.morgancountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://morgan.oh.publicsearch.us/",
+  "county": "Morgan",
+  "state": "OH"
+ },
+ "39117": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://auditor.co.morrow.oh.us/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.morrowcountyohio.gov/recorder/",
+  "county": "Morrow",
+  "state": "OH"
+ },
+ "39119": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-homepage-discovery",
+  "appraiser_url": "https://www.muskingumcountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.muskingumcountyoh.gov/Offices/Recorder/",
+  "county": "Muskingum",
+  "state": "OH"
+ },
+ "39121": {
+  "_src_appraiser_url": "oh-homepage-discovery",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://noblecountyohio.gov/county-auditor/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.noblecountyrecorder.com/",
+  "county": "Noble",
+  "state": "OH"
+ },
+ "39123": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://auditor.co.ottawa.oh.us/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://ottawa.oh.publicsearch.us/",
+  "county": "Ottawa",
+  "state": "OH"
+ },
+ "39125": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.pauldingcountyauditor.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.pauldingcountyrecorder.com/",
+  "county": "Paulding",
+  "state": "OH"
+ },
+ "39127": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-homepage-discovery",
+  "appraiser_url": "https://auditor.perrycountyohio.gov/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://perrycountyohio.gov/records/perry-county-ohio-recorder/",
+  "county": "Perry",
+  "state": "OH"
+ },
+ "39129": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://auditor.pickawaycountyohio.gov/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.pickawaycountyrecorder.com/",
+  "county": "Pickaway",
+  "state": "OH"
+ },
+ "39131": {
+  "_src_clerk_url": "oh-recorder-sweep",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://pike.oh.publicsearch.us/",
+  "county": "Pike",
+  "state": "OH"
+ },
+ "39133": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.portagecountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.portage.oh.us/recorder",
+  "county": "Portage",
+  "state": "OH"
+ },
+ "39135": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "kofile-county-fusion",
+  "appraiser_url": "https://www.preblecountyauditor.org/",
+  "clerk_note": "Kofile County Fusion - a multi-county recorder platform; one adapter would serve every county on it.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://countyfusion1.kofiletech.us/countyweb/loginDisplay.action?countyname=PrebleOH",
+  "county": "Preble",
+  "state": "OH"
+ },
+ "39137": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://auditor.putnamcountyohio.gov/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://putnamcountyrecorder.com/",
+  "county": "Putnam",
+  "state": "OH"
+ },
+ "39139": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "kofile-county-fusion",
+  "appraiser_url": "https://richlandcountyauditor.org/",
+  "clerk_note": "Kofile County Fusion - a multi-county recorder platform; one adapter would serve every county on it.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://countyfusion1.kofiletech.us/countyweb/loginDisplay.action?countyname=RichlandOH",
+  "county": "Richland",
+  "state": "OH"
+ },
+ "39141": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://rosscountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.rosscountyohio.gov/recorder/",
+  "county": "Ross",
+  "state": "OH"
+ },
+ "39143": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://sanduskycountyauditor.us/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://sandusky.oh.publicsearch.us/",
+  "county": "Sandusky",
+  "state": "OH"
+ },
+ "39145": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://www.sciotocountyauditor.com/",
+  "county": "Scioto",
+  "state": "OH"
+ },
+ "39147": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "kofile-county-fusion",
+  "appraiser_url": "https://senecacountyauditoroh.gov/",
+  "clerk_note": "Kofile County Fusion - a multi-county recorder platform; one adapter would serve every county on it.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://countyfusion1.kofiletech.us/countyweb/loginDisplay.action?countyname=SenecaOH",
+  "county": "Seneca",
+  "state": "OH"
+ },
+ "39149": {
+  "_src_appraiser_url": "oh-homepage-discovery",
+  "_src_clerk_url": "oh-homepage-discovery",
+  "appraiser_url": "https://realestate.shelbycountyauditors.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.shelby.oh.us/298/Recorder",
+  "county": "Shelby",
+  "state": "OH"
+ },
+ "39151": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://starkcountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.starkcountyohio.gov/government/offices/recorder/index.php",
+  "county": "Stark",
+  "state": "OH"
+ },
+ "39153": {
+  "_src_appraiser_url": "targeted-search",
+  "_src_clerk_url": "targeted-search",
+  "appraiser_url": "https://fiscaloffice.summitoh.net/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://fiscaloffice.summitoh.net/index.php/about-us/recorder-division",
+  "county": "Summit",
+  "state": "OH"
+ },
+ "39155": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://trumbullcountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.trumbull.oh.us/recorder/",
+  "county": "Trumbull",
+  "state": "OH"
+ },
+ "39157": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://tuscarawascountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://tuscarawas.oh.publicsearch.us/",
+  "county": "Tuscarawas",
+  "state": "OH"
+ },
+ "39159": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.unioncountyohio.gov/auditor",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.unioncountyohio.gov/recorder",
+  "county": "Union",
+  "state": "OH"
+ },
+ "39161": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-homepage-discovery",
+  "appraiser_url": "https://auditor.vanwertcountyohio.gov/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.vanwertcountyohio.gov/government/recorder_s_office/index.php",
+  "county": "Van Wert",
+  "state": "OH"
+ },
+ "39163": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://www.vintoncountyauditor.org/",
+  "county": "Vinton",
+  "state": "OH"
+ },
+ "39165": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://www.warrencountyauditor.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://recorder.warrencountyohio.gov/",
+  "county": "Warren",
+  "state": "OH"
+ },
+ "39167": {
+  "_src_clerk_url": "kofile-county-fusion",
+  "clerk_note": "Kofile County Fusion - a multi-county recorder platform; one adapter would serve every county on it.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://countyfusion1.kofiletech.us/countyweb/loginDisplay.action?countyname=WashingtonOH",
+  "county": "Washington",
+  "state": "OH"
+ },
+ "39169": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "kofile-county-fusion",
+  "appraiser_url": "https://www.waynecountyauditor.org/",
+  "clerk_note": "Kofile County Fusion - a multi-county recorder platform; one adapter would serve every county on it.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://countyfusion1.kofiletech.us/countyweb/loginDisplay.action?countyname=WayneOH",
+  "county": "Wayne",
+  "state": "OH"
+ },
+ "39173": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "_src_clerk_url": "oh-recorder-sweep",
+  "appraiser_url": "https://auditor.co.wood.oh.us/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://recorder.woodcountyohio.gov/",
+  "county": "Wood",
+  "state": "OH"
+ },
+ "39175": {
+  "_src_appraiser_url": "oh-auditor-sweep",
+  "appraiser_url": "https://wyandotcountyauditor.us/",
+  "county": "Wyandot",
+  "state": "OH"
+ },
+ "48001": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.andersoncad.net/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://anderson.tx.publicsearch.us/",
+  "county": "Anderson",
+  "state": "TX"
+ },
+ "48003": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://andrewscad.org/",
+  "county": "Andrews",
+  "state": "TX"
+ },
+ "48005": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.angelinacad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.angelinacounty.net/cc/",
+  "county": "Angelina",
+  "state": "TX"
+ },
+ "48007": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://aransascad.org/",
+  "county": "Aransas",
+  "state": "TX"
+ },
+ "48009": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.archercad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.archer.tx.us/page/archer.County.Clerk",
+  "county": "Archer",
+  "state": "TX"
+ },
+ "48011": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://armstrongcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.armstrong.tx.us/page/armstrong.County.Clerk",
+  "county": "Armstrong",
+  "state": "TX"
+ },
+ "48013": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://atascosacad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://co.atascosa.tx.us/county-clerk/",
+  "county": "Atascosa",
+  "state": "TX"
+ },
+ "48015": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://austincad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.austincounty.com/page/austin.County.Clerk",
+  "county": "Austin",
+  "state": "TX"
+ },
+ "48017": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://bailey-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.bailey.tx.us/page/bailey.County.Clerk",
+  "county": "Bailey",
+  "state": "TX"
+ },
+ "48019": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://bancad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.banderacounty.gov/page/countyclerk.home",
+  "county": "Bandera",
+  "state": "TX"
+ },
+ "48021": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://bastropcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.bastropcounty.gov/page/co.county_clerk",
+  "county": "Bastrop",
+  "state": "TX"
+ },
+ "48023": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://baylorcad.southwestdatasolutions.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.baylor.tx.us/page/baylor.County.Clerk",
+  "county": "Baylor",
+  "state": "TX"
+ },
+ "48025": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://beecad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://bee.tx.publicsearch.us/",
+  "county": "Bee",
+  "state": "TX"
+ },
+ "48027": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://bellcad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://bell.tx.publicsearch.us/",
+  "county": "Bell",
+  "state": "TX"
+ },
+ "48029": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://bcad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://bexar.tx.publicsearch.us/",
+  "county": "Bexar",
+  "state": "TX"
+ },
+ "48031": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://blancocad.com/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://blanco.tx.publicsearch.us/",
+  "county": "Blanco",
+  "state": "TX"
+ },
+ "48033": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://bordencad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.borden.tx.us/page/County.Clerk",
+  "county": "Borden",
+  "state": "TX"
+ },
+ "48035": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://bosquecad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.bosquecounty.gov/171/County-Clerk--Recording-lifes-events-sin",
+  "county": "Bosque",
+  "state": "TX"
+ },
+ "48037": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://www.bowieappraisal.com/",
+  "county": "Bowie",
+  "state": "TX"
+ },
+ "48039": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://brazoriacad.org/",
+  "county": "Brazoria",
+  "state": "TX"
+ },
+ "48041": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://brazoscad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://brazos.tx.publicsearch.us/",
+  "county": "Brazos",
+  "state": "TX"
+ },
+ "48043": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.brewstercad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://brewster.tx.publicsearch.us/",
+  "county": "Brewster",
+  "state": "TX"
+ },
+ "48045": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.briscoecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.briscoe.tx.us/page/briscoe.County.Clerk",
+  "county": "Briscoe",
+  "state": "TX"
+ },
+ "48047": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://brookscad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.brooks.tx.us/page/brooks.County.Clerk",
+  "county": "Brooks",
+  "state": "TX"
+ },
+ "48049": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://brown-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.browncountytx.gov/page/brown.County.Clerk",
+  "county": "Brown",
+  "state": "TX"
+ },
+ "48051": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://burlesonappraisal.com/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://burleson.tx.publicsearch.us/",
+  "county": "Burleson",
+  "state": "TX"
+ },
+ "48053": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://burnet-cad.org/",
+  "county": "Burnet",
+  "state": "TX"
+ },
+ "48055": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://caldwellcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.caldwell.tx.us/page/County.Clerk",
+  "county": "Caldwell",
+  "state": "TX"
+ },
+ "48057": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://calhouncad.org/",
+  "county": "Calhoun",
+  "state": "TX"
+ },
+ "48059": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://callahancad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.callahancounty.org/page/callahan.County.Clerk",
+  "county": "Callahan",
+  "state": "TX"
+ },
+ "48061": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "http://www.cameroncad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://cameron.tx.publicsearch.us/",
+  "county": "Cameron",
+  "state": "TX"
+ },
+ "48063": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://campcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.camp.tx.us/page/camp.County.Clerk",
+  "county": "Camp",
+  "state": "TX"
+ },
+ "48065": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.carsoncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.carson.tx.us/page/carson.County.Clerk",
+  "county": "Carson",
+  "state": "TX"
+ },
+ "48067": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://casscad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.cass.tx.us/page/cass.County.Clerk",
+  "county": "Cass",
+  "state": "TX"
+ },
+ "48069": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://castrocad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.castro.tx.us/page/castro.County.Clerk",
+  "county": "Castro",
+  "state": "TX"
+ },
+ "48071": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "http://www.chamberscad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://chambers.tx.publicsearch.us/",
+  "county": "Chambers",
+  "state": "TX"
+ },
+ "48073": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://cherokeecad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "http://www.co.cherokee.tx.us/ips/cms/countyoffices/countyClerk.html",
+  "county": "Cherokee",
+  "state": "TX"
+ },
+ "48075": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.childresscad.org/",
+  "county": "Childress",
+  "state": "TX"
+ },
+ "48077": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.claycad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.claycountytx.net/county-clerk",
+  "county": "Clay",
+  "state": "TX"
+ },
+ "48079": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://cochrancad.com/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://cochran.tx.publicsearch.us/",
+  "county": "Cochran",
+  "state": "TX"
+ },
+ "48081": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://cokecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.coke.tx.us/page/coke.County.Clerk",
+  "county": "Coke",
+  "state": "TX"
+ },
+ "48083": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "http://www.colemancad.net/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://coleman.tx.publicsearch.us/",
+  "county": "Coleman",
+  "state": "TX"
+ },
+ "48085": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://collincad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://collin.tx.publicsearch.us/",
+  "county": "Collin",
+  "state": "TX"
+ },
+ "48087": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.collingsworthcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.collingsworth.tx.us/page/collingsworth.County.Clerk",
+  "county": "Collingsworth",
+  "state": "TX"
+ },
+ "48089": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://coloradocad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.colorado.tx.us/page/colorado.County.Clerk",
+  "county": "Colorado",
+  "state": "TX"
+ },
+ "48091": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.comalcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://comal.landrecordsonline.com/",
+  "county": "Comal",
+  "state": "TX"
+ },
+ "48093": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://comanchecad.org/",
+  "county": "Comanche",
+  "state": "TX"
+ },
+ "48095": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://conchocad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.concho.tx.us/page/concho.County.Clerk",
+  "county": "Concho",
+  "state": "TX"
+ },
+ "48097": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.cookecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.cooke.tx.us/page/cooke.County.Clerk",
+  "county": "Cooke",
+  "state": "TX"
+ },
+ "48099": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://coryellcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://coryellcountyclerk.com/",
+  "county": "Coryell",
+  "state": "TX"
+ },
+ "48101": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.cottlecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.cottlecountytx.gov/page/County.Clerk",
+  "county": "Cottle",
+  "state": "TX"
+ },
+ "48103": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.cranecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.crane.tx.us/page/crane.County.Clerk",
+  "county": "Crane",
+  "state": "TX"
+ },
+ "48105": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.crockettcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.crockett.tx.us/page/crockett.CountyClerk",
+  "county": "Crockett",
+  "state": "TX"
+ },
+ "48107": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.crosbycad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.crosby.tx.us/page/crosby.County.Clerk",
+  "county": "Crosby",
+  "state": "TX"
+ },
+ "48109": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.culbersoncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.culberson.tx.us/page/County.Clerk",
+  "county": "Culberson",
+  "state": "TX"
+ },
+ "48111": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://dallamcad.org/",
+  "county": "Dallam",
+  "state": "TX"
+ },
+ "48113": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.dallascad.org",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://dallas.tx.publicsearch.us/",
+  "county": "Dallas",
+  "state": "TX"
+ },
+ "48115": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.dawsoncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.dawson.tx.us/page/dawson.County.Clerk",
+  "county": "Dawson",
+  "state": "TX"
+ },
+ "48117": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://deafsmithcad.org/",
+  "county": "Deaf Smith",
+  "state": "TX"
+ },
+ "48119": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://delta-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "http://www.deltacountytx.com/page/County.Clerk",
+  "county": "Delta",
+  "state": "TX"
+ },
+ "48121": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.dentoncad.com/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://denton.tx.publicsearch.us/",
+  "county": "Denton",
+  "state": "TX"
+ },
+ "48123": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.dewittcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.dewitt.tx.us/page/dewitt.County.Clerk",
+  "county": "DeWitt",
+  "state": "TX"
+ },
+ "48125": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.dickenscad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.dickens.tx.us/page/dickens.County.Clerk",
+  "county": "Dickens",
+  "state": "TX"
+ },
+ "48127": {
+  "_src_appraiser_url": "cad-own-site",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://dimmit-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.dimmitcounty.org/government/departments/county_clerk.php",
+  "county": "Dimmit",
+  "state": "TX"
+ },
+ "48129": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.donleycad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.donley.tx.us/page/County.Clerk",
+  "county": "Donley",
+  "state": "TX"
+ },
+ "48131": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://duvalcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.duval.tx.us/page/duval.county-clerk",
+  "county": "Duval",
+  "state": "TX"
+ },
+ "48133": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.eastlandcad.org/",
+  "county": "Eastland",
+  "state": "TX"
+ },
+ "48135": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.ectorcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.ectorcountytx.gov/172/County-Clerk",
+  "county": "Ector",
+  "state": "TX"
+ },
+ "48137": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.edwardscad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.edwards.tx.us/page/County.Clerk",
+  "county": "Edwards",
+  "state": "TX"
+ },
+ "48139": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://www.elliscad.org/",
+  "county": "Ellis",
+  "state": "TX"
+ },
+ "48141": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://epcad.org/",
+  "county": "El Paso",
+  "state": "TX"
+ },
+ "48143": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://erath-cad.com/",
+  "county": "Erath",
+  "state": "TX"
+ },
+ "48145": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://fallscad.net/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.falls.tx.us/page/County.Clerk",
+  "county": "Falls",
+  "state": "TX"
+ },
+ "48147": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://fannincad.southwestdatasolutions.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.fannin.tx.us/page/fannin.County.Clerk",
+  "county": "Fannin",
+  "state": "TX"
+ },
+ "48149": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://fayettecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.fayette.tx.us/page/fayette.County.Clerk",
+  "county": "Fayette",
+  "state": "TX"
+ },
+ "48151": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.fishercad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.fishercounty.org/page/fisher.County.Clerk",
+  "county": "Fisher",
+  "state": "TX"
+ },
+ "48153": {
+  "_src_appraiser_url": "cad-own-site",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.co.floyd.tx.us/page/floyd.FloydCAD",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.floyd.tx.us/page/floyd.County.Clerk",
+  "county": "Floyd",
+  "state": "TX"
+ },
+ "48155": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.foardcad.org/",
+  "county": "Foard",
+  "state": "TX"
+ },
+ "48157": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://www.fbcad.org/",
+  "county": "Fort Bend",
+  "state": "TX"
+ },
+ "48159": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.franklin-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.franklin.tx.us/page/franklin.County.Clerk",
+  "county": "Franklin",
+  "state": "TX"
+ },
+ "48161": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "http://www.freestonecad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://freestone.tx.publicsearch.us/",
+  "county": "Freestone",
+  "state": "TX"
+ },
+ "48163": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.friocad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.frio.tx.us/page/co.county-clerk",
+  "county": "Frio",
+  "state": "TX"
+ },
+ "48165": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://gainescad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.gaines.tx.us/page/gaines.County.Clerk",
+  "county": "Gaines",
+  "state": "TX"
+ },
+ "48167": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://galvestoncad.org/",
+  "county": "Galveston",
+  "state": "TX"
+ },
+ "48169": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://garzacad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.garzacounty.gov/page/clerk.home",
+  "county": "Garza",
+  "state": "TX"
+ },
+ "48171": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://gillespiecad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://gillespie.tx.publicsearch.us/",
+  "county": "Gillespie",
+  "state": "TX"
+ },
+ "48173": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.glasscockcad.org/",
+  "county": "Glasscock",
+  "state": "TX"
+ },
+ "48175": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "http://goliadcad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://goliad.tx.publicsearch.us/",
+  "county": "Goliad",
+  "state": "TX"
+ },
+ "48177": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.gonzalescad.org/",
+  "county": "Gonzales",
+  "state": "TX"
+ },
+ "48179": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://graycad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.gray.tx.us/page/gray.County.Clerk",
+  "county": "Gray",
+  "state": "TX"
+ },
+ "48181": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://graysonappraisal.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://grayson.tx.publicsearch.us/",
+  "county": "Grayson",
+  "state": "TX"
+ },
+ "48183": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://gcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://greggcounty.texas.gov/departments/county-clerk",
+  "county": "Gregg",
+  "state": "TX"
+ },
+ "48185": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://grimescad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://grimes.tx.publicsearch.us/",
+  "county": "Grimes",
+  "state": "TX"
+ },
+ "48187": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://guadalupead.org/",
+  "county": "Guadalupe",
+  "state": "TX"
+ },
+ "48189": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.halecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.halecounty.org/county_offices/county_clerk.php",
+  "county": "Hale",
+  "state": "TX"
+ },
+ "48191": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.hallcad.org/",
+  "county": "Hall",
+  "state": "TX"
+ },
+ "48193": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://hamiltoncad.southwestdatasolutions.com",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.hamiltoncountytx.gov/page/hamilton.coclerk",
+  "county": "Hamilton",
+  "state": "TX"
+ },
+ "48195": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.hansfordcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.hansford.tx.us/page/hansford.County.Clerk",
+  "county": "Hansford",
+  "state": "TX"
+ },
+ "48197": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.hardemancad.org/",
+  "county": "Hardeman",
+  "state": "TX"
+ },
+ "48199": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://hardin-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.hardincountytx.gov/page/County.Clerk",
+  "county": "Hardin",
+  "state": "TX"
+ },
+ "48201": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://hcad.org/",
+  "county": "Harris",
+  "state": "TX"
+ },
+ "48203": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.harrisoncad.net/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.harrisoncountytexas.gov/page/CountyClerk",
+  "county": "Harrison",
+  "state": "TX"
+ },
+ "48205": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://hartleycad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.hartley.tx.us/page/hartley.County.Clerk",
+  "county": "Hartley",
+  "state": "TX"
+ },
+ "48207": {
+  "_src_appraiser_url": "cad-own-site",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://haskellcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.haskellcounty.org/page/County.Clerk",
+  "county": "Haskell",
+  "state": "TX"
+ },
+ "48209": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://hayscad.com/",
+  "county": "Hays",
+  "state": "TX"
+ },
+ "48211": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.hemphillcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.hemphill.tx.us/page/hemphill.County.Clerk",
+  "county": "Hemphill",
+  "state": "TX"
+ },
+ "48213": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://henderson-cad.org/",
+  "county": "Henderson",
+  "state": "TX"
+ },
+ "48215": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.hidalgocad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://hidalgo.tx.publicsearch.us/",
+  "county": "Hidalgo",
+  "state": "TX"
+ },
+ "48217": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://hillcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.hill.tx.us/page/hill.County.Clerk",
+  "county": "Hill",
+  "state": "TX"
+ },
+ "48219": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.hockleycad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://hockley.tx.publicsearch.us/",
+  "county": "Hockley",
+  "state": "TX"
+ },
+ "48221": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://hoodcad.net/",
+  "county": "Hood",
+  "state": "TX"
+ },
+ "48223": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://iswdataclient.azurewebsites.net/webindex.aspx?dbkey=HOPKINSCAD&time=202608200814022",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://hopkinscountyclerk.com/",
+  "county": "Hopkins",
+  "state": "TX"
+ },
+ "48225": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.houstoncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.houston.tx.us/page/houston.County.Clerk",
+  "county": "Houston",
+  "state": "TX"
+ },
+ "48227": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://howardcad.org/",
+  "county": "Howard",
+  "state": "TX"
+ },
+ "48229": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://hudspethcad.org/",
+  "county": "Hudspeth",
+  "state": "TX"
+ },
+ "48231": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://www.hunt-cad.org/",
+  "county": "Hunt",
+  "state": "TX"
+ },
+ "48233": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.hutchinsoncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.hutchinson.tx.us/page/hutchinson.County.Clerk",
+  "county": "Hutchinson",
+  "state": "TX"
+ },
+ "48235": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.irioncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.irion.tx.us/1193/County-Clerk",
+  "county": "Irion",
+  "state": "TX"
+ },
+ "48237": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.jackcad.org/",
+  "county": "Jack",
+  "state": "TX"
+ },
+ "48239": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://jacksoncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.jackson.tx.us/page/County.Clerk",
+  "county": "Jackson",
+  "state": "TX"
+ },
+ "48241": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://jaspercad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.jasper.tx.us/page/jasper.County.Clerk",
+  "county": "Jasper",
+  "state": "TX"
+ },
+ "48243": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.jeffdaviscad.org/",
+  "county": "Jeff Davis",
+  "state": "TX"
+ },
+ "48245": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://jcad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://jefferson.tx.publicsearch.us/",
+  "county": "Jefferson",
+  "state": "TX"
+ },
+ "48247": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://jimhogg-cad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://jimhogg.tx.publicsearch.us/",
+  "county": "Jim Hogg",
+  "state": "TX"
+ },
+ "48249": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.jimwellscad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://jimwells.tx.publicsearch.us/",
+  "county": "Jim Wells",
+  "state": "TX"
+ },
+ "48251": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://johnsoncad.com/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://johnson.tx.publicsearch.us/",
+  "county": "Johnson",
+  "state": "TX"
+ },
+ "48253": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.jonescad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.jones.tx.us/page/jones.County.Clerk",
+  "county": "Jones",
+  "state": "TX"
+ },
+ "48255": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.karnescad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.karnes.tx.us/page/karnes.County.Clerk",
+  "county": "Karnes",
+  "state": "TX"
+ },
+ "48257": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://kaufman-cad.org/",
+  "county": "Kaufman",
+  "state": "TX"
+ },
+ "48259": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://kendallad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://kendall.tx.publicsearch.us/",
+  "county": "Kendall",
+  "state": "TX"
+ },
+ "48261": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://kenedycad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.kenedycountytx.gov/page/kenedy.County.Clerk",
+  "county": "Kenedy",
+  "state": "TX"
+ },
+ "48263": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.kentcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.kent.tx.us/page/kent.CountyClerk",
+  "county": "Kent",
+  "state": "TX"
+ },
+ "48265": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://kerrcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://kerrcountyclerk.com/",
+  "county": "Kerr",
+  "state": "TX"
+ },
+ "48267": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://kimblecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.kimble.tx.us/page/County.Clerk",
+  "county": "Kimble",
+  "state": "TX"
+ },
+ "48269": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.kingcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.king.tx.us/page/king.County.Clerk",
+  "county": "King",
+  "state": "TX"
+ },
+ "48271": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://kinneycad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.kinney.tx.us/page/County.Clerk",
+  "county": "Kinney",
+  "state": "TX"
+ },
+ "48273": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://kleberg-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.kleberg.tx.us/page/kleberg.County.Clerk",
+  "county": "Kleberg",
+  "state": "TX"
+ },
+ "48275": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://knoxcad.com/",
+  "county": "Knox",
+  "state": "TX"
+ },
+ "48277": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://lamarcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.lamarcountytx.org/land.shtm",
+  "county": "Lamar",
+  "state": "TX"
+ },
+ "48279": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://lambcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.lamb.tx.us/page/lamb.County.Clerk",
+  "county": "Lamb",
+  "state": "TX"
+ },
+ "48281": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://lampasascad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.lampasas.tx.us/page/lampasas.County.Clerk",
+  "county": "Lampasas",
+  "state": "TX"
+ },
+ "48283": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://www.lasallecad.com/",
+  "county": "La Salle",
+  "state": "TX"
+ },
+ "48285": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://lavacacad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.lavaca.tx.us/page/County.Clerk",
+  "county": "Lavaca",
+  "state": "TX"
+ },
+ "48287": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://lee-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.lee.tx.us/page/lee.County.Clerk",
+  "county": "Lee",
+  "state": "TX"
+ },
+ "48289": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "http://www.leoncad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://leon.tx.publicsearch.us/",
+  "county": "Leon",
+  "state": "TX"
+ },
+ "48291": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://libertycad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.liberty.tx.us/page/liberty.County.Clerk",
+  "county": "Liberty",
+  "state": "TX"
+ },
+ "48293": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.limestonecad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.limestone.tx.us/page/limestone.cc.clerk",
+  "county": "Limestone",
+  "state": "TX"
+ },
+ "48295": {
+  "_src_appraiser_url": "cad-vendor-portal",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://iswdataclient.azurewebsites.net/webindex.aspx?dbkey=LIPSCOMBCAD",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.lipscomb.tx.us/page/lipscomb.County.Clerk",
+  "county": "Lipscomb",
+  "state": "TX"
+ },
+ "48297": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "http://www.liveoakappraisal.com/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://liveoak.tx.publicsearch.us/",
+  "county": "Live Oak",
+  "state": "TX"
+ },
+ "48299": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://llanocad.net/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://llano.tx.publicsearch.us/",
+  "county": "Llano",
+  "state": "TX"
+ },
+ "48301": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.lovingcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.loving.tx.us/page/loving.County.Clerk",
+  "county": "Loving",
+  "state": "TX"
+ },
+ "48303": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.lubbockcad.org/",
+  "county": "Lubbock",
+  "state": "TX"
+ },
+ "48305": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.lynncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.lynn.tx.us/page/lynn.County.Clerk",
+  "county": "Lynn",
+  "state": "TX"
+ },
+ "48307": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.mccullochcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.mcculloch.tx.us/page/mcculloch.County.Clerk",
+  "county": "McCulloch",
+  "state": "TX"
+ },
+ "48309": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://www.mclennancad.org/",
+  "county": "McLennan",
+  "state": "TX"
+ },
+ "48311": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://mcmullencad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://mcmullencounty.org/county-clerk/",
+  "county": "McMullen",
+  "state": "TX"
+ },
+ "48313": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://madisoncad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://madison.tx.publicsearch.us/",
+  "county": "Madison",
+  "state": "TX"
+ },
+ "48315": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.marioncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.marion.tx.us/page/marion.County.Clerk",
+  "county": "Marion",
+  "state": "TX"
+ },
+ "48317": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.martincad.org/",
+  "county": "Martin",
+  "state": "TX"
+ },
+ "48319": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://masoncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.mason.tx.us/page/mason.County.Clerk",
+  "county": "Mason",
+  "state": "TX"
+ },
+ "48321": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://matagorda-cad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://matagorda.tx.publicsearch.us/",
+  "county": "Matagorda",
+  "state": "TX"
+ },
+ "48323": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://www.maverickcad.org/",
+  "county": "Maverick",
+  "state": "TX"
+ },
+ "48325": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://medinacad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://medina.tx.publicsearch.us/",
+  "county": "Medina",
+  "state": "TX"
+ },
+ "48327": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.menardcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.menard.tx.us/page/menard.County.Clerk",
+  "county": "Menard",
+  "state": "TX"
+ },
+ "48329": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://midcad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://midland.tx.publicsearch.us/",
+  "county": "Midland",
+  "state": "TX"
+ },
+ "48331": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://milamad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://milam.tx.publicsearch.us/",
+  "county": "Milam",
+  "state": "TX"
+ },
+ "48333": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://millscad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.millscountytx.gov/page/County.Clerk",
+  "county": "Mills",
+  "state": "TX"
+ },
+ "48335": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://mitchellcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.mitchell.tx.us/page/County.Clerk",
+  "county": "Mitchell",
+  "state": "TX"
+ },
+ "48337": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.montaguecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.montague.tx.us/page/montague.County.Clerk",
+  "county": "Montague",
+  "state": "TX"
+ },
+ "48339": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.mcad-tx.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://montgomery.tx.publicsearch.us/",
+  "county": "Montgomery",
+  "state": "TX"
+ },
+ "48341": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://moorecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.moore.tx.us/page/moore.County.Clerk",
+  "county": "Moore",
+  "state": "TX"
+ },
+ "48343": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.morriscad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.morris.tx.us/page/morris.County.Clerk",
+  "county": "Morris",
+  "state": "TX"
+ },
+ "48345": {
+  "_src_appraiser_url": "cad-own-site",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://iswdataclient.azurewebsites.net/webindex.aspx?dbkey=MOTLEYCAD&time=202608200821052",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.motley.tx.us/page/motley.County.Clerk",
+  "county": "Motley",
+  "state": "TX"
+ },
+ "48347": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://nacocad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://nacogdoches.tx.publicsearch.us/",
+  "county": "Nacogdoches",
+  "state": "TX"
+ },
+ "48349": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.navarrocad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.navarro.tx.us/page/County.Clerk",
+  "county": "Navarro",
+  "state": "TX"
+ },
+ "48351": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://newtoncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.newton.tx.us/page/newton.County.Clerk",
+  "county": "Newton",
+  "state": "TX"
+ },
+ "48353": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.nolan-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.nolan.tx.us/page/nolan.County.Clerk",
+  "county": "Nolan",
+  "state": "TX"
+ },
+ "48355": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://nuecescad.net/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://nueces.tx.publicsearch.us/",
+  "county": "Nueces",
+  "state": "TX"
+ },
+ "48357": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.ochiltreecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.ochiltree.tx.us/page/ochiltree.County.Clerk",
+  "county": "Ochiltree",
+  "state": "TX"
+ },
+ "48359": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://oldhamcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.oldham.tx.us/page/County.Clerk",
+  "county": "Oldham",
+  "state": "TX"
+ },
+ "48361": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://orangecad.net/",
+  "county": "Orange",
+  "state": "TX"
+ },
+ "48363": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://palopintocad.org/",
+  "county": "Palo Pinto",
+  "state": "TX"
+ },
+ "48365": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.panolacad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.panola.tx.us/page/panola.County.Clerk",
+  "county": "Panola",
+  "state": "TX"
+ },
+ "48367": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.southwestdatasolution.com/webindex.aspx?dbkey=PARKERCAD&time=202608200815001",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://parkercountyclerk.com/",
+  "county": "Parker",
+  "state": "TX"
+ },
+ "48369": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://parmercad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.parmer.tx.us/page/County.Clerk",
+  "county": "Parmer",
+  "state": "TX"
+ },
+ "48371": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.pecoscad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.pecos.tx.us/department/county-clerk/",
+  "county": "Pecos",
+  "state": "TX"
+ },
+ "48373": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://polkcad.org/",
+  "county": "Polk",
+  "state": "TX"
+ },
+ "48375": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.prad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://potter.tx.publicsearch.us/",
+  "county": "Potter",
+  "state": "TX"
+ },
+ "48377": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://presidiocad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.presidio.tx.us/page/presidio.County.Clerk",
+  "county": "Presidio",
+  "state": "TX"
+ },
+ "48379": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://rainscad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.rains.tx.us/page/rains.County.Clerk",
+  "county": "Rains",
+  "state": "TX"
+ },
+ "48381": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://www.prad.org/",
+  "county": "Randall",
+  "state": "TX"
+ },
+ "48383": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "http://www.reagancad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://reagan.tx.publicsearch.us/",
+  "county": "Reagan",
+  "state": "TX"
+ },
+ "48385": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://realcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.real.tx.us/page/real.County.Clerk",
+  "county": "Real",
+  "state": "TX"
+ },
+ "48387": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://rrcad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://redriver.tx.publicsearch.us/",
+  "county": "Red River",
+  "state": "TX"
+ },
+ "48389": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.reeves-cad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://reeves.tx.publicsearch.us/",
+  "county": "Reeves",
+  "state": "TX"
+ },
+ "48391": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "http://www.refugiocad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://refugio.tx.publicsearch.us/",
+  "county": "Refugio",
+  "state": "TX"
+ },
+ "48393": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://robertscad.southwestdatasolutions.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.roberts.tx.us/page/roberts.County.Clerk",
+  "county": "Roberts",
+  "state": "TX"
+ },
+ "48395": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://robertsoncad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.robertson.tx.us/page/robertson.County.Clerk",
+  "county": "Robertson",
+  "state": "TX"
+ },
+ "48397": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://www.rockwallcad.com/",
+  "county": "Rockwall",
+  "state": "TX"
+ },
+ "48399": {
+  "_src_appraiser_url": "cad-own-site",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://runnelscad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.runnelscounty.org/page/runnels.County.Clerk",
+  "county": "Runnels",
+  "state": "TX"
+ },
+ "48401": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "http://www.ruskcad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://rusk.tx.publicsearch.us/",
+  "county": "Rusk",
+  "state": "TX"
+ },
+ "48403": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.sabinecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.sabine.tx.us/page/sabine.County.Clerk",
+  "county": "Sabine",
+  "state": "TX"
+ },
+ "48405": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.sanaugustinecad.org/",
+  "county": "San Augustine",
+  "state": "TX"
+ },
+ "48407": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://sjcad.org/",
+  "county": "San Jacinto",
+  "state": "TX"
+ },
+ "48409": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://sanpatcad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://sanpatricio.tx.publicsearch.us/",
+  "county": "San Patricio",
+  "state": "TX"
+ },
+ "48411": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.sansabacad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.sansabacounty.org/page/County.Clerk",
+  "county": "San Saba",
+  "state": "TX"
+ },
+ "48413": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.schleichercad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.schleichercounty.gov/page/County.Clerk",
+  "county": "Schleicher",
+  "state": "TX"
+ },
+ "48415": {
+  "_src_appraiser_url": "cad-own-site",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://scurrytex.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.scurry.tx.us/page/Coclerk.home",
+  "county": "Scurry",
+  "state": "TX"
+ },
+ "48417": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://shackelfordcad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.shackelfordcounty.org/page/shackelford.County.Clerk",
+  "county": "Shackelford",
+  "state": "TX"
+ },
+ "48419": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.shelbycad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.shelby.tx.us/page/shelby.County.Clerk",
+  "county": "Shelby",
+  "state": "TX"
+ },
+ "48421": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.shermancad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.shermancountytx.gov/page/County.Clerk",
+  "county": "Sherman",
+  "state": "TX"
+ },
+ "48423": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.smithcad.org",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://smith.tx.publicsearch.us/",
+  "county": "Smith",
+  "state": "TX"
+ },
+ "48425": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://somervellcad.southwestdatasolutions.com",
+  "county": "Somervell",
+  "state": "TX"
+ },
+ "48427": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://starrcad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://starr.tx.publicsearch.us/",
+  "county": "Starr",
+  "state": "TX"
+ },
+ "48429": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://stephenscad.southwestdatasolutions.com",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.stephens.tx.us/page/stephens.County.Clerk",
+  "county": "Stephens",
+  "state": "TX"
+ },
+ "48431": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.sterlingcad.org/Home/UserLockedOut",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.sterlingcotx.gov/page/County.Clerk",
+  "county": "Sterling",
+  "state": "TX"
+ },
+ "48433": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.stonewallcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.stonewallcounty.org/page/stonewall.County.Clerk",
+  "county": "Stonewall",
+  "state": "TX"
+ },
+ "48435": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://suttoncad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.sutton.tx.us/page/sutton.County.Clerk",
+  "county": "Sutton",
+  "state": "TX"
+ },
+ "48437": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://swisher-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.swisher.tx.us/page/swisher.County.Clerk",
+  "county": "Swisher",
+  "state": "TX"
+ },
+ "48439": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.tad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://tarrant.tx.publicsearch.us/",
+  "county": "Tarrant",
+  "state": "TX"
+ },
+ "48441": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://taylor-cad.org/",
+  "county": "Taylor",
+  "state": "TX"
+ },
+ "48443": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://terrellcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.terrell.tx.us/page/terrell.County.Clerk",
+  "county": "Terrell",
+  "state": "TX"
+ },
+ "48445": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.terrycad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.terry.tx.us/page/terry.County.Clerk",
+  "county": "Terry",
+  "state": "TX"
+ },
+ "48447": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.throckmortoncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.throckmortoncounty.org/page/throckmorton.countyclerk",
+  "county": "Throckmorton",
+  "state": "TX"
+ },
+ "48449": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://titus-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.titus.tx.us/page/coclerk.home",
+  "county": "Titus",
+  "state": "TX"
+ },
+ "48451": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.southwestdatasolution.com/webindex.aspx?dbkey=TOMGREENCAD&time=202608200815014",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.tomgreencountytx.gov/page/cck.CountyClerkHome",
+  "county": "Tom Green",
+  "state": "TX"
+ },
+ "48453": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://traviscad.org/",
+  "county": "Travis",
+  "state": "TX"
+ },
+ "48455": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://trinitycad.net/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.trinity.tx.us/page/trinity.County.Clerk2",
+  "county": "Trinity",
+  "state": "TX"
+ },
+ "48457": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://tylercad.net/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.tyler.tx.us/page/tyler.County.Clerk",
+  "county": "Tyler",
+  "state": "TX"
+ },
+ "48459": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://upshur-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.upshurcounty.org/departments/county_clerk.php",
+  "county": "Upshur",
+  "state": "TX"
+ },
+ "48461": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.uptoncad.org/",
+  "county": "Upton",
+  "state": "TX"
+ },
+ "48463": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://uvaldecad.org/",
+  "county": "Uvalde",
+  "state": "TX"
+ },
+ "48465": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.valverdecad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.valverdecounty.texas.gov/153/County-Clerk",
+  "county": "Val Verde",
+  "state": "TX"
+ },
+ "48467": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.vzcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.vanzandtcounty.org/page/vanzandt.County.Clerk",
+  "county": "Van Zandt",
+  "state": "TX"
+ },
+ "48469": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://victoriacad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "http://manatron.vctx.org/",
+  "county": "Victoria",
+  "state": "TX"
+ },
+ "48471": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://walkercad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://walker.tx.publicsearch.us/",
+  "county": "Walker",
+  "state": "TX"
+ },
+ "48473": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://waller-cad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.waller.tx.us/page/CC.CountyClerk",
+  "county": "Waller",
+  "state": "TX"
+ },
+ "48475": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.wardcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.ward.tx.us/page/ward.County.Clerk",
+  "county": "Ward",
+  "state": "TX"
+ },
+ "48477": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://washingtoncad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.washington.tx.us/page/washington.County.Clerk",
+  "county": "Washington",
+  "state": "TX"
+ },
+ "48479": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "kofile-county-fusion",
+  "appraiser_url": "https://www.webbcad.org/",
+  "clerk_note": "Kofile County Fusion - a multi-county recorder platform; one adapter would serve every county on it.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://countyfusion1.kofiletech.us/countyweb/loginDisplay.action?countyname=WebbTX",
+  "county": "Webb",
+  "state": "TX"
+ },
+ "48481": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.whartoncad.net/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.wharton.tx.us/page/wharton.County.Clerk",
+  "county": "Wharton",
+  "state": "TX"
+ },
+ "48483": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.wheelercad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.wheelercounty.org/page/County.Clerk",
+  "county": "Wheeler",
+  "state": "TX"
+ },
+ "48485": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://wadtx.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.wichitacounty.org/199/County-Clerk",
+  "county": "Wichita",
+  "state": "TX"
+ },
+ "48487": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "http://www.wilbargerappraisal.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.wilbarger.tx.us/page/County.Clerk",
+  "county": "Wilbarger",
+  "state": "TX"
+ },
+ "48489": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://willacycad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.willacy.tx.us/page/willacy.County.Clerk",
+  "county": "Willacy",
+  "state": "TX"
+ },
+ "48491": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://www.wcad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://williamson.tx.publicsearch.us/",
+  "county": "Williamson",
+  "state": "TX"
+ },
+ "48493": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://wilson-cad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://wilson.tx.publicsearch.us/",
+  "county": "Wilson",
+  "state": "TX"
+ },
+ "48495": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "http://www.winklercad.org/",
+  "county": "Winkler",
+  "state": "TX"
+ },
+ "48497": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "appraiser_url": "https://wise-cad.com/",
+  "county": "Wise",
+  "state": "TX"
+ },
+ "48499": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://www.woodcad.net/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.mywoodcounty.com/page/cc_home",
+  "county": "Wood",
+  "state": "TX"
+ },
+ "48501": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://yoakumcad.org/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.yoakumcounty.gov/page/County.Clerk",
+  "county": "Yoakum",
+  "state": "TX"
+ },
+ "48503": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://youngcad.org/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://young.tx.publicsearch.us/",
+  "county": "Young",
+  "state": "TX"
+ },
+ "48505": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "vendor-sweep",
+  "appraiser_url": "https://zapatacad.com/",
+  "clerk_note": "Kofile PublicSearch - one platform across many TX counties; a single adapter here would unlock deed/plat auto-download.",
+  "clerk_platform": "publicsearch",
+  "clerk_url": "https://zapata.tx.publicsearch.us/",
+  "county": "Zapata",
+  "state": "TX"
+ },
+ "48507": {
+  "_src_appraiser_url": "tx-comptroller-directory",
+  "_src_clerk_url": "official-county-clerk-page",
+  "appraiser_url": "https://zavalacad.com/",
+  "clerk_platform": "inhouse",
+  "clerk_url": "https://www.co.zavala.tx.us/page/County%20Clerk",
+  "county": "Zavala",
+  "state": "TX"
+ }
+}

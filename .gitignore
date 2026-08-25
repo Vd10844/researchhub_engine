@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# local runtime data — never commit
+jobs/
+evidence/
+*.db
+*.sqlite3
+server.log
+
+# generated contract artifacts are committed, but scratch exports are not
+contracts/_scratch/
