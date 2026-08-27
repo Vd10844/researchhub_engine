@@ -1,0 +1,12 @@
+{
+  "properties": {
+    "data": {
+      "$ref": "#/components/schemas/ResearchJob"
+    }
+  },
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "title": "DataEnvelope[ResearchJob]"
+}

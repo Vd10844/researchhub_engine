@@ -1,0 +1,22 @@
+{
+  "properties": {
+    "document_types": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Document Types",
+      "description": "Specific doc types to retry. None = retry all failed from original job."
+    }
+  },
+  "type": "object",
+  "title": "RetryResearchJobRequest",
+  "description": "Request to retry failed documents from a completed/partial/failed job.\n\nIf ``document_types`` is provided, only those types are retried.\nOtherwise, all failed documents from the original job are retried.\n\nCreates a NEW job (linked to the same order) \u2014 does not mutate the original."
+}

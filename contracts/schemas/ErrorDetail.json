@@ -1,0 +1,32 @@
+{
+  "properties": {
+    "code": {
+      "$ref": "#/components/schemas/ResearchErrorCode",
+      "description": "Machine-readable error code"
+    },
+    "message": {
+      "type": "string",
+      "title": "Message",
+      "description": "Human-readable error message"
+    },
+    "details": {
+      "anyOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Details",
+      "description": "Additional context (e.g. which doc_type failed, validation errors)"
+    }
+  },
+  "type": "object",
+  "required": [
+    "code",
+    "message"
+  ],
+  "title": "ErrorDetail",
+  "description": "Structured error response: ``{ error: { code, message, details? } }``."
+}

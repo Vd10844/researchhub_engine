@@ -1,0 +1,13 @@
+{
+  "type": "string",
+  "enum": [
+    "auto",
+    "link_only",
+    "blocked",
+    "broken",
+    "retryable",
+    "manual_review"
+  ],
+  "title": "SourceOutcome",
+  "description": "Engine-internal reliability classification for *why* a source returned what it did.\n\nThis replaces the ad-hoc if/elif chains in research.py with a single vocabulary\nthat can be filtered, monitored, and surfaced to ops dashboards.\n\nMapped from HTTP exceptions + adapter behaviour:\n  auto         \u2014 data fetched successfully (fetcher returned structured data)\n  link_only    \u2014 no auto-download exists; a deep-link was provided (by design, not failure)\n  blocked      \u2014 source returned 401/403/406/429 (WAF/bot block \u2014 opens in a real browser)\n  broken       \u2014 source returned 404/410/5xx (the URL is wrong or the server errored)\n  retryable    \u2014 source timed out or had a connection error after exhausting retries\n  manual_review \u2014 data is present but ambiguous (e.g. parcel matched via buffered\n                  point with no address confirmation); needs human eyeballs"
+}

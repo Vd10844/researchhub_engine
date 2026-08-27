@@ -1,0 +1,13 @@
+{
+  "properties": {
+    "error": {
+      "$ref": "#/components/schemas/ErrorDetail"
+    }
+  },
+  "type": "object",
+  "required": [
+    "error"
+  ],
+  "title": "ErrorEnvelope",
+  "description": "Error envelope: ``{ error: ErrorDetail }``."
+}

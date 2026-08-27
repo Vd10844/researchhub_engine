@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "enum": [
+    "high",
+    "medium",
+    "low",
+    "none"
+  ],
+  "title": "Confidence",
+  "description": "How sure the engine is that the result actually pertains to the searched property."
+}

@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "reason": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Reason",
+      "description": "Optional cancellation reason (for audit trail)."
+    }
+  },
+  "type": "object",
+  "title": "CancelJobRequest",
+  "description": "Request to cancel a running/queued job.\n\nIn-flight documents complete their current step; queued documents are skipped.\nThe job transitions to ``cancelled``."
+}

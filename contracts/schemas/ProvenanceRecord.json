@@ -1,0 +1,71 @@
+{
+  "properties": {
+    "source_id": {
+      "type": "string",
+      "title": "Source Id",
+      "description": "Unique source identifier, e.g. 'parcel.state_fl', 'fema.nfhl'"
+    },
+    "provider": {
+      "type": "string",
+      "title": "Provider",
+      "description": "How the data was obtained: arcgis-rest, census, playwright, etc.",
+      "default": ""
+    },
+    "url": {
+      "type": "string",
+      "title": "Url",
+      "description": "Source URL or endpoint hit",
+      "default": ""
+    },
+    "retrieved_utc": {
+      "type": "string",
+      "title": "Retrieved Utc",
+      "description": "ISO-8601 timestamp of the retrieval",
+      "default": ""
+    },
+    "attempt": {
+      "type": "integer",
+      "title": "Attempt",
+      "description": "Which attempt succeeded (1-based)",
+      "default": 1
+    },
+    "fallback_chain": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "title": "Fallback Chain",
+      "description": "Ordered list of source_ids tried before success"
+    },
+    "file": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "File",
+      "description": "Relative path of saved artifact within the job folder"
+    },
+    "sha256": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Sha256",
+      "description": "SHA-256 digest of the saved artifact (if any)"
+    }
+  },
+  "type": "object",
+  "required": [
+    "source_id"
+  ],
+  "title": "ProvenanceRecord",
+  "description": "Where this piece of data came from \u2014 stamped by the engine, not by adapters."
+}

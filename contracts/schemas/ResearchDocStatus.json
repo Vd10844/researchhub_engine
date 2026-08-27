@@ -1,0 +1,14 @@
+{
+  "type": "string",
+  "enum": [
+    "queued",
+    "fetching",
+    "fetched",
+    "uploading",
+    "uploaded",
+    "failed",
+    "skipped"
+  ],
+  "title": "ResearchDocStatus",
+  "description": "Per-document progress \u2014 tracked in ``research_documents.status``.\n\nTransitions:\n  queued    \u2192 fetching        (worker starts this document)\n  fetching  \u2192 fetched         (orchestrator returned data)\n  fetching  \u2192 failed          (adapter error after retries)\n  fetched   \u2192 uploading       (S3 upload started)\n  uploading \u2192 uploaded        (S3 upload complete + OrderFile created)\n  uploading \u2192 failed          (S3 upload error)\n  queued    \u2192 skipped         (doc type not applicable to this order)"
+}

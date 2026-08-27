@@ -1,0 +1,37 @@
+{
+  "properties": {
+    "order_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Order Id",
+      "description": "Order to research"
+    },
+    "document_types": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "title": "Document Types",
+      "description": "Document types to fetch, e.g. ['PARCEL_RECORD', 'FLOOD']. Empty = fetch all applicable types for the order's survey type."
+    },
+    "idempotency_key": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uuid"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Idempotency Key",
+      "description": "Client-generated idempotency key. Auto-generated if not provided."
+    }
+  },
+  "type": "object",
+  "required": [
+    "order_id"
+  ],
+  "title": "CreateResearchJobRequest",
+  "description": "Request to start a research job for an order.\n\n``document_types`` is the list of document types to fetch (from the\nsource registry). If empty, all applicable types are fetched.\n\n``idempotency_key`` is optional; if omitted, the server generates one.\nDuplicate requests with the same key return the existing job."
+}

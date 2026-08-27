@@ -1702,6 +1702,357 @@
         }
       }
     },
+    "/api/v1/research/jobs": {
+      "post": {
+        "tags": [
+          "research"
+        ],
+        "summary": "Create a research job",
+        "description": "Starts auto-fetching documents for an order. Accepts a list of document types (from the source registry). Returns the created job with per-document status.",
+        "operationId": "create_research_job_api_v1_research_jobs_post",
+        "parameters": [
+          {
+            "name": "X-Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateResearchJobRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataEnvelope_ResearchJob_"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Order not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Idempotency conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/research/jobs/{job_id}": {
+      "get": {
+        "tags": [
+          "research"
+        ],
+        "summary": "Get research job status",
+        "description": "Returns the job metadata and per-document progress. Poll this endpoint to track job completion.",
+        "operationId": "get_research_job_api_v1_research_jobs__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataEnvelope_ResearchJob_"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Job not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/research/jobs/{job_id}/retry": {
+      "post": {
+        "tags": [
+          "research"
+        ],
+        "summary": "Retry failed documents",
+        "description": "Creates a new research job with the failed document types from the original job. The original job is not mutated.",
+        "operationId": "retry_research_job_api_v1_research_jobs__job_id__retry_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/RetryResearchJobRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataEnvelope_ResearchJob_"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Job not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Job not retryable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/research/jobs/{job_id}/cancel": {
+      "post": {
+        "tags": [
+          "research"
+        ],
+        "summary": "Cancel a research job",
+        "description": "Cancels a running/queued job. In-flight documents complete their current step; queued documents are skipped.",
+        "operationId": "cancel_research_job_api_v1_research_jobs__job_id__cancel_post",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/CancelJobRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataEnvelope_ResearchJob_"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Job not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Job not cancellable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/research/orders/{order_id}/jobs": {
+      "get": {
+        "tags": [
+          "research"
+        ],
+        "summary": "List research jobs for an order",
+        "description": "Returns all research jobs for the given order, newest first.",
+        "operationId": "list_order_jobs_api_v1_research_orders__order_id__jobs_get",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Order Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataEnvelope_list_ResearchJob__"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/health": {
       "get": {
         "summary": "Health",
@@ -2612,7 +2963,7 @@
           },
           "file": {
             "type": "string",
-            "contentMediaType": "application/octet-stream",
+            "format": "binary",
             "title": "File"
           }
         },
@@ -2629,7 +2980,7 @@
           "files": {
             "items": {
               "type": "string",
-              "contentMediaType": "application/octet-stream"
+              "format": "binary"
             },
             "type": "array",
             "title": "Files"
@@ -2651,6 +3002,101 @@
         ],
         "title": "Body_upload_documents_api_v2_orders__order_id__documents_post"
       },
+      "CancelJobRequest": {
+        "properties": {
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason",
+            "description": "Optional cancellation reason (for audit trail)."
+          }
+        },
+        "type": "object",
+        "title": "CancelJobRequest",
+        "description": "Request to cancel a running/queued job.\n\nIn-flight documents complete their current step; queued documents are skipped.\nThe job transitions to ``cancelled``."
+      },
+      "Confidence": {
+        "type": "string",
+        "enum": [
+          "high",
+          "medium",
+          "low",
+          "none"
+        ],
+        "title": "Confidence",
+        "description": "How sure the engine is that the result actually pertains to the searched property."
+      },
+      "CreateResearchJobRequest": {
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Order Id",
+            "description": "Order to research"
+          },
+          "document_types": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Document Types",
+            "description": "Document types to fetch, e.g. ['PARCEL_RECORD', 'FLOOD']. Empty = fetch all applicable types for the order's survey type."
+          },
+          "idempotency_key": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Idempotency Key",
+            "description": "Client-generated idempotency key. Auto-generated if not provided."
+          }
+        },
+        "type": "object",
+        "required": [
+          "order_id"
+        ],
+        "title": "CreateResearchJobRequest",
+        "description": "Request to start a research job for an order.\n\n``document_types`` is the list of document types to fetch (from the\nsource registry). If empty, all applicable types are fetched.\n\n``idempotency_key`` is optional; if omitted, the server generates one.\nDuplicate requests with the same key return the existing job."
+      },
+      "DataEnvelope_ResearchJob_": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ResearchJob"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "title": "DataEnvelope[ResearchJob]"
+      },
+      "DataEnvelope_list_ResearchJob__": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/ResearchJob"
+            },
+            "type": "array",
+            "title": "Data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "data"
+        ],
+        "title": "DataEnvelope[list[ResearchJob]]"
+      },
       "DocPatch": {
         "properties": {
           "doc_type": {
@@ -2661,6 +3107,51 @@
         },
         "type": "object",
         "title": "DocPatch"
+      },
+      "ErrorDetail": {
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ResearchErrorCode",
+            "description": "Machine-readable error code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable error message"
+          },
+          "details": {
+            "anyOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Details",
+            "description": "Additional context (e.g. which doc_type failed, validation errors)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorDetail",
+        "description": "Structured error response: ``{ error: { code, message, details? } }``."
+      },
+      "ErrorEnvelope": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetail"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ErrorEnvelope",
+        "description": "Error envelope: ``{ error: ErrorDetail }``."
       },
       "EvidenceItem": {
         "properties": {
@@ -2758,6 +3249,59 @@
           "verdict"
         ],
         "title": "FeedbackRequest"
+      },
+      "FileReference": {
+        "properties": {
+          "file_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "File Id",
+            "description": "Evidence module File.id"
+          },
+          "order_file_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Order File Id",
+            "description": "OrderFile.id linking this file to the order"
+          },
+          "key": {
+            "type": "string",
+            "title": "Key",
+            "description": "S3 object key: tenants/{tenant}/orders/{order}/research/{file_id}/{name}"
+          },
+          "filename": {
+            "type": "string",
+            "title": "Filename",
+            "description": "Original filename"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "title": "Size Bytes",
+            "description": "File size in bytes"
+          },
+          "sha256": {
+            "type": "string",
+            "title": "Sha256",
+            "description": "SHA-256 digest of the file",
+            "default": ""
+          },
+          "mime_type": {
+            "type": "string",
+            "title": "Mime Type",
+            "description": "MIME type",
+            "default": "application/pdf"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file_id",
+          "order_file_id",
+          "key",
+          "filename",
+          "size_bytes"
+        ],
+        "title": "FileReference",
+        "description": "Reference to a file stored in S3 via the evidence module."
       },
       "HTTPValidationError": {
         "properties": {
@@ -2862,12 +3406,10 @@
             "title": "Lot Area Sqft"
           },
           "client": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Client"
           },
           "access_contact": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Access Contact"
           },
@@ -3014,12 +3556,10 @@
             "title": "Lot Area Sqft"
           },
           "client": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Client"
           },
           "access_contact": {
-            "additionalProperties": true,
             "type": "object",
             "title": "Access Contact"
           },
@@ -3091,6 +3631,77 @@
         "title": "OrderPatch",
         "description": "Partial update: only the fields actually sent are applied, so nothing is required."
       },
+      "ProvenanceRecord": {
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "title": "Source Id",
+            "description": "Unique source identifier, e.g. 'parcel.state_fl', 'fema.nfhl'"
+          },
+          "provider": {
+            "type": "string",
+            "title": "Provider",
+            "description": "How the data was obtained: arcgis-rest, census, playwright, etc.",
+            "default": ""
+          },
+          "url": {
+            "type": "string",
+            "title": "Url",
+            "description": "Source URL or endpoint hit",
+            "default": ""
+          },
+          "retrieved_utc": {
+            "type": "string",
+            "title": "Retrieved Utc",
+            "description": "ISO-8601 timestamp of the retrieval",
+            "default": ""
+          },
+          "attempt": {
+            "type": "integer",
+            "title": "Attempt",
+            "description": "Which attempt succeeded (1-based)",
+            "default": 1
+          },
+          "fallback_chain": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Fallback Chain",
+            "description": "Ordered list of source_ids tried before success"
+          },
+          "file": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File",
+            "description": "Relative path of saved artifact within the job folder"
+          },
+          "sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sha256",
+            "description": "SHA-256 digest of the saved artifact (if any)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_id"
+        ],
+        "title": "ProvenanceRecord",
+        "description": "Where this piece of data came from \u2014 stamped by the engine, not by adapters."
+      },
       "ReasonIn": {
         "properties": {
           "reason": {
@@ -3101,6 +3712,347 @@
         },
         "type": "object",
         "title": "ReasonIn"
+      },
+      "ResearchDocStatus": {
+        "type": "string",
+        "enum": [
+          "queued",
+          "fetching",
+          "fetched",
+          "uploading",
+          "uploaded",
+          "failed",
+          "skipped"
+        ],
+        "title": "ResearchDocStatus",
+        "description": "Per-document progress \u2014 tracked in ``research_documents.status``.\n\nTransitions:\n  queued    \u2192 fetching        (worker starts this document)\n  fetching  \u2192 fetched         (orchestrator returned data)\n  fetching  \u2192 failed          (adapter error after retries)\n  fetched   \u2192 uploading       (S3 upload started)\n  uploading \u2192 uploaded        (S3 upload complete + OrderFile created)\n  uploading \u2192 failed          (S3 upload error)\n  queued    \u2192 skipped         (doc type not applicable to this order)"
+      },
+      "ResearchDocument": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id",
+            "description": "research_documents.id"
+          },
+          "doc_type": {
+            "type": "string",
+            "title": "Doc Type",
+            "description": "Document type, e.g. 'PARCEL_RECORD'"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ResearchDocStatus",
+            "description": "Current status of this document"
+          },
+          "source_outcome": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourceOutcome"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Why the source returned what it did (after fetch completes)"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Confidence"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "How sure the engine is that this pertains to the property"
+          },
+          "file": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FileReference"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "File reference (set after S3 upload completes)"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary",
+            "description": "One-line summary of what was found",
+            "default": ""
+          },
+          "link": {
+            "type": "string",
+            "title": "Link",
+            "description": "Fallback deep-link when auto-fetch is not available",
+            "default": ""
+          },
+          "link_label": {
+            "type": "string",
+            "title": "Link Label",
+            "description": "Display text for the link button",
+            "default": ""
+          },
+          "provenance": {
+            "items": {
+              "$ref": "#/components/schemas/ProvenanceRecord"
+            },
+            "type": "array",
+            "title": "Provenance",
+            "description": "Audit trail: every source hit that contributed to this document"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings",
+            "description": "Per-document warnings (e.g. 'buffered match, verify location')"
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResearchErrorCode"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Structured error code when status == 'failed'"
+          },
+          "error_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Message",
+            "description": "Human-readable error when status == 'failed'"
+          },
+          "retryable": {
+            "type": "boolean",
+            "title": "Retryable",
+            "description": "Whether this document can be retried",
+            "default": true
+          },
+          "retry_count": {
+            "type": "integer",
+            "title": "Retry Count",
+            "description": "Number of retry attempts",
+            "default": 0
+          },
+          "fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fetched At",
+            "description": "Timestamp when the fetch completed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "doc_type",
+          "status"
+        ],
+        "title": "ResearchDocument",
+        "description": "Per-document status within a research job.\n\nOne row per requested document type. Tracks fetch \u2192 upload \u2192 OrderFile creation."
+      },
+      "ResearchErrorCode": {
+        "type": "string",
+        "enum": [
+          "ORDER_NOT_FOUND",
+          "ORDER_NOT_RESEARCHABLE",
+          "INVALID_DOC_TYPES",
+          "JOB_NOT_FOUND",
+          "JOB_NOT_RETRYABLE",
+          "JOB_NOT_CANCELLABLE",
+          "IDEMPOTENCY_CONFLICT",
+          "MISSING_ADDRESS",
+          "GEOCODE_FAILED",
+          "PARCEL_NOT_FOUND",
+          "DEED_UNAVAILABLE",
+          "PLAT_UNAVAILABLE",
+          "FLOOD_UNAVAILABLE",
+          "APPRAISER_UNAVAILABLE",
+          "SOURCE_UNAVAILABLE",
+          "S3_UPLOAD_FAILED",
+          "TIMEOUT",
+          "INTERNAL_ERROR",
+          "RATE_LIMITED"
+        ],
+        "title": "ResearchErrorCode",
+        "description": "Machine-readable error codes for the ``error.code`` field.\n\nGrouped by source:\n  - Client errors (4xx): bad input, conflicts, not found\n  - Document errors (per-document): adapter-specific failures\n  - System errors (5xx): internal, rate-limited, timeout"
+      },
+      "ResearchJob": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id",
+            "description": "research_jobs.id"
+          },
+          "order_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Order Id",
+            "description": "Order this job belongs to"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ResearchJobStatus",
+            "description": "Job lifecycle status"
+          },
+          "requested_doc_types": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Requested Doc Types",
+            "description": "Document types originally requested"
+          },
+          "total_documents": {
+            "type": "integer",
+            "title": "Total Documents",
+            "description": "Total documents in this job"
+          },
+          "fetched_documents": {
+            "type": "integer",
+            "title": "Fetched Documents",
+            "description": "Documents successfully fetched",
+            "default": 0
+          },
+          "uploaded_documents": {
+            "type": "integer",
+            "title": "Uploaded Documents",
+            "description": "Documents uploaded to S3",
+            "default": 0
+          },
+          "failed_documents": {
+            "type": "integer",
+            "title": "Failed Documents",
+            "description": "Documents that failed",
+            "default": 0
+          },
+          "cancelled_documents": {
+            "type": "integer",
+            "title": "Cancelled Documents",
+            "description": "Documents skipped due to cancellation",
+            "default": 0
+          },
+          "documents": {
+            "items": {
+              "$ref": "#/components/schemas/ResearchDocument"
+            },
+            "type": "array",
+            "title": "Documents",
+            "description": "Per-document status (included in single-job GET)"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At",
+            "description": "When the job started running"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At",
+            "description": "When the job completed/failed/cancelled"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "description": "Job creation timestamp"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At",
+            "description": "Last update timestamp"
+          },
+          "created_by": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Created By",
+            "description": "User who created this job"
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResearchErrorCode"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Top-level error when status == 'failed'"
+          },
+          "error_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Message",
+            "description": "Top-level error message when status == 'failed'"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "order_id",
+          "status",
+          "requested_doc_types",
+          "total_documents",
+          "created_at",
+          "updated_at",
+          "created_by"
+        ],
+        "title": "ResearchJob",
+        "description": "Research job \u2014 the top-level resource returned by GET /research/jobs/{id}.\n\nContains the job metadata + per-document progress in ``documents[]``."
+      },
+      "ResearchJobStatus": {
+        "type": "string",
+        "enum": [
+          "queued",
+          "running",
+          "completed",
+          "partial",
+          "failed",
+          "cancelling",
+          "cancelled"
+        ],
+        "title": "ResearchJobStatus",
+        "description": "Lifecycle of a research job \u2014 persisted in ``research_jobs.status``.\n\nTransitions:\n  queued   \u2192 running          (Celery worker picks it up)\n  running  \u2192 completed        (all adapters returned designed outcome)\n  running  \u2192 partial          (\u22651 adapter hit an unexpected failure)\n  running  \u2192 failed           (context resolution failed \u2014 no geocode, no parcel)\n  running  \u2192 cancelled        (user cancelled via API)\n  *        \u2192 cancelling       (cancel requested, waiting for in-flight work to stop)"
       },
       "ResearchRequest": {
         "properties": {
@@ -3157,6 +4109,41 @@
         "type": "object",
         "title": "ResearchRequest"
       },
+      "RetryResearchJobRequest": {
+        "properties": {
+          "document_types": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Types",
+            "description": "Specific doc types to retry. None = retry all failed from original job."
+          }
+        },
+        "type": "object",
+        "title": "RetryResearchJobRequest",
+        "description": "Request to retry failed documents from a completed/partial/failed job.\n\nIf ``document_types`` is provided, only those types are retried.\nOtherwise, all failed documents from the original job are retried.\n\nCreates a NEW job (linked to the same order) \u2014 does not mutate the original."
+      },
+      "SourceOutcome": {
+        "type": "string",
+        "enum": [
+          "auto",
+          "link_only",
+          "blocked",
+          "broken",
+          "retryable",
+          "manual_review"
+        ],
+        "title": "SourceOutcome",
+        "description": "Engine-internal reliability classification for *why* a source returned what it did.\n\nThis replaces the ad-hoc if/elif chains in research.py with a single vocabulary\nthat can be filtered, monitored, and surfaced to ops dashboards.\n\nMapped from HTTP exceptions + adapter behaviour:\n  auto         \u2014 data fetched successfully (fetcher returned structured data)\n  link_only    \u2014 no auto-download exists; a deep-link was provided (by design, not failure)\n  blocked      \u2014 source returned 401/403/406/429 (WAF/bot block \u2014 opens in a real browser)\n  broken       \u2014 source returned 404/410/5xx (the URL is wrong or the server errored)\n  retryable    \u2014 source timed out or had a connection error after exhausting retries\n  manual_review \u2014 data is present but ambiguous (e.g. parcel matched via buffered\n                  point with no address confirmation); needs human eyeballs"
+      },
       "SubmitIn": {
         "properties": {
           "note": {
@@ -3191,13 +4178,6 @@
           "type": {
             "type": "string",
             "title": "Error Type"
-          },
-          "input": {
-            "title": "Input"
-          },
-          "ctx": {
-            "type": "object",
-            "title": "Context"
           }
         },
         "type": "object",

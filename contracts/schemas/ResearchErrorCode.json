@@ -1,0 +1,26 @@
+{
+  "type": "string",
+  "enum": [
+    "ORDER_NOT_FOUND",
+    "ORDER_NOT_RESEARCHABLE",
+    "INVALID_DOC_TYPES",
+    "JOB_NOT_FOUND",
+    "JOB_NOT_RETRYABLE",
+    "JOB_NOT_CANCELLABLE",
+    "IDEMPOTENCY_CONFLICT",
+    "MISSING_ADDRESS",
+    "GEOCODE_FAILED",
+    "PARCEL_NOT_FOUND",
+    "DEED_UNAVAILABLE",
+    "PLAT_UNAVAILABLE",
+    "FLOOD_UNAVAILABLE",
+    "APPRAISER_UNAVAILABLE",
+    "SOURCE_UNAVAILABLE",
+    "S3_UPLOAD_FAILED",
+    "TIMEOUT",
+    "INTERNAL_ERROR",
+    "RATE_LIMITED"
+  ],
+  "title": "ResearchErrorCode",
+  "description": "Machine-readable error codes for the ``error.code`` field.\n\nGrouped by source:\n  - Client errors (4xx): bad input, conflicts, not found\n  - Document errors (per-document): adapter-specific failures\n  - System errors (5xx): internal, rate-limited, timeout"
+}

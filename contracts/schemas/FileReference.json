@@ -1,0 +1,53 @@
+{
+  "properties": {
+    "file_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "File Id",
+      "description": "Evidence module File.id"
+    },
+    "order_file_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Order File Id",
+      "description": "OrderFile.id linking this file to the order"
+    },
+    "key": {
+      "type": "string",
+      "title": "Key",
+      "description": "S3 object key: tenants/{tenant}/orders/{order}/research/{file_id}/{name}"
+    },
+    "filename": {
+      "type": "string",
+      "title": "Filename",
+      "description": "Original filename"
+    },
+    "size_bytes": {
+      "type": "integer",
+      "title": "Size Bytes",
+      "description": "File size in bytes"
+    },
+    "sha256": {
+      "type": "string",
+      "title": "Sha256",
+      "description": "SHA-256 digest of the file",
+      "default": ""
+    },
+    "mime_type": {
+      "type": "string",
+      "title": "Mime Type",
+      "description": "MIME type",
+      "default": "application/pdf"
+    }
+  },
+  "type": "object",
+  "required": [
+    "file_id",
+    "order_file_id",
+    "key",
+    "filename",
+    "size_bytes"
+  ],
+  "title": "FileReference",
+  "description": "Reference to a file stored in S3 via the evidence module."
+}

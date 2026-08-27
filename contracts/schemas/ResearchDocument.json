@@ -1,0 +1,142 @@
+{
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id",
+      "description": "research_documents.id"
+    },
+    "doc_type": {
+      "type": "string",
+      "title": "Doc Type",
+      "description": "Document type, e.g. 'PARCEL_RECORD'"
+    },
+    "status": {
+      "$ref": "#/components/schemas/ResearchDocStatus",
+      "description": "Current status of this document"
+    },
+    "source_outcome": {
+      "anyOf": [
+        {
+          "$ref": "#/components/schemas/SourceOutcome"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Why the source returned what it did (after fetch completes)"
+    },
+    "confidence": {
+      "anyOf": [
+        {
+          "$ref": "#/components/schemas/Confidence"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "How sure the engine is that this pertains to the property"
+    },
+    "file": {
+      "anyOf": [
+        {
+          "$ref": "#/components/schemas/FileReference"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "File reference (set after S3 upload completes)"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Summary",
+      "description": "One-line summary of what was found",
+      "default": ""
+    },
+    "link": {
+      "type": "string",
+      "title": "Link",
+      "description": "Fallback deep-link when auto-fetch is not available",
+      "default": ""
+    },
+    "link_label": {
+      "type": "string",
+      "title": "Link Label",
+      "description": "Display text for the link button",
+      "default": ""
+    },
+    "provenance": {
+      "items": {
+        "$ref": "#/components/schemas/ProvenanceRecord"
+      },
+      "type": "array",
+      "title": "Provenance",
+      "description": "Audit trail: every source hit that contributed to this document"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "title": "Warnings",
+      "description": "Per-document warnings (e.g. 'buffered match, verify location')"
+    },
+    "error_code": {
+      "anyOf": [
+        {
+          "$ref": "#/components/schemas/ResearchErrorCode"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Structured error code when status == 'failed'"
+    },
+    "error_message": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Error Message",
+      "description": "Human-readable error when status == 'failed'"
+    },
+    "retryable": {
+      "type": "boolean",
+      "title": "Retryable",
+      "description": "Whether this document can be retried",
+      "default": true
+    },
+    "retry_count": {
+      "type": "integer",
+      "title": "Retry Count",
+      "description": "Number of retry attempts",
+      "default": 0
+    },
+    "fetched_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Fetched At",
+      "description": "Timestamp when the fetch completed"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "doc_type",
+    "status"
+  ],
+  "title": "ResearchDocument",
+  "description": "Per-document status within a research job.\n\nOne row per requested document type. Tracks fetch \u2192 upload \u2192 OrderFile creation."
+}

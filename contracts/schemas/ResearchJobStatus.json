@@ -1,0 +1,14 @@
+{
+  "type": "string",
+  "enum": [
+    "queued",
+    "running",
+    "completed",
+    "partial",
+    "failed",
+    "cancelling",
+    "cancelled"
+  ],
+  "title": "ResearchJobStatus",
+  "description": "Lifecycle of a research job \u2014 persisted in ``research_jobs.status``.\n\nTransitions:\n  queued   \u2192 running          (Celery worker picks it up)\n  running  \u2192 completed        (all adapters returned designed outcome)\n  running  \u2192 partial          (\u22651 adapter hit an unexpected failure)\n  running  \u2192 failed           (context resolution failed \u2014 no geocode, no parcel)\n  running  \u2192 cancelled        (user cancelled via API)\n  *        \u2192 cancelling       (cancel requested, waiting for in-flight work to stop)"
+}

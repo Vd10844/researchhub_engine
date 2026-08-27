@@ -1,0 +1,145 @@
+{
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id",
+      "description": "research_jobs.id"
+    },
+    "order_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Order Id",
+      "description": "Order this job belongs to"
+    },
+    "status": {
+      "$ref": "#/components/schemas/ResearchJobStatus",
+      "description": "Job lifecycle status"
+    },
+    "requested_doc_types": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "title": "Requested Doc Types",
+      "description": "Document types originally requested"
+    },
+    "total_documents": {
+      "type": "integer",
+      "title": "Total Documents",
+      "description": "Total documents in this job"
+    },
+    "fetched_documents": {
+      "type": "integer",
+      "title": "Fetched Documents",
+      "description": "Documents successfully fetched",
+      "default": 0
+    },
+    "uploaded_documents": {
+      "type": "integer",
+      "title": "Uploaded Documents",
+      "description": "Documents uploaded to S3",
+      "default": 0
+    },
+    "failed_documents": {
+      "type": "integer",
+      "title": "Failed Documents",
+      "description": "Documents that failed",
+      "default": 0
+    },
+    "cancelled_documents": {
+      "type": "integer",
+      "title": "Cancelled Documents",
+      "description": "Documents skipped due to cancellation",
+      "default": 0
+    },
+    "documents": {
+      "items": {
+        "$ref": "#/components/schemas/ResearchDocument"
+      },
+      "type": "array",
+      "title": "Documents",
+      "description": "Per-document status (included in single-job GET)"
+    },
+    "started_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Started At",
+      "description": "When the job started running"
+    },
+    "completed_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Completed At",
+      "description": "When the job completed/failed/cancelled"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At",
+      "description": "Job creation timestamp"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Updated At",
+      "description": "Last update timestamp"
+    },
+    "created_by": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Created By",
+      "description": "User who created this job"
+    },
+    "error_code": {
+      "anyOf": [
+        {
+          "$ref": "#/components/schemas/ResearchErrorCode"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Top-level error when status == 'failed'"
+    },
+    "error_message": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Error Message",
+      "description": "Top-level error message when status == 'failed'"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "order_id",
+    "status",
+    "requested_doc_types",
+    "total_documents",
+    "created_at",
+    "updated_at",
+    "created_by"
+  ],
+  "title": "ResearchJob",
+  "description": "Research job \u2014 the top-level resource returned by GET /research/jobs/{id}.\n\nContains the job metadata + per-document progress in ``documents[]``."
+}

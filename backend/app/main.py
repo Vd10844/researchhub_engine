@@ -15,9 +15,11 @@ from . import db
 # Importing the QuickPlot package registers its ORM models on db.Base, so init_db() below
 # creates the qp_* tables in the same pass as the v1 index tables.
 from .quickplot import router as quickplot_router
+from .engine.router import router as research_router
 
 app = FastAPI(title=APP_NAME, version="1.0.0")
 app.include_router(quickplot_router)
+app.include_router(research_router)
 
 # Create the index/analytics tables at startup (SQLite in dev, Postgres in prod). Best-effort:
 # the filesystem is the source of truth, so a DB problem must never stop the app from serving.
