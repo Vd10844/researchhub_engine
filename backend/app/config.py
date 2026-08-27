@@ -50,6 +50,17 @@ class Settings(BaseSettings):
     # --- HTTP client -------------------------------------------------
     HTTP_TIMEOUT_SECONDS: int = 30
 
+    # --- legacy POC names the service modules still read -----------------
+    # (downloader.py / http.py import these directly; keep them in sync with
+    #  HTTP_TIMEOUT_SECONDS — they are part of the services' existing contract)
+    HTTP_TIMEOUT: int = 30
+    USER_AGENT: str = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125 Safari/537.36"
+
+    # --- staged research jobs ------------------------------------------
+    JOBS_DIR: str = str(
+        (__import__("pathlib").Path(__file__).resolve().parents[2] / "data" / "jobs")
+    )
+
     @property
     def cors_origins_list(self) -> list[str]:
         return [o.strip() for o in self.CORS_ORIGINS.split(",") if o.strip()]
@@ -61,3 +72,9 @@ def get_settings() -> Settings:
 
 
 settings = get_settings()
+
+# Module-level aliases the legacy service modules import directly
+# (`from ..config import HTTP_TIMEOUT, USER_AGENT`).  Keep these in sync with
+# the Settings fields above.
+HTTP_TIMEOUT = settings.HTTP_TIMEOUT
+USER_AGENT = settings.USER_AGENT

@@ -203,3 +203,11 @@ class ResearchResult(BaseModel):
         default=JobState.completed,
         description="Persisted lifecycle state of this job (new)",
     )
+    docs_dir: Optional[str] = Field(
+        default=None,
+        description="Additive: research staging directory containing documents/ (internal)",
+    )
+    survey_type: str = Field(
+        default="",
+        description="Additive: survey type passed into the run (e.g. Residential Land Survey)",
+    )
