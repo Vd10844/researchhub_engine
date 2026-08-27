@@ -9,12 +9,18 @@ python-multipart==0.0.9
 sqlalchemy==2.0.46
 alembic==1.13.2
 psycopg2-binary==2.9.10
-# psycopg 3.x binary — parent uses ^3.2.0; only needed for real Postgres
 psycopg[binary]>=3.2.0
 
 # --- HTTP -----------------------------------------------------------------
 httpx==0.28.1
-requests>=2.32              # us only (Playwright deps, not in parent)
+requests>=2.32
+
+# --- Queue / worker --------------------------------------------------------
+celery==5.4.0
+redis==5.0.7
+
+# --- S3 -------------------------------------------------------------------
+boto3>=1.34
 
 # --- Engine-only (parent does NOT use these) ------------------------------
 pillow>=11.0                # flood map compositing

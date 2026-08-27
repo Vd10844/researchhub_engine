@@ -24,7 +24,7 @@ load_dotenv()
 config = context.config
 
 # SAFE DATABASE URL (No Pydantic dependency)
-database_url = os.getenv("DATABASE_URL", "sqlite:///./test.db")
+database_url = os.getenv("DATABASE_URL", "postgresql+psycopg://postgres:postgres@localhost:5432/researchhub")
 config.set_main_option("sqlalchemy.url", database_url)
 
 # -------------------------------
@@ -34,14 +34,12 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # -------------------------------
-# IMPORT DB + MODELES
+# IMPORT DB + MODELS
 # -------------------------------
-# TODO: Uncomment when we have a Base defined
-# from app.db.base import Base
-# target_metadata = Base.metadata
+from app.db.base import Base  # noqa: E402
+import app.engine.models  # noqa: E402,F401  (register tables)
 
-# Placeholder until models are defined
-target_metadata = None
+target_metadata = Base.metadata
 
 
 def run_migrations_offline() -> None:
@@ -63,9 +61,7 @@ def run_migrations_online() -> None:
         poolclass=pool.NullPool,
     )
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
         with context.begin_transaction():
             context.run_migrations()
 

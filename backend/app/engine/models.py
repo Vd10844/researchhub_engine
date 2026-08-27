@@ -71,18 +71,25 @@ class ResearchJob(
             "idempotency_key",
             name="uq_research_job_idempotency_per_tenant",
         ),
-        # A job cannot have zero document types.
-        CheckConstraint(
-            "jsonb_array_length(requested_doc_types) > 0",
-            name="ck_research_job_nonempty_doc_types",
-        ),
+        # Non-empty doc types is enforced in the service layer
+        # (_validate_doc_types) so the constraint stays dialect-portable.
     )
 
-    # --- foreign keys ------------------------------------------------
+    # --- tenant / order references -----------------------------------
+    # During integration into the parent repo, these become FKs:
+    #   order_id  → orders.id (CASCADE)
+    #   tenant_id → tenants.id (RESTRICT, via TenantMixin)
+    # The tenant_id below overrides TenantMixin's FK so the standalone
+    # engine is self-contained and fully testable offline (SQLite).
 
+    tenant_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        nullable=False,
+        index=True,
+        comment="Tenant isolation key.",
+    )
     order_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("orders.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
         comment="Order this research job belongs to.",
@@ -184,8 +191,9 @@ class ResearchJob(
     )
 
     # --- relationships -----------------------------------------------
+    # `order` → parent's Order model is removed; re-added during integration.
+    # `file`  → parent's File model is removed; re-added during integration.
 
-    order: Mapped["Order"] = relationship()
     documents: Mapped[list["ResearchDocument"]] = relationship(
         back_populates="job",
         cascade="all, delete-orphan",
@@ -213,6 +221,9 @@ class ResearchDocument(Base, TimestampMixin, SoftDeleteMixin):
     )
 
     # --- foreign keys ------------------------------------------------
+    #   job_id  → research_jobs.id (CASCADE)  [local FK, kept]
+    #   order_id / file_id / order_file_id → parent tables (plain UUID
+    #   columns here; FKs restored during integration into the parent repo)
 
     job_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
@@ -223,7 +234,6 @@ class ResearchDocument(Base, TimestampMixin, SoftDeleteMixin):
     )
     order_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("orders.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
         comment="Denormalized order reference for direct queries.",
@@ -276,14 +286,14 @@ class ResearchDocument(Base, TimestampMixin, SoftDeleteMixin):
 
     file_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("files.id"),
         nullable=True,
+        index=True,
         comment="Evidence module File.id (set after S3 upload).",
     )
     order_file_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("order_files.id"),
         nullable=True,
+        index=True,
         comment="OrderFile.id linking this file to the order.",
     )
 
@@ -365,4 +375,3 @@ class ResearchDocument(Base, TimestampMixin, SoftDeleteMixin):
     # --- relationships -----------------------------------------------
 
     job: Mapped["ResearchJob"] = relationship(back_populates="documents")
-    file: Mapped["File"] = relationship()

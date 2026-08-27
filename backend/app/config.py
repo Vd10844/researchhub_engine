@@ -1,53 +1,63 @@
-"""Central configuration."""
-import os
-import pathlib
+"""Application settings — loaded from environment variables.
 
-# Where fetched job research folders are written.
-# Default: a "jobs" folder next to the backend. Override with SURVEY_JOBS_DIR.
-JOBS_DIR = pathlib.Path(
-    os.environ.get(
-        "SURVEY_JOBS_DIR",
-        pathlib.Path(__file__).resolve().parents[2] / "jobs",
-    )
-).resolve()
-JOBS_DIR.mkdir(parents=True, exist_ok=True)
+All secrets must come from the environment; never hardcode values in code.
+Compatible with the parent repo's naming so the engine can be dropped into
+the parent's deployment unchanged.
+"""
+from __future__ import annotations
 
-# Evidence Locker — curated documents a researcher sends downstream for an order, keyed by
-# order number. Sibling of jobs/. Override with SURVEY_EVIDENCE_DIR.
-EVIDENCE_DIR = pathlib.Path(
-    os.environ.get(
-        "SURVEY_EVIDENCE_DIR",
-        pathlib.Path(__file__).resolve().parents[2] / "evidence",
-    )
-).resolve()
-EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
+from functools import lru_cache
 
-# Frontend location
-FRONTEND_DIR = (pathlib.Path(__file__).resolve().parents[2] / "frontend").resolve()
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-# Database / index. Mirrors the survey-automation pattern: build a Postgres URL from
-# POSTGRES_* when present (URL-quoting the credentials), else honour an explicit DATABASE_URL,
-# else default to a local SQLite file — so the same code runs SQLite in dev / Postgres in prod.
-def _build_database_url() -> str:
-    from urllib.parse import quote_plus
-    user = os.environ.get("POSTGRES_USER", "").strip()
-    password = os.environ.get("POSTGRES_PASSWORD", "").strip()
-    host = os.environ.get("POSTGRES_HOST", "db").strip()
-    db = os.environ.get("POSTGRES_DB", "").strip()
-    if user and password and db:
-        return f"postgresql+psycopg2://{quote_plus(user)}:{quote_plus(password)}@{host}/{db}"
-    default_sqlite = (JOBS_DIR.parent / "survey_research.db").as_posix()
-    return os.environ.get("DATABASE_URL", f"sqlite:///{default_sqlite}")
+class Settings(BaseSettings):
+    """Engine configuration. All fields sourced from environment or .env."""
+
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    # --- runtime ---------------------------------------------------
+    RUN_ENV: str = "local"
+    ENABLE_FASTAPI_DEBUG: bool = False
+
+    # --- database ---------------------------------------------------
+    DATABASE_URL: str = "postgresql+psycopg://postgres:postgres@localhost:5432/researchhub"
+
+    # --- S3 (evidence uploads) --------------------------------------
+    AWS_REGION: str = "us-east-1"
+    AWS_S3_REGION_NAME: str = "us-east-1"
+    S3_ARTIFACTS_BUCKET: str = "researchhub-artifacts"
+
+    # --- Redis / Celery ----------------------------------------------
+    REDIS_URL: str = "redis://localhost:6379/0"
+    CELERY_BROKER_URL: str = "redis://localhost:6379/0"
+    CELERY_RESULT_BACKEND: str = "redis://localhost:6379/1"
+
+    # --- auth (parent's Cognito) ------------------------------------
+    COGNITO_REGION: str | None = None
+    COGNITO_USER_POOL_ID: str | None = None
+    COGNITO_CLIENT_ID: str | None = None
+    COGNITO_ISSUER: str | None = None
+    COGNITO_AUDIENCE: str | None = None
+
+    # --- CORS --------------------------------------------------------
+    CORS_ORIGINS: str = "http://localhost:3000"
+
+    # --- research defaults -------------------------------------------
+    MAX_RETRIES_PER_DOCUMENT: int = 3
+    DOCUMENT_TIMEOUT_SECONDS: int = 60
+
+    # --- HTTP client -------------------------------------------------
+    HTTP_TIMEOUT_SECONDS: int = 30
+
+    @property
+    def cors_origins_list(self) -> list[str]:
+        return [o.strip() for o in self.CORS_ORIGINS.split(",") if o.strip()]
 
 
-DATABASE_URL = _build_database_url()
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()
 
-HTTP_TIMEOUT = 30
-# Browser-like UA: some county GIS servers (e.g. Johnson County IA) 403 any non-browser
-# User-Agent. A browser string is the safe default for hitting public gov ArcGIS endpoints and
-# matches what check_url() already sends.
-USER_AGENT = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-              "(KHTML, like Gecko) Chrome/125.0 Safari/537.36")
 
-APP_NAME = "Survey Research Automation"
+settings = get_settings()

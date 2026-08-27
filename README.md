@@ -1,17 +1,26 @@
 # ResearchHub Engine
 
-The research core of ResearchHub: given a property address (or parcel ID), it resolves the
-parcel and assembles the survey research document set — parcel, deed, plat, flood, survey
-control, appraiser — auto-fetching from public sources where possible and returning verified
-one-click county links everywhere else.
+Automated research for land-survey orders. Given an order (with address, county, parcel), the
+engine auto-fetches the survey document set — parcel, deed, plat, flood, survey control,
+appraiser — from public sources, uploads each document to S3, and records an audit trail.
 
-This is an **API-only service**. The product UI is owned by the frontend team; the platform
-(order management, users, review workflow) is owned by the backend team. This engine exposes
-`/api/v2/*` and nothing else is a committed interface.
+This is a **standalone HTTP service** consumed by the frontend team (UI) and the backend team
+(order management, review workflow) via the frozen API contract. When ready it drops into the
+parent repo's `app/modules/research/` unchanged.
 
-- API reference: [`docs/INTEGRATION.md`](docs/INTEGRATION.md)
-- Contracts for consumers: [`contracts/`](contracts/) (generated — do not hand-edit)
-- Contract docs: [`docs/engine/`](docs/engine/)
+## API
+
+`/api/v1/research/*` — 5 endpoints:
+
+| Endpoint | Purpose |
+|---|---|
+| `POST /research/jobs` | Create a research job (idempotent via `X-Idempotency-Key`) |
+| `GET /research/jobs/{id}` | Poll job + per-document progress |
+| `POST /research/jobs/{id}/retry` | Retry failed docs (creates a new job) |
+| `POST /research/jobs/{id}/cancel` | Cancel a queued/running job |
+| `GET /research/orders/{order_id}/jobs` | List an order's job history |
+
+Contracts: `contracts/openapi.json` + `contracts/schemas/` (generated — do not hand-edit).
 
 ## Run
 
@@ -19,31 +28,48 @@ This is an **API-only service**. The product UI is owned by the frontend team; t
 python -m venv .venv
 .venv/Scripts/python -m pip install -r requirements.txt
 # clerk auto-download needs a browser once:  .venv/Scripts/python -m playwright install chromium
+
+cp .env.example .env                # set DATABASE_URL etc.
+docker compose up db redis          # infra (Postgres + Redis)
+alembic upgrade head                # apply migrations
 cd backend && ../.venv/Scripts/python.exe -m uvicorn app.main:app --port 8000
 ```
 
-Interactive OpenAPI docs: <http://127.0.0.1:8000/docs>
+Worker (processes jobs):
+
+```bash
+cd backend && celery -A app.engine.worker.celery_app worker --loglevel=info --queues=research
+```
+
+Docs: <http://127.0.0.1:8000/docs>
 
 ## Test
 
 ```bash
-.venv/Scripts/python.exe -m pytest tests -q     # offline; no network access required
+.venv/Scripts/python.exe -m pytest tests -q     # 125 tests, fully offline
 ```
 
 ## Layout
 
 ```
 backend/app/
-  services/   research sources today (parcel, geocode, fema, ngs, clerk, appraiser...)
-  quickplot/  /api/v2 layer: orders, documents, research runner, source catalog
-  data/       per-state registry modules + county platform registry (verified data)
-frontend/     demo client only (reference for the UI team; not a deliverable)
-contracts/    generated OpenAPI + JSON Schemas consumed by FE/BE teams
-docs/engine/  SOURCE_CONTRACT / RESULT_SCHEMA / JOB_LIFECYCLE
-scripts/      export_contracts.py regenerates contracts/
+  engine/      the service: contracts, models, repository, service, router, worker, adapters
+  services/    research sources (parcel, geocode, fema, ngs, clerk, appraiser, downloader)
+  data/        per-state registry modules + county platform registry (verified data)
+  db/          SQLAlchemy base + mixins (UUID PKs, tenant/audit/timestamp/soft-delete)
+alembic/       database migrations (research_jobs, research_documents)
+contracts/     generated OpenAPI + JSON Schemas consumed by FE/BE teams
+tests/         offline conformance + API + service tests
+docker-compose.yml  Postgres + Redis + api + worker
+Dockerfile     production container
 ```
+
+## Load-bearing domain data
+
+`backend/app/data/` holds the battle-tested county registry (`county_platforms.py`) and the
+per-state modules under `data/states/`. This is domain data accumulated in the POC — treat it
+as the source of truth; do not regenerate blindly.
 
 ## Status
 
-Day-1 baseline of the POC-to-engine rebuild. See `MIGRATION.md` for exactly what was
-carried over from `poc01/SurveyResearch` and from where.
+Engine v1 contract + service skeleton. See `contracts/openapi.json` for the frozen API.
