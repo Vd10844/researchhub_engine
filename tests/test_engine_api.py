@@ -55,6 +55,11 @@ def _wire_fakes(monkeypatch):
 
     monkeypatch.setattr(adapters, "order_provider", fake_order_provider)
     monkeypatch.setattr(adapters, "build_document_fetcher", fake_build_document_fetcher)
+    # POST /jobs must not fire the worker in offline tests (CELERY eager would
+    # run the whole pipeline synchronously and break the "queued" assertions).
+    import app.engine.worker as worker_mod
+
+    monkeypatch.setattr(worker_mod, "enqueue_research_job", lambda **_: None)
 
 
 # ------------------------------------------------------------------ POST /jobs

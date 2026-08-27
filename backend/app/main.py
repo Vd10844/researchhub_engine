@@ -26,6 +26,8 @@ async def lifespan(_app: FastAPI):
     if settings.RUN_ENV == "local":
         from app.db.base import Base, engine
         from app.engine import models  # noqa: F401  (register tables)
+        from app.engine import order_source  # noqa: F401  (register dev orders table)
+        from app.engine import evidence_source  # noqa: F401  (register dev evidence tables)
 
         Base.metadata.create_all(bind=engine)
     yield

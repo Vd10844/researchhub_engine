@@ -19,12 +19,12 @@ from celery import Celery
 
 from app.config import settings
 from app.db.base import SessionLocal
+from app.engine.adapters import build_research_service
 from app.engine.repository import ResearchDocumentRepository, ResearchJobRepository
 from app.engine.schemas import ResearchDocStatus, ResearchJobStatus
 from app.engine.service import (
     recalc_job_counters,
     resolve_job_terminal_status,
-    ResearchService,
 )
 
 celery_app = Celery(
@@ -43,6 +43,20 @@ celery_app.conf.update(
 )
 
 
+def enqueue_research_job(*, job_id, tenant_id, actor_id) -> None:
+    """Publish the job's Celery task to the ``research`` queue.
+
+    Called by ``ResearchService.create_job`` once the job row is committed.
+    Kept here (workers are the only place that may run the orchestrator).
+    """
+    import uuid as _uuid
+
+    job_id = _uuid.UUID(str(job_id))
+    tenant_id = _uuid.UUID(str(tenant_id))
+    actor_id = _uuid.UUID(str(actor_id))
+    research_job.delay(job_id, tenant_id, actor_id)
+
+
 @celery_app.task(name="app.engine.worker.research_job", bind=True, max_retries=1)
 def research_job(self, job_id, tenant_id, actor_id):
     """Process a research job: fetch all requested documents, upload to S3.
@@ -50,7 +64,7 @@ def research_job(self, job_id, tenant_id, actor_id):
     Runs in the Celery worker. One task per job (parallelism happens
     *inside* the document fetcher via ThreadPoolExecutor).
     """
-    service = ResearchService()
+    service = build_research_service()
     db = SessionLocal()
     started = datetime.now(timezone.utc)
     try:
@@ -77,7 +91,7 @@ def research_job(self, job_id, tenant_id, actor_id):
             db.commit()
 
             try:
-                fetched = service.document_fetcher(order, [doc.doc_type])[doc.doc_type]
+                fetched = service.document_fetcher(order, [doc.doc_type], tenant_id=tenant_id)[doc.doc_type]
                 doc.status = fetched.status
                 doc.summary = fetched.summary
                 doc.link = fetched.link

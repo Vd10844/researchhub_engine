@@ -43,7 +43,9 @@ def test_db(engine):
     """A fresh database per test function."""
     from app.db.base import Base, SessionLocal
 
-    import app.engine.models  # noqa: F401  (register tables)
+    import app.engine.models  # noqa: F401  (register research tables)
+    import app.engine.order_source  # noqa: F401  (register dev orders/tenants)
+    import app.engine.evidence_source  # noqa: F401  (register dev files/order_files)
 
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()

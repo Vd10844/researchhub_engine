@@ -6,6 +6,7 @@ __pycache__/
 # local runtime data — never commit
 jobs/
 evidence/
+data/
 *.db
 *.sqlite3
 server.log

@@ -71,6 +71,8 @@ class FetchedDocument:
     file_size: int | None = None
     sha256: str = ""
     mime_type: str | None = None
+    file_id: uuid.UUID | None = None
+    order_file_id: uuid.UUID | None = None
     provenance: list = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
     error_code: ResearchErrorCode | None = None
@@ -126,16 +128,21 @@ class ResearchService:
         order_provider=None,
         document_fetcher=None,
         file_storage=None,
+        enqueue=None,
     ):
         """Dependencies are injected for testability.
 
         - ``order_provider``: callable(order_id, tenant_id) → OrderData
         - ``document_fetcher``: callable(order: OrderData, doc_types: list[str]) → dict[str, FetchedDocument]
         - ``file_storage``: object with ``save_file(tenant_id, order_id, doc_id, filename, content) → dict``
+        - ``enqueue``: callable(job_id, tenant_id, actor_id) — publishes the job's
+          Celery task to the broker. ``None`` skips enqueueing (standalone/tests);
+          production wiring passes ``app.engine.worker.enqueue_research_job``.
         """
         self.order_provider = order_provider
         self.document_fetcher = document_fetcher
         self.file_storage = file_storage
+        self.enqueue = enqueue
 
     # ---------------------------------------------------------- create
 
@@ -164,6 +171,10 @@ class ResearchService:
             )
         db.commit()
         db.refresh(job)
+        if self.enqueue is not None:
+            self.enqueue(
+                job_id=job.id, tenant_id=tenant_id, actor_id=actor_id
+            )
         return job
 
     # ---------------------------------------------------------- get / list
@@ -235,9 +246,28 @@ class ResearchService:
         return order
 
     def _validate_doc_types(self, doc_types: list[str]) -> list[str]:
-        from app.engine.contracts import StepStatus  # noqa: F401  (import guard)
+        from app.engine.adapters import DOC_TYPE_TO_STEP, STEP_TO_DOC_TYPE
 
         if not doc_types:
             raise InvalidDocTypesError("document_types must not be empty")
-        # TODO: validate against the source registry (catalog) at startup.
-        return doc_types
+
+        canonical: list[str] = []
+        unknown: list[str] = []
+        for t in doc_types:
+            if t in DOC_TYPE_TO_STEP:
+                canonical.append(t)
+            # Legacy alias: a step short-name (or its upper/lower variant),
+            # e.g. "flood" -> FEMA_FLOOD_ZONE_FIRM. Normalize to canonical so
+            # the stored value always resolves in the fetcher's include map.
+            elif t.lower() in STEP_TO_DOC_TYPE:
+                canonical.append(STEP_TO_DOC_TYPE[t.lower()])
+            else:
+                unknown.append(t)
+        if unknown:
+            raise InvalidDocTypesError(
+                "unsupported document_types: %s (supported: %s)"
+                % (", ".join(sorted(unknown)), ", ".join(sorted(DOC_TYPE_TO_STEP)))
+            )
+        # Deduplicate (an alias + its canonical form resolve to one document)
+        # while preserving first-occurrence order.
+        return list(dict.fromkeys(canonical))

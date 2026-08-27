@@ -45,13 +45,9 @@ router = APIRouter(prefix="/api/v1/research", tags=["research"])
 
 def get_service(db: Session = Depends(get_db)) -> ResearchService:
     """Service singleton with the production dependencies injected."""
-    from app.engine.adapters import build_document_fetcher, order_provider
+    from app.engine.adapters import build_research_service
 
-    return ResearchService(
-        order_provider=order_provider,
-        document_fetcher=build_document_fetcher(),
-        file_storage=None,  # wired at integration; local tests inject their own
-    )
+    return build_research_service()
 
 
 # ------------------------------------------------------------------ POST /jobs

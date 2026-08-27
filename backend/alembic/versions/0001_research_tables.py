@@ -11,7 +11,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 revision = "0001_research_tables"
-down_revision = None
+down_revision = "0002_dev_base_tables"
 branch_labels = None
 depends_on = None
 

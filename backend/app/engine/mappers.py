@@ -23,21 +23,25 @@ from app.engine.schemas import (
 def _to_file_reference(
     doc: ResearchDocument,
 ) -> FileReference | None:
-    """Build a FileReference from the stored file metadata on the doc row.
+    """Build a FileReference for an uploaded document.
 
-    Full filename/size/sha come from the evidence module's File row during
-    integration; the engine stores what it knows on the document row.
+    Reads the stored File metadata (real key/size/sha) from the engine's
+    evidence stand-in; at parent integration this reads the evidence module's
+    File row instead.
     """
     if not doc.file_id or not doc.order_file_id:
         return None
+    from app.engine.evidence_source import get_file_reference
+
+    meta = get_file_reference(doc.file_id) or {}
     return FileReference(
         file_id=doc.file_id,
         order_file_id=doc.order_file_id,
-        key=_s3_key(doc),
-        filename=doc.link_label or f"{doc.doc_type}.pdf",
-        size_bytes=0,
-        sha256="",
-        mime_type="application/pdf",
+        key=meta.get("key") or _s3_key(doc),
+        filename=meta.get("filename") or f"{doc.doc_type}.pdf",
+        size_bytes=meta.get("size_bytes") or 0,
+        sha256=meta.get("sha256") or "",
+        mime_type=meta.get("mime_type") or "application/pdf",
     )
 
 
