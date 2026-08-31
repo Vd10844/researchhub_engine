@@ -155,16 +155,195 @@ def test_cancel_queued_job(client):
     assert r.json()["data"]["status"] == "cancelled"
 
 
+def test_cancel_records_reason_roundtrip(client):
+    created = client.post(
+        "/api/v1/research/jobs",
+        json={"order_id": ORDER_ID, "document_types": ["PARCEL_RECORD"]},
+    ).json()["data"]
+
+    r = client.post(
+        f"/api/v1/research/jobs/{created['id']}/cancel",
+        json={"reason": "duplicate order"},
+    )
+    assert r.status_code == 200, r.text
+    data = r.json()["data"]
+    assert data["status"] == "cancelled"
+    assert data["cancel_reason"] == "duplicate order"
+
+
+def test_get_job_full_contract_json(client):
+    """GET /jobs/{id} is the frozen+additive API shape — assert the full field
+    surface and the defaults the contract promises (additive-safe)."""
+    created = client.post(
+        "/api/v1/research/jobs",
+        json={"order_id": ORDER_ID, "document_types": ["PARCEL_RECORD", "FEMA_FLOOD_ZONE_FIRM"]},
+    ).json()["data"]
+
+    r = client.get(f"/api/v1/research/jobs/{created['id']}")
+    assert r.status_code == 200, r.text
+    data = r.json()["data"]
+
+    for key in (
+        "id", "order_id", "status", "requested_doc_types", "total_documents",
+        "fetched_documents", "uploaded_documents", "failed_documents",
+        "cancelled_documents", "documents", "started_at", "completed_at",
+        "created_at", "updated_at", "created_by", "error_code", "error_message",
+    ):
+        assert key in data, f"missing top-level key {key}"
+
+    assert data["status"] == "queued"
+    assert data["cancel_reason"] is None      # additive default
+    assert data["error_code"] is None
+    assert data["error_message"] is None
+
+    doc = data["documents"][0]
+    for key in (
+        "id", "doc_type", "status", "source_outcome", "confidence", "file",
+        "summary", "link", "link_label", "provenance", "warnings", "error_code",
+        "error_message", "retryable", "retry_count", "fetched_at",
+    ):
+        assert key in doc, f"missing doc key {key}"
+    assert doc["status"] == "queued"
+    assert doc["retryable"] is True           # additive default
+    assert doc["source_outcome"] is None
+    assert doc["confidence"] is None
+    assert doc["file"] is None
+    assert doc["retry_count"] == 0
+
+
 # ------------------------------------------------------------------ GET /orders/{id}/jobs
 
 
-def test_list_order_jobs(client):
+def test_list_order_jobs_returns_compact_summaries(client):
+    """The list endpoint returns the declared compact shape — counters + lifecycle
+    only, no per-document array — matching DataEnvelope[list[ResearchJobSummary]]."""
     client.post(
         "/api/v1/research/jobs",
-        json={"order_id": ORDER_ID, "document_types": ["PARCEL_RECORD"]},
+        json={"order_id": ORDER_ID, "document_types": ["PARCEL_RECORD", "FEMA_FLOOD_ZONE_FIRM"]},
     )
     r = client.get(f"/api/v1/research/orders/{ORDER_ID}/jobs")
     assert r.status_code == 200, r.text
     jobs = r.json()["data"]
     assert isinstance(jobs, list)
     assert len(jobs) >= 1
+
+    job = jobs[0]
+    assert job["order_id"] == ORDER_ID
+    assert "documents" not in job
+    assert "requested_doc_types" not in job
+    assert "created_by" not in job
+    for key in (
+        "id", "order_id", "status", "total_documents", "fetched_documents",
+        "uploaded_documents", "failed_documents", "cancelled_documents",
+        "created_at", "completed_at", "cancel_reason",
+    ):
+        assert key in job, f"missing summary key {key}"
+    assert job["cancel_reason"] is None
+
+
+# ------------------------------------------------------------------ idempotency
+
+
+def test_create_job_idempotency_same_key_same_job(client):
+    """POST /jobs twice with the same X-Idempotency-Key returns the same job —
+    no duplicate job/document rows."""
+    from app.engine.repository import ResearchDocumentRepository
+
+    key = str(uuid.uuid4())  # a realistic uuid (hex letters) — an all-digit
+    # uuid round-trips through SQLite as a float and would corrupt read-back
+
+    r1 = client.post(
+        "/api/v1/research/jobs",
+        json={"order_id": ORDER_ID, "document_types": ["PARCEL_RECORD"]},
+        headers={"X-Idempotency-Key": key},
+    )
+    assert r1.status_code == 200, r1.text
+    id1 = r1.json()["data"]["id"]
+
+    r2 = client.post(
+        "/api/v1/research/jobs",
+        json={"order_id": ORDER_ID, "document_types": ["PARCEL_RECORD"]},
+        headers={"X-Idempotency-Key": key},
+    )
+    assert r2.status_code == 200, r2.text
+    assert r2.json()["data"]["id"] == id1
+
+
+# ------------------------------------------------------------------ request validation
+
+
+def test_create_job_unknown_doc_type_422(client):
+    r = client.post(
+        "/api/v1/research/jobs",
+        json={"order_id": ORDER_ID, "document_types": ["PARCEL_RECORD", "BOGUS_TYPE"]},
+    )
+    assert r.status_code == 422
+    assert r.json()["error"]["code"] == "INVALID_DOC_TYPES"
+
+
+def test_create_job_invalid_order_uuid_422(client):
+    r = client.post(
+        "/api/v1/research/jobs",
+        json={"order_id": "not-a-uuid", "document_types": ["PARCEL_RECORD"]},
+    )
+    assert r.status_code == 422
+
+
+def test_get_job_invalid_uuid_422(client):
+    r = client.get("/api/v1/research/jobs/not-a-uuid")
+    assert r.status_code == 422
+
+
+# ------------------------------------------------------------------ cancel terminal rejection
+
+
+def test_cancel_terminal_job_rejected(client, test_db):
+    created = client.post(
+        "/api/v1/research/jobs",
+        json={"order_id": ORDER_ID, "document_types": ["PARCEL_RECORD"]},
+    ).json()["data"]["id"]
+
+    # Flip the job to a terminal state directly (as a completed worker would).
+    from app.engine.repository import ResearchJobRepository, ResearchDocumentRepository
+    from app.engine.schemas import ResearchJobStatus
+
+    job = ResearchJobRepository.get(test_db, uuid.UUID(created), uuid.UUID("f0000000-0000-0000-0000-000000000001"))
+    job.status = ResearchJobStatus.completed
+    for doc in ResearchDocumentRepository.list_for_job(test_db, uuid.UUID(created)):
+        doc.status = ResearchDocStatus.uploaded
+    ResearchJobRepository.save(test_db, job)
+    test_db.commit()
+
+    r = client.post(f"/api/v1/research/jobs/{created}/cancel")
+    assert r.status_code == 422
+    assert r.json()["error"]["code"] == "ORDER_NOT_RESEARCHABLE"
+
+
+# ------------------------------------------------------------------ empty list
+
+
+def test_list_jobs_empty_order_returns_empty(client):
+    r = client.get(f"/api/v1/research/orders/{uuid.uuid4()}/jobs")
+    assert r.status_code == 200
+    assert r.json()["data"] == []
+
+
+# ------------------------------------------------------------------ error envelope shape
+
+
+def test_error_envelope_shape(client):
+    """Every failure response is a single {error:{code,message}} envelope."""
+    r = client.get(f"/api/v1/research/jobs/{uuid.uuid4()}")
+    body = r.json()
+    assert set(body.keys()) == {"error"}
+    assert "code" in body["error"] and isinstance(body["error"]["code"], str)
+    assert "message" in body["error"] and isinstance(body["error"]["message"], str)
+
+
+# ------------------------------------------------------------------ health
+
+
+def test_health_endpoint(client):
+    r = client.get("/api/health")
+    assert r.status_code == 200
+    assert r.json()["status"] == "ok"

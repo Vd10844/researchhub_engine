@@ -182,6 +182,15 @@ class ResearchJob(
         comment="Top-level error message when the job failed.",
     )
 
+    # --- cancellation ------------------------------------------------
+    #  ``status`` == cancelling/cancelled only; set from CancelJobRequest.reason.
+
+    cancel_reason: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
+        comment="Human-readable reason recorded when the job was cancelled.",
+    )
+
     # --- callbacks ---------------------------------------------------
 
     callback_url: Mapped[str | None] = mapped_column(

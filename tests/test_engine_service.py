@@ -202,6 +202,94 @@ def test_cancel_rejects_terminal_job(test_db):
         svc.cancel_job(test_db, tenant_id=TENANT_ID, job_id=job.id)
 
 
+def test_cancel_queue_stores_reason(test_db):
+    svc = service_with()
+    job = svc.create_job(
+        test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID,
+        order_id=ORDER_ID, doc_types=["PARCEL_RECORD"], idempotency_key=None,
+    )
+    cancelled = svc.cancel_job(
+        test_db, tenant_id=TENANT_ID, job_id=job.id, reason="duplicate order"
+    )
+    assert cancelled.status == ResearchJobStatus.cancelled
+    assert cancelled.cancel_reason == "duplicate order"
+
+
+def test_cancel_running_job_goes_cancelling_and_records_reason(test_db):
+    """A running job enters `cancelling` (not a hard `cancelled`): the worker
+    drains in-flight work, skips the rest, then finalizes. The reason is kept
+    for the audit trail."""
+    svc = service_with()
+    job = svc.create_job(
+        test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID,
+        order_id=ORDER_ID, doc_types=["PARCEL_RECORD"], idempotency_key=None,
+    )
+    job.status = ResearchJobStatus.running
+    ResearchJobRepository.save(test_db, job)
+    test_db.commit()
+
+    cancelled = svc.cancel_job(
+        test_db, tenant_id=TENANT_ID, job_id=job.id, reason="client requested"
+    )
+    assert cancelled.status == ResearchJobStatus.cancelling
+    assert cancelled.cancel_reason == "client requested"
+
+
+# ------------------------------------------------------------------ review / archive
+
+
+def test_mark_reviewed_from_completed(test_db):
+    svc = service_with()
+    job = svc.create_job(
+        test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID,
+        order_id=ORDER_ID, doc_types=["PARCEL_RECORD"], idempotency_key=None,
+    )
+    job.status = ResearchJobStatus.completed
+    ResearchJobRepository.save(test_db, job)
+    test_db.commit()
+
+    reviewed = svc.mark_reviewed(test_db, tenant_id=TENANT_ID, job_id=job.id)
+    assert reviewed.status == ResearchJobStatus.reviewed
+
+
+def test_mark_reviewed_rejects_queued_job(test_db):
+    svc = service_with()
+    job = svc.create_job(
+        test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID,
+        order_id=ORDER_ID, doc_types=["PARCEL_RECORD"], idempotency_key=None,
+    )
+    with pytest.raises(OrderNotResearchableError):
+        svc.mark_reviewed(test_db, tenant_id=TENANT_ID, job_id=job.id)
+
+
+def test_archive_only_from_reviewed(test_db):
+    svc = service_with()
+    job = svc.create_job(
+        test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID,
+        order_id=ORDER_ID, doc_types=["PARCEL_RECORD"], idempotency_key=None,
+    )
+    job.status = ResearchJobStatus.reviewed
+    ResearchJobRepository.save(test_db, job)
+    test_db.commit()
+
+    archived = svc.archive_job(test_db, tenant_id=TENANT_ID, job_id=job.id)
+    assert archived.status == ResearchJobStatus.archived
+
+
+def test_archive_rejects_non_reviewed(test_db):
+    svc = service_with()
+    job = svc.create_job(
+        test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID,
+        order_id=ORDER_ID, doc_types=["PARCEL_RECORD"], idempotency_key=None,
+    )
+    job.status = ResearchJobStatus.completed
+    ResearchJobRepository.save(test_db, job)
+    test_db.commit()
+
+    with pytest.raises(OrderNotResearchableError):
+        svc.archive_job(test_db, tenant_id=TENANT_ID, job_id=job.id)
+
+
 # ------------------------------------------------------------------ counters/terminal
 
 

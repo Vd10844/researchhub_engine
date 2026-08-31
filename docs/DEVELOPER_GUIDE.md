@@ -58,11 +58,12 @@ backend/app/
       runner.py              two-phase pipeline → canonical ResearchResult
       folders.py             staging dir + manifest.json / result.json writers
   alembic/versions/          0002 base shim (orders/tenants/files/order_files first),
-                             0001 research tables (FKs onto the shim)
+                             0001 research tables (FKs onto the shim),
+                             0003 cancel_reason column + reviewed/archived enum values
 scripts/
   export_contracts.py        re-export contracts/openapi.json + schemas (drift-checkable)
   e2e_local.py               FULL E2E: alembic → seed → API+worker → job → verify
-tests/                       197 tests, fully offline except the explicit E2E
+tests/                       236 tests, fully offline except the explicit E2E
 docs/                        the four contract docs + this guide
 contracts/                   frozen OpenAPI + per-schema JSON (re-export only via script)
 docker-compose.yml           db (postgres:15), redis, api, worker
@@ -121,7 +122,7 @@ Three bugs this newest code fixes (found by code review and the E2E):
 # venv (Python 3.14)
 python -m venv .venv && .venv/Scripts/pip install -r requirements.txt
 
-# unit + regression suite (197 tests, offline, ~1s)
+# unit + regression suite (236 tests, offline, ~1s)
 .venv/Scripts/python.exe -m pytest tests -q
 
 # plain API against a local Postgres (create_all in RUN_ENV=local)
@@ -154,9 +155,12 @@ the job still completes. (Last run: `completed`, NGS uploaded a real
 - API responses come from `schemas.py` via `mappers.py` — never raw ORM dicts.
 - Change a schema? Re-run `scripts/export_contracts.py` and confirm `git diff
   contracts/` shows exactly the intended drift. CI fails on drift (exit 1).
-- The 54-fixture regression suite (`tests/test_orchestration_regression.py`)
+- The fixture regression suite (`tests/test_orchestration_regression.py`, 54)
   pins the 11-step key order, the frozen vocabulary and every stable field.
-  A schema change that breaks it is a contract break.
+  The execution scenarios (`tests/test_execution_scenarios.py`, 26) pin the
+  running system: worker-path outcomes, `classify_exception` branches,
+  cancel-`cancelling` drains and last-resort fallbacks. A schema change that
+  breaks either is a contract break.
 
 ## 7. What is remaining
 
@@ -167,7 +171,7 @@ the job still completes. (Last run: `completed`, NGS uploaded a real
 | 1 | `order_provider` reads dev `orders` | `engine/order_source.py` | parent `app/modules/orders` (Order+OrderAddress) |
 | 2 | `File`/`OrderFile` stand-in | `engine/evidence_source.py` | parent evidence module (same columns/names) |
 | 3 | tenant/actor from headers | `engine/dependencies.py` | Cognito deps from `app/modules/identity` |
-| 4 | alembic base shim `0002` | `0002_dev_base_tables.py` | drop at parent merge (tables already exist); keep `0001` |
+| 4 | alembic base shim `0002` | `0002_dev_base_tables.py` | drop at parent merge (tables already exist); keep `0001`; `0003` (cancel_reason + enum values) requires the table names from `0001` |
 | 5 | `doc_types` vs source registry | `service._validate_doc_types` | validate against the live catalog at startup (TODO remains) |
 | 6 | Celery `--pool=solo` | E2E only | default prefork pool on Linux workers in prod |
 

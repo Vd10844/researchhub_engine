@@ -57,7 +57,7 @@ def _run_one(ctx, d: dict, adapter: SourceAdapter, docs_dir) -> StepResult:
     try:
         fs = adapter.fetch(ctx, docs_dir)
         return _assemble(ctx, d, fs, _outcome_for(fs), None,
-                         fs.confidence or _default_confidence(fs.status))
+                         fs.confidence or _default_confidence(fs.status, fs.manual_review))
     except SourceError as e:
         fs = adapter.fallback(ctx)
         error = ErrorInfo(code=e.code or _code_for(e.outcome), retryable=e.retryable)
@@ -110,6 +110,8 @@ _CTX_STACK_REMOVED = None  # noqa: F841
 
 
 def _outcome_for(fs: FetchedSource) -> SourceOutcome:
+    if fs.manual_review:
+        return SourceOutcome.manual_review
     if fs.status == StepStatus.ok:
         return SourceOutcome.auto
     if fs.status == StepStatus.empty:
@@ -117,7 +119,9 @@ def _outcome_for(fs: FetchedSource) -> SourceOutcome:
     return SourceOutcome.link_only
 
 
-def _default_confidence(status: StepStatus) -> Confidence:
+def _default_confidence(status: StepStatus, manual_review: bool = False) -> Confidence:
+    if manual_review:
+        return Confidence.low
     if status == StepStatus.ok:
         return Confidence.high
     if status == StepStatus.empty:

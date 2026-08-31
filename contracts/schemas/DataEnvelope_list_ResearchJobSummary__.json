@@ -1,0 +1,16 @@
+{
+  "properties": {
+    "data": {
+      "items": {
+        "$ref": "#/components/schemas/ResearchJobSummary"
+      },
+      "type": "array",
+      "title": "Data"
+    }
+  },
+  "type": "object",
+  "required": [
+    "data"
+  ],
+  "title": "DataEnvelope[list[ResearchJobSummary]]"
+}

@@ -72,6 +72,21 @@ def research_job(self, job_id, tenant_id, actor_id):
         if job is None:
             return  # job deleted/soft-deleted underneath us
 
+        docs = ResearchDocumentRepository.list_for_job(db, job_id)
+
+        # Delivered after a cancel? Drain without touching a single source —
+        # never overwrite an external `cancelling`/`cancelled` with `running`.
+        if job.status in (ResearchJobStatus.cancelled, ResearchJobStatus.cancelling):
+            for doc in docs:
+                doc.status = ResearchDocStatus.skipped
+                ResearchDocumentRepository.save(db, doc)
+            recalc_job_counters(job, docs)
+            job.status = ResearchJobStatus.cancelled
+            job.completed_at = started
+            ResearchJobRepository.save(db, job)
+            db.commit()
+            return
+
         job.status = ResearchJobStatus.running
         job.started_at = started
         ResearchJobRepository.save(db, job)
@@ -81,7 +96,17 @@ def research_job(self, job_id, tenant_id, actor_id):
         order = service.order_provider(job.order_id, tenant_id)
 
         for doc in docs:
-            if job.status == ResearchJobStatus.cancelled:
+            # Re-read the job each iteration so a cancel issued from another
+            # session (API process) is observed mid-run. expire() first —
+            # SessionLocal uses expire_on_commit=False, so the ORM identity
+            # map would otherwise hand back the stale running object and hide
+            # the external update. `cancelling` skips the remaining documents
+            # and resolves to `cancelled` below.
+            db.expire(job)
+            job = ResearchJobRepository.get(db, job.id, tenant_id)
+            if job is None:
+                return  # deleted/soft-deleted while we were working
+            if job.status in (ResearchJobStatus.cancelled, ResearchJobStatus.cancelling):
                 doc.status = ResearchDocStatus.skipped
                 ResearchDocumentRepository.save(db, doc)
                 continue

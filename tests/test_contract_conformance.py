@@ -191,3 +191,43 @@ class TestAdditiveFields:
         assert sr.provenance == []
         assert sr.warnings == []
         assert sr.error is None
+
+
+VALID_REQUIREMENTS = {"mandatory", "conditional", "recommended"}
+
+
+class TestRequirementDomain:
+    """requirement must be one of the three frozen survey-standard values."""
+
+    def test_requirement_values_valid(self, result: dict[str, Any]) -> None:
+        for step in result["steps"]:
+            req = step.get("requirement")
+            assert req in VALID_REQUIREMENTS, (
+                f"Step '{step['key']}' requirement={req!r} not in {sorted(VALID_REQUIREMENTS)}"
+            )
+
+    def test_condition_is_string(self, result: dict[str, Any]) -> None:
+        for step in result["steps"]:
+            assert isinstance(step["condition"], str), f"Step '{step['key']}' condition is not a str"
+
+
+class TestMapLinksContract:
+    """map_links must be a list of {label, url} objects."""
+
+    def test_map_links_shape(self, result: dict[str, Any]) -> None:
+        for link in result["map_links"]:
+            assert isinstance(link, dict), f"map_link is not an object: {link!r}"
+            assert "label" in link and isinstance(link["label"], str), f"map_link missing label: {link!r}"
+            assert "url" in link and isinstance(link["url"], str), f"map_link missing url: {link!r}"
+
+    def test_map_links_nonempty(self, result: dict[str, Any]) -> None:
+        assert result["map_links"], "every POC result should carry at least one map link"
+
+
+class TestWarningsContract:
+    """warnings must be a list of strings."""
+
+    def test_warnings_is_list_of_str(self, result: dict[str, Any]) -> None:
+        assert isinstance(result["warnings"], list)
+        for w in result["warnings"]:
+            assert isinstance(w, str), f"warning is not a str: {w!r}"

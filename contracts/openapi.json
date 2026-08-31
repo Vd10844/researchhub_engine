@@ -437,7 +437,7 @@
           "research"
         ],
         "summary": "List research jobs for an order",
-        "description": "Returns all research jobs for the given order, newest first.",
+        "description": "Returns a compact listing of research jobs for the given order, newest first. Use GET /jobs/{id} for a job's per-document detail.",
         "operationId": "list_order_jobs_api_v1_research_orders__order_id__jobs_get",
         "parameters": [
           {
@@ -489,7 +489,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DataEnvelope_list_ResearchJob__"
+                  "$ref": "#/components/schemas/DataEnvelope_list_ResearchJobSummary__"
                 }
               }
             }
@@ -605,11 +605,11 @@
         ],
         "title": "DataEnvelope[ResearchJob]"
       },
-      "DataEnvelope_list_ResearchJob__": {
+      "DataEnvelope_list_ResearchJobSummary__": {
         "properties": {
           "data": {
             "items": {
-              "$ref": "#/components/schemas/ResearchJob"
+              "$ref": "#/components/schemas/ResearchJobSummary"
             },
             "type": "array",
             "title": "Data"
@@ -619,7 +619,7 @@
         "required": [
           "data"
         ],
-        "title": "DataEnvelope[list[ResearchJob]]"
+        "title": "DataEnvelope[list[ResearchJobSummary]]"
       },
       "ErrorDetail": {
         "properties": {
@@ -1114,6 +1114,18 @@
             ],
             "title": "Error Message",
             "description": "Top-level error message when status == 'failed'"
+          },
+          "cancel_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancel Reason",
+            "description": "Reason recorded when the job was cancelled (from CancelJobRequest.reason)"
           }
         },
         "type": "object",
@@ -1139,10 +1151,95 @@
           "partial",
           "failed",
           "cancelling",
-          "cancelled"
+          "cancelled",
+          "reviewed",
+          "archived"
         ],
         "title": "ResearchJobStatus",
-        "description": "Lifecycle of a research job \u2014 persisted in ``research_jobs.status``.\n\nTransitions:\n  queued   \u2192 running          (Celery worker picks it up)\n  running  \u2192 completed        (all adapters returned designed outcome)\n  running  \u2192 partial          (\u22651 adapter hit an unexpected failure)\n  running  \u2192 failed           (context resolution failed \u2014 no geocode, no parcel)\n  running  \u2192 cancelled        (user cancelled via API)\n  *        \u2192 cancelling       (cancel requested, waiting for in-flight work to stop)"
+        "description": "Lifecycle of a research job \u2014 persisted in ``research_jobs.status``.\n\nTransitions:\n  queued   \u2192 running          (Celery worker picks it up)\n  running  \u2192 completed        (all adapters returned designed outcome)\n  running  \u2192 partial          (\u22651 adapter hit an unexpected failure)\n  running  \u2192 failed           (context resolution failed \u2014 no geocode, no parcel)\n  queued   \u2192 cancelled        (cancel requested before the worker started)\n  running  \u2192 cancelling       (cancel requested mid-run; worker drains then finalizes)\n  cancelling \u2192 cancelled      (worker observed the cancellation and drained)\n  completed | partial \u2192 reviewed   (human confirms the document set)\n  reviewed \u2192 archived         (retention \u2014 hidden from the default list)"
+      },
+      "ResearchJobSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "order_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Order Id",
+            "description": "Order this job belongs to"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ResearchJobStatus"
+          },
+          "total_documents": {
+            "type": "integer",
+            "title": "Total Documents"
+          },
+          "fetched_documents": {
+            "type": "integer",
+            "title": "Fetched Documents"
+          },
+          "uploaded_documents": {
+            "type": "integer",
+            "title": "Uploaded Documents"
+          },
+          "failed_documents": {
+            "type": "integer",
+            "title": "Failed Documents"
+          },
+          "cancelled_documents": {
+            "type": "integer",
+            "title": "Cancelled Documents",
+            "description": "Documents skipped due to cancellation",
+            "default": 0
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "cancel_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancel Reason",
+            "description": "Reason recorded when the job was cancelled (from CancelJobRequest.reason)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "order_id",
+          "status",
+          "total_documents",
+          "fetched_documents",
+          "uploaded_documents",
+          "failed_documents",
+          "created_at",
+          "completed_at"
+        ],
+        "title": "ResearchJobSummary",
+        "description": "Compact job listing \u2014 used in GET /research/orders/{order_id}/jobs."
       },
       "RetryResearchJobRequest": {
         "properties": {

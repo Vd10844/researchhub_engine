@@ -25,13 +25,14 @@ from sqlalchemy.orm import Session
 from app.db.base import get_db
 from app.engine.dependencies import get_actor_id, get_tenant_id
 from app.engine.errors import ResearchEngineError
-from app.engine.mappers import to_job_schema
+from app.engine.mappers import to_job_schema, to_job_summary_schema
 from app.engine.schemas import (
     CancelJobRequest,
     CreateResearchJobRequest,
     DataEnvelope,
     ErrorEnvelope,
     ResearchJob,
+    ResearchJobSummary,
     RetryResearchJobRequest,
 )
 from app.engine.service import ResearchService
@@ -167,7 +168,12 @@ async def cancel_research_job(
     db: Session = Depends(get_db),
     service: ResearchService = Depends(get_service),
 ):
-    job = service.cancel_job(db, tenant_id=tenant_id, job_id=job_id)
+    job = service.cancel_job(
+        db,
+        tenant_id=tenant_id,
+        job_id=job_id,
+        reason=request.reason if request else None,
+    )
     return DataEnvelope(data=to_job_schema(db, job))
 
 
@@ -176,9 +182,12 @@ async def cancel_research_job(
 
 @router.get(
     "/orders/{order_id}/jobs",
-    response_model=DataEnvelope[list[ResearchJob]],
+    response_model=DataEnvelope[list[ResearchJobSummary]],
     summary="List research jobs for an order",
-    description="Returns all research jobs for the given order, newest first.",
+    description=(
+        "Returns a compact listing of research jobs for the given order, newest first. "
+        "Use GET /jobs/{id} for a job's per-document detail."
+    ),
 )
 async def list_order_jobs(
     order_id: UUID,
@@ -188,4 +197,4 @@ async def list_order_jobs(
     service: ResearchService = Depends(get_service),
 ):
     jobs = service.list_order_jobs(db, tenant_id=tenant_id, order_id=order_id)
-    return DataEnvelope(data=[to_job_schema(db, j) for j in jobs])
+    return DataEnvelope(data=[to_job_summary_schema(j) for j in jobs])

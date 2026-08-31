@@ -7,8 +7,10 @@
     "partial",
     "failed",
     "cancelling",
-    "cancelled"
+    "cancelled",
+    "reviewed",
+    "archived"
   ],
   "title": "ResearchJobStatus",
-  "description": "Lifecycle of a research job \u2014 persisted in ``research_jobs.status``.\n\nTransitions:\n  queued   \u2192 running          (Celery worker picks it up)\n  running  \u2192 completed        (all adapters returned designed outcome)\n  running  \u2192 partial          (\u22651 adapter hit an unexpected failure)\n  running  \u2192 failed           (context resolution failed \u2014 no geocode, no parcel)\n  running  \u2192 cancelled        (user cancelled via API)\n  *        \u2192 cancelling       (cancel requested, waiting for in-flight work to stop)"
+  "description": "Lifecycle of a research job \u2014 persisted in ``research_jobs.status``.\n\nTransitions:\n  queued   \u2192 running          (Celery worker picks it up)\n  running  \u2192 completed        (all adapters returned designed outcome)\n  running  \u2192 partial          (\u22651 adapter hit an unexpected failure)\n  running  \u2192 failed           (context resolution failed \u2014 no geocode, no parcel)\n  queued   \u2192 cancelled        (cancel requested before the worker started)\n  running  \u2192 cancelling       (cancel requested mid-run; worker drains then finalizes)\n  cancelling \u2192 cancelled      (worker observed the cancellation and drained)\n  completed | partial \u2192 reviewed   (human confirms the document set)\n  reviewed \u2192 archived         (retention \u2014 hidden from the default list)"
 }

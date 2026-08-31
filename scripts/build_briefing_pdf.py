@@ -270,8 +270,40 @@ def main() -> int:
                     "window.__mmdDone === true", timeout=25000
                 )
             except Exception as e:  # noqa: BLE001 — offline CDN is a soft path
-                print(f"WARN: mermaid render skipped ({type(e).__name__}); "
-                      "diagram blocks appear as source text")
+                print(
+                    f"WARN: mermaid render skipped ({type(e).__name__}); "
+                    "diagram blocks appear as source text"
+                )
+            else:
+                state = page.evaluate(
+                    """() => {
+                      const svgs = [...document.querySelectorAll(
+                          'pre.mermaid svg')];
+                      return {
+                        mermaidLoaded: !!window.mermaid,
+                        rendered: svgs.length,
+                        syntaxErrs: svgs.filter(
+                            s => /Syntax error/i.test(s.textContent)).length,
+                        err: window.__mmdError || ''
+                      };
+                    }"""
+                )
+                if state["syntaxErrs"]:
+                    print(
+                        f"ERROR: {state['syntaxErrs']} mermaid diagram(s) "
+                        f"failed to render: {state['err'][:120]}",
+                        file=sys.stderr,
+                    )
+                    browser.close()
+                    return 1
+                if not state["mermaidLoaded"] and mermaid_blocks:
+                    print("WARN: mermaid CDN unreachable — diagram blocks "
+                          "appear as source text")
+                elif state["rendered"] < mermaid_blocks:
+                    print(
+                        f"WARN: rendered {state['rendered']}/{mermaid_blocks} "
+                        "mermaid diagrams", file=sys.stderr,
+                    )
         page.wait_for_timeout(400)
         page.pdf(
             path=str(out),

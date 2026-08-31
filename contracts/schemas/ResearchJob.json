@@ -127,6 +127,18 @@
       ],
       "title": "Error Message",
       "description": "Top-level error message when status == 'failed'"
+    },
+    "cancel_reason": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Cancel Reason",
+      "description": "Reason recorded when the job was cancelled (from CancelJobRequest.reason)"
     }
   },
   "type": "object",

@@ -19,7 +19,7 @@ graph LR
       modules[per-screen modules]
       app[app.js shell]
     end
-    subgraph FastAPI (same process)
+    subgraph FA["FastAPI (same process)"]
       static[/static mount/]
       routes[/ and /quickplot routes/]
     end

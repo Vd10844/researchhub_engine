@@ -1,0 +1,83 @@
+{
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+    },
+    "order_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Order Id",
+      "description": "Order this job belongs to"
+    },
+    "status": {
+      "$ref": "#/components/schemas/ResearchJobStatus"
+    },
+    "total_documents": {
+      "type": "integer",
+      "title": "Total Documents"
+    },
+    "fetched_documents": {
+      "type": "integer",
+      "title": "Fetched Documents"
+    },
+    "uploaded_documents": {
+      "type": "integer",
+      "title": "Uploaded Documents"
+    },
+    "failed_documents": {
+      "type": "integer",
+      "title": "Failed Documents"
+    },
+    "cancelled_documents": {
+      "type": "integer",
+      "title": "Cancelled Documents",
+      "description": "Documents skipped due to cancellation",
+      "default": 0
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+    },
+    "completed_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Completed At"
+    },
+    "cancel_reason": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Cancel Reason",
+      "description": "Reason recorded when the job was cancelled (from CancelJobRequest.reason)"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "order_id",
+    "status",
+    "total_documents",
+    "fetched_documents",
+    "uploaded_documents",
+    "failed_documents",
+    "created_at",
+    "completed_at"
+  ],
+  "title": "ResearchJobSummary",
+  "description": "Compact job listing \u2014 used in GET /research/orders/{order_id}/jobs."
+}

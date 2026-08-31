@@ -17,6 +17,7 @@ from app.engine.schemas import (
     FileReference,
     ResearchDocument as ResearchDocumentSchema,
     ResearchJob as ResearchJobSchema,
+    ResearchJobSummary,
 )
 
 
@@ -95,4 +96,27 @@ def to_job_schema(
         created_by=job.created_by,
         error_code=job.error_code,
         error_message=job.error_message,
+        cancel_reason=job.cancel_reason,
+    )
+
+
+def to_job_summary_schema(job: ResearchJob) -> ResearchJobSummary:
+    """Compact job shape for GET /research/orders/{order_id}/jobs.
+
+    Deliberately excludes the per-document array and audit-field noise — the
+    list view only needs counters + lifecycle; detail is one GET /jobs/{id}
+    away. Matches the declared contract alias (DataEnvelope[list[ResearchJobSummary]]).
+    """
+    return ResearchJobSummary(
+        id=job.id,
+        order_id=job.order_id,
+        status=job.status,
+        total_documents=job.total_documents,
+        fetched_documents=job.fetched_documents,
+        uploaded_documents=job.uploaded_documents,
+        failed_documents=job.failed_documents,
+        cancelled_documents=job.cancelled_documents,
+        created_at=job.created_at,
+        completed_at=job.completed_at,
+        cancel_reason=job.cancel_reason,
     )

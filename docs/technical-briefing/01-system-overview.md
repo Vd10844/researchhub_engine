@@ -95,11 +95,11 @@ sequenceDiagram
     WORKER->>DB: job.status=running
     loop each document
         WORKER->>WORKER: run_research(include=[step]) → FetchedSource
-        WORKER->>DB: persist status/summary/link/error; commit
+        WORKER->>DB: persist status/summary/link/error, commit
         alt auto-fetched artifact
             WORKER->>SRC: (already fetched inside run_research)
             WORKER->>WORKER: _upload_artifact → blob → File/OrderFile rows
-            WORKER->>DB: doc.status=uploaded; file_id/order_file_id
+            WORKER->>DB: doc.status=uploaded, file_id/order_file_id
         end
     end
     WORKER->>DB: recalc counters → terminal (completed/partial/failed)

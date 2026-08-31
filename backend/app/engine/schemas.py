@@ -43,8 +43,11 @@ class ResearchJobStatus(str, enum.Enum):
       running  → completed        (all adapters returned designed outcome)
       running  → partial          (≥1 adapter hit an unexpected failure)
       running  → failed           (context resolution failed — no geocode, no parcel)
-      running  → cancelled        (user cancelled via API)
-      *        → cancelling       (cancel requested, waiting for in-flight work to stop)
+      queued   → cancelled        (cancel requested before the worker started)
+      running  → cancelling       (cancel requested mid-run; worker drains then finalizes)
+      cancelling → cancelled      (worker observed the cancellation and drained)
+      completed | partial → reviewed   (human confirms the document set)
+      reviewed → archived         (retention — hidden from the default list)
     """
 
     queued = "queued"
@@ -54,6 +57,8 @@ class ResearchJobStatus(str, enum.Enum):
     failed = "failed"
     cancelling = "cancelling"
     cancelled = "cancelled"
+    reviewed = "reviewed"
+    archived = "archived"
 
 
 class ResearchDocStatus(str, enum.Enum):
@@ -275,19 +280,29 @@ class ResearchJob(BaseModel):
         default=None,
         description="Top-level error message when status == 'failed'",
     )
+    cancel_reason: str | None = Field(
+        default=None,
+        description="Reason recorded when the job was cancelled (from CancelJobRequest.reason)",
+    )
 
 
 class ResearchJobSummary(BaseModel):
     """Compact job listing — used in GET /research/orders/{order_id}/jobs."""
 
     id: UUID
+    order_id: UUID = Field(..., description="Order this job belongs to")
     status: ResearchJobStatus
     total_documents: int
     fetched_documents: int
     uploaded_documents: int
     failed_documents: int
+    cancelled_documents: int = Field(default=0, description="Documents skipped due to cancellation")
     created_at: datetime
     completed_at: datetime | None
+    cancel_reason: str | None = Field(
+        default=None,
+        description="Reason recorded when the job was cancelled (from CancelJobRequest.reason)",
+    )
 
 
 # ======================================================================

@@ -46,7 +46,7 @@ Docs: <http://127.0.0.1:8000/docs>
 ## Test
 
 ```bash
-.venv/Scripts/python.exe -m pytest tests -q     # 125 tests, fully offline
+.venv/Scripts/python.exe -m pytest tests -q     # 236 tests, fully offline
 ```
 
 ## Layout
@@ -57,7 +57,7 @@ backend/app/
   services/    research sources (parcel, geocode, fema, ngs, clerk, appraiser, downloader)
   data/        per-state registry modules + county platform registry (verified data)
   db/          SQLAlchemy base + mixins (UUID PKs, tenant/audit/timestamp/soft-delete)
-alembic/       database migrations (research_jobs, research_documents)
+alembic/       database migrations (0002 base shim → 0001 research tables → 0003 cancel/enum)
 contracts/     generated OpenAPI + JSON Schemas consumed by FE/BE teams
 tests/         offline conformance + API + service tests
 docker-compose.yml  Postgres + Redis + api + worker

@@ -61,6 +61,11 @@ class FetchedSource:
     records: list[dict] = field(default_factory=list)   # manifest/audit entries
     warnings: list[str] = field(default_factory=list)
     confidence: Confidence | None = None
+    # Ambiguous-but-present data that needs human eyeballs (e.g. a parcel matched
+    # via a buffered point with no address confirmation). Step assembly maps this
+    # to SourceOutcome.manual_review; the frozen status stays as-designed
+    # (typically `link`) so old frontends render it without change.
+    manual_review: bool = False
 
     # --- frozen POC parcel-step extras (only the parcel adapter sets these) ---
     situs: str | None = None
@@ -113,10 +118,22 @@ class ParcelAdapter(SourceAdapter):
         p = ctx.parcel
         ok = (ctx.parcel_ok and p.get("method") == "arcgis-rest" and bool(p.get("parcels")))
         if not ok:
-            return self.fallback(ctx, error=ErrorInfo(
+            fs = self.fallback(ctx, error=ErrorInfo(
                 code="PARCEL_NOT_FOUND",
                 message="No confident parcel match for this address.",
                 retryable=False))
+            # A polygon WAS returned but only via a buffered point (geocoder
+            # landing on the street centerline) with no address confirmation.
+            # The data is present yet ambiguous — flag it for human review
+            # instead of hiding it behind a plain reference link.
+            if bool(p.get("parcels")) and p.get("buffered_match"):
+                fs.manual_review = True
+                fs.summary = "Parcel found via a buffered match — review the boundary and ID before using."
+                fs.source_url = p.get("source") or ctx.appraiser_url
+                fs.warnings.append(
+                    "Parcel matched with a 40 m buffer and no address confirmation — "
+                    "verify the parcel boundary and ID before relying on this data.")
+            return fs
 
         sqft, acres = p.get("land_sqft"), p.get("land_acres")
         situs = p.get("situs", "")

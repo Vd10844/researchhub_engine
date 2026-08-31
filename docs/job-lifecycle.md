@@ -20,20 +20,23 @@ the API + worker contract (`engine/schemas.py`, `engine/service.py`,
                 ┌──────────┐
         create  │  queued   │
       ─────────►│          │
-                └─────┬────┘
+                └─────┬────┘    user cancels before
+                      │         the worker starts ──► cancelled
                       │ worker picks up
                       ▼
                 ┌──────────┐   all designed outcomes      ┌────────────┐
                 │  running  │ ───────────────────────────►│  completed  │
-                │           │                             └────────────┘
-                └─────┬─────┘   ≥1 unexpected failure       ┌─────────┐
-                      │         (blocked/broken/retryable) ►│ partial  │
-                      │                                     └─────────┘
-                      │   context resolution failed          ┌────────┐
-                      └────────────────────────────────────►│ failed  │
-                                                           └────────┘
-   cancel requested while running/queued:
-                        running ──► cancelled   (cancel requested → cancelling)
+                │           │                             └─────┬──────┘
+                └──┬─────┬──┘   ≥1 unexpected failure       ┌─────────┐
+                   │     └────  (blocked/broken/retryable) ►│ partial  │
+                   │                                        └─────┬────┘
+                   │   context resolution failed          ┌────────┐
+                   └─────────────────────────────────────►│ failed  │
+                                                          └────────┘
+   cancel requested mid-run:  running ──► cancelling ──► cancelled
+                                (worker drains, remaining docs → skipped)
+
+   human sign-off / retention:  completed | partial ──► reviewed ──► archived
 ```
 
 Rules:
@@ -44,8 +47,10 @@ Rules:
 | `running → completed` | every document reached `uploaded`/`fetched`/`skipped` |
 | `running → partial` | ≥1 document is `failed`, at least one succeeded |
 | `running → failed` | context resolution failed, or all documents failed |
-| `queued/running → cancelled` | only via cancel API; queued docs → `skipped` |
-| terminal → any new state | impossible on the same row — retries are a NEW job |
+| `queued → cancelled` | via cancel API before the worker claims it |
+| `running → cancelling → cancelled` | via cancel API mid-run; remaining docs → `skipped` |
+| `completed/partial → reviewed → archived` | sign-off moves; job rows are never deleted |
+| terminal → any new state (except reviewed/archived) | impossible on the same row — retries are a NEW job |
 
 ## 3. Per-document state machine
 
@@ -70,10 +75,15 @@ queued ──► fetching ──► fetched ──► uploading ──► upload
 documents:
 
 ```
-failed == 0                                   → completed
-failed > 0 and ≥1 successful                  → partial
-all documents failed (or zero)                → failed
+cancelling                                         → cancelled
+failed == 0                                        → completed
+failed > 0 and ≥1 successful                      → partial
+all documents failed (or zero documents present)  → failed
 ```
+
+The `cancelling → cancelled` branch is checked **before** the document-derived
+resolution: a drained run must land on `cancelled` even when some documents
+finished `uploaded` and others were `skipped`.
 
 `skipped` documents do not count as failed. Same rule drives the job's
 denormalized counters (`fetched_documents`, `uploaded_documents`,
@@ -93,11 +103,18 @@ POST `/research/jobs/{id}/retry`:
 
 ## 6. Cancel
 
-POST `/research/jobs/{id}/cancel`:
+POST `/research/jobs/{id}/cancel` (body: `{"reason": str?}`):
 
-1. Only `queued`/`running` jobs can be cancelled.
-2. The job transitions to `cancelled`; documents not yet started flip to
-   `skipped`; in-flight documents finish their current fetch step.
+1. Only `queued`/`running`/`cancelling` jobs can be cancelled.
+2. A **queued** job flips straight to `cancelled` — it never starts.
+3. A **running** job transitions to `cancelling`; the optional `reason` is
+   recorded on the row. `cancelling` is a drain state, not a terminal one.
+4. The worker observes the `cancelling` flag on its next document boundary,
+   marks every remaining document `skipped`, recomputes the counters, and
+   resolves the job to `cancelled`. In-flight documents finish their current
+   fetch step first.
+5. A task delivered after the job was already cancelled is drained without
+   fetching anything — it must never flip the job back to `running`.
 
 ## 7. Idempotency
 

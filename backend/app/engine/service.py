@@ -99,10 +99,13 @@ def recalc_job_counters(job: ResearchJob, docs: list[ResearchDocument]) -> None:
 def resolve_job_terminal_status(db, job: ResearchJob) -> ResearchJobStatus:
     """Compute the job's terminal status from its documents.
 
-    - all uploaded/fetched  → completed
-    - some failed           → partial
-    - all failed            → failed
+    - cancelling (observed by the worker)  → cancelled
+    - all uploaded/fetched                 → completed
+    - some failed                          → partial
+    - all failed                           → failed
     """
+    if job.status == ResearchJobStatus.cancelling:
+        return ResearchJobStatus.cancelled
     docs = ResearchDocumentRepository.list_for_job(db, job.id)
     total = len(docs)
     if total == 0:
@@ -221,13 +224,52 @@ class ResearchService:
 
     # ---------------------------------------------------------- cancel
 
-    def cancel_job(self, db, *, tenant_id, job_id) -> ResearchJob:
+    def cancel_job(self, db, *, tenant_id, job_id, reason: str | None = None) -> ResearchJob:
         job = self.get_job(db, tenant_id=tenant_id, job_id=job_id)
-        if job.status not in (ResearchJobStatus.queued, ResearchJobStatus.running):
+        if job.status not in (
+            ResearchJobStatus.queued,
+            ResearchJobStatus.running,
+            ResearchJobStatus.cancelling,
+        ):
             raise OrderNotResearchableError("Job is not cancellable")
 
-        job.status = ResearchJobStatus.cancelled
+        # A queued job has nothing in flight — finalize immediately. A running
+        # job enters `cancelling`: the worker drains in-flight work, skips the
+        # remaining documents, then resolves `cancelling → cancelled`.
+        if job.status == ResearchJobStatus.queued:
+            job.status = ResearchJobStatus.cancelled
+        else:
+            job.status = ResearchJobStatus.cancelling
+        if reason:
+            job.cancel_reason = reason
         job.completed_at = None  # set by worker on actual completion
+        ResearchJobRepository.save(db, job)
+        db.commit()
+        db.refresh(job)
+        return job
+
+    # ---------------------------------------------------------- review / archive
+
+    def mark_reviewed(self, db, *, tenant_id, job_id) -> ResearchJob:
+        """Human sign-off that the fetched document set is correct."""
+        job = self.get_job(db, tenant_id=tenant_id, job_id=job_id)
+        if job.status not in (
+            ResearchJobStatus.completed,
+            ResearchJobStatus.partial,
+        ):
+            raise OrderNotResearchableError("Only completed/partial jobs can be marked reviewed")
+        job.status = ResearchJobStatus.reviewed
+        ResearchJobRepository.save(db, job)
+        db.commit()
+        db.refresh(job)
+        return job
+
+    def archive_job(self, db, *, tenant_id, job_id) -> ResearchJob:
+        """Retention state — hides a reviewed job from the default list."""
+        job = self.get_job(db, tenant_id=tenant_id, job_id=job_id)
+        if job.status != ResearchJobStatus.reviewed:
+            raise OrderNotResearchableError("Only reviewed jobs can be archived")
+        job.status = ResearchJobStatus.archived
         ResearchJobRepository.save(db, job)
         db.commit()
         db.refresh(job)
