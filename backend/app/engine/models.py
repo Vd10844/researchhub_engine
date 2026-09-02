@@ -198,6 +198,12 @@ class ResearchJob(
         nullable=True,
         comment="Optional URL to POST job completion status to.",
     )
+    callback_delivered: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False,
+        nullable=False,
+        comment="Whether the completion callback was successfully delivered (at-least-once).",
+    )
 
     # --- relationships -----------------------------------------------
     # `order` → parent's Order model is removed; re-added during integration.

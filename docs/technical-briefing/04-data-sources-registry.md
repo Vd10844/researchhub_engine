@@ -11,7 +11,7 @@ are in this repo's `backend/app/data/` + `backend/app/services/`.
 | `data/states/` package | one module per state exporting `STATE`, `PARCEL` (statewide service), `COUNTIES` (per-county overrides), `DEED_LINK`, `PLAT_LINK`, `APPRAISER_LINK` | country-scale coverage without a giant file |
 | `data/records_links.json` | **bulk-verified** clerk + appraiser links for hundreds of counties (351 entries today), each carrying `_src_clerk_url` provenance | TX's 254 CADs etc. without hand-writing |
 | `data/geography.py` | states/counties list + **live Census TIGERweb** city picker per county | dropdowns, FIPS normalization |
-| `data/reference.py` | `SURVEY_TYPES`, `RESIDENTIAL_DOCS` (the 11 doc steps in declared order), `DOC_MATRIX` (which docs each survey type needs), `SOURCES` | the survey matrix |
+| `data/reference.py` | `SURVEY_TYPES`, `RESIDENTIAL_DOCS` (the 12 doc steps in declared order), `DOC_MATRIX` (which docs each survey type needs), `SOURCES` | the survey matrix |
 
 Entry example, Volusia FL (`county_platforms.py:21-28`):
 
@@ -110,8 +110,9 @@ platform:
 - `appraiser.py` — Polk CAMA record card download; everywhere else the tax card is generated
   from the parcel records, with a VERIFIED appraiser portal link (Georgia: `qpublic.net/ga/<slug>/`);
   Texas: Comptroller county directory per county.
-- Anything on an `inhouse`/`unknown` platform with no scraper → the `_link_only_clerk_adapter`
-  returns the verified clerk `link` (never fabricates one).
+- Anything on an `inhouse`/`unknown` platform with no scraper → the
+  `_attempt_clerk_adapter` (`sources.py:438`) tries the shared clerk scrape and falls
+  back to the verified clerk `link` (never fabricates one).
 
 ## 3. The coverage gates (what "adding a county" means)
 
@@ -157,8 +158,8 @@ The shared `session` (`http.py:8-16`) carries the app's `User-Agent`, retries
 ## 5. The survey matrix (`data/reference.py`)
 
 `RESIDENTIAL_DOCS` (from `POI = apartment/office…` families) is the agreed order the engine
-runs: the 11 steps (parcel, appraiser, **deed, plat, adjoiners, easements, prior_survey, condo**,
-flood, benchmarks/ngs, glo) with their `requirement` (mandatory → conditional → recommended).
+runs: the 12 steps (parcel, appraiser, **deed, plat, adjoiners, easements, prior_survey, condo**,
+flood, benchmarks/ngs, glo, zoning) with their `requirement` (mandatory → conditional → recommended).
 `DOC_MATRIX` maps survey_type → the subset of docs that survey needs, and `SURVEY_TYPES` lists
 the supported types — a new survey type = a matrix row, nothing else.
 

@@ -228,15 +228,31 @@ finally:
         if not uploaded:
             log("WARN  no uploaded artifacts this run (expected only if all sources fell back)")
 
-        # Cancel path: second job, cancel immediately.
+        # Cancel path: second job with the full (slower, partly network-bound)
+        # document set so there is a real in-flight window to cancel; cancel
+        # immediately after POST. Expect the job to drain to `cancelled`.
         cjob = http("POST", "/jobs", body={
             "order_id": str(order_id),
-            "document_types": ["PARCEL_RECORD"],
+            "document_types": ALL_DOC_TYPES,
         }, headers={"X-Idempotency-Key": str(uuid.uuid4())})["data"]
         http("POST", f"/jobs/{cjob['id']}/cancel")
-        cjob = http("GET", f"/jobs/{cjob['id']}")["data"]
-        log(f"cancel path  : {cjob['status']} (expected cancelled)")
-        if cjob["status"] != "cancelled":
+        cjob_status = "cancel-request-failed"
+        deadline2 = time.time() + 30
+        while time.time() < deadline2:
+            try:
+                cjob_status = http("GET", f"/jobs/{cjob['id']}")["data"]["status"]
+            except Exception:
+                pass
+            # Only the terminal `cancelled` ends the wait. `cancelling` is an
+            # intermediate state: the worker observes it and drains the job to
+            # `cancelled`. Breaking on `cancelling` races the worker and
+            # declares failure before it ever finishes (which also lets the
+            # `finally` block kill the worker mid-drain).
+            if cjob_status == "cancelled":
+                break
+            time.sleep(1)
+        log(f"cancel path  : {cjob_status} (expected cancelled)")
+        if cjob_status != "cancelled":
             log("WARN  cancel did not reach cancelled")
             return 5
 

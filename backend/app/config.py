@@ -47,6 +47,11 @@ class Settings(BaseSettings):
     MAX_RETRIES_PER_DOCUMENT: int = 3
     DOCUMENT_TIMEOUT_SECONDS: int = 60
 
+    # --- callback delivery (at-least-once with retry + backoff) ------
+    CALLBACK_RETRY_ATTEMPTS: int = 3
+    CALLBACK_RETRY_BACKOFF: float = 1.0  # first retry sleep in seconds; doubles
+    CALLBACK_RETRY_SLEEP: bool = True  # set false in offline tests to skip sleeps
+
     # --- HTTP client -------------------------------------------------
     HTTP_TIMEOUT_SECONDS: int = 30
 

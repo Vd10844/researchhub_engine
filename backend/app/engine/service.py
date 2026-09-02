@@ -22,7 +22,9 @@ from app.engine.errors import (
     DocumentFetchError,
     IdempotencyConflictError,
     InvalidDocTypesError,
+    JobNotCancellableError,
     JobNotFoundError,
+    JobNotRetryableError,
     OrderNotFoundError,
     OrderNotResearchableError,
 )
@@ -150,6 +152,8 @@ class ResearchService:
     # ---------------------------------------------------------- create
 
     def create_job(self, db, *, tenant_id, actor_id, order_id, doc_types, idempotency_key, callback_url=None):
+        from sqlalchemy.exc import IntegrityError
+
         order = self._resolve_order(db, tenant_id, order_id)
         doc_types = self._validate_doc_types(doc_types)
 
@@ -159,20 +163,33 @@ class ResearchService:
             if existing:
                 return existing
 
-        job = ResearchJobRepository.create(
-            db,
-            order_id=order.id,
-            tenant_id=tenant_id,
-            created_by=actor_id,
-            idempotency_key=idempotency_key or uuid.uuid4(),
-            requested_doc_types=doc_types,
-            callback_url=callback_url,
-        )
-        for doc_type in doc_types:
-            ResearchDocumentRepository.create(
-                db, job_id=job.id, order_id=order.id, doc_type=doc_type
+        try:
+            job = ResearchJobRepository.create(
+                db,
+                order_id=order.id,
+                tenant_id=tenant_id,
+                created_by=actor_id,
+                idempotency_key=idempotency_key or uuid.uuid4(),
+                requested_doc_types=doc_types,
+                callback_url=callback_url,
             )
-        db.commit()
+            for doc_type in doc_types:
+                ResearchDocumentRepository.create(
+                    db, job_id=job.id, order_id=order.id, doc_type=doc_type
+                )
+            db.commit()
+        except IntegrityError:
+            # Concurrent race: two requests with the same idempotency key both
+            # passed the pre-check, then the unique constraint
+            # (uq_research_job_idempotency_per_tenant) rejected the second
+            # insert. Roll back and return the winner's job instead of a 500.
+            db.rollback()
+            if idempotency_key:
+                existing = ResearchJobRepository.get_by_idempotency(db, idempotency_key, tenant_id)
+                if existing:
+                    return existing
+            raise IdempotencyConflictError("A job with this idempotency key already exists")
+
         db.refresh(job)
         if self.enqueue is not None:
             self.enqueue(
@@ -201,7 +218,7 @@ class ResearchService:
             ResearchJobStatus.failed,
             ResearchJobStatus.cancelled,
         ):
-            raise OrderNotResearchableError("Original job is not in a retryable state")
+            raise JobNotRetryableError("Original job is not in a retryable state")
 
         failed = ResearchDocumentRepository.list_failed(db, job_id)
         failed_types = [d.doc_type for d in failed]
@@ -211,7 +228,7 @@ class ResearchService:
             doc_types = [t for t in doc_types if t in failed_types]
 
         if not doc_types:
-            raise OrderNotResearchableError("No failed documents to retry")
+            raise JobNotRetryableError("No failed documents to retry")
 
         return self.create_job(
             db,
@@ -231,7 +248,7 @@ class ResearchService:
             ResearchJobStatus.running,
             ResearchJobStatus.cancelling,
         ):
-            raise OrderNotResearchableError("Job is not cancellable")
+            raise JobNotCancellableError("Job is not cancellable")
 
         # A queued job has nothing in flight — finalize immediately. A running
         # job enters `cancelling`: the worker drains in-flight work, skips the
@@ -291,7 +308,10 @@ class ResearchService:
         from app.engine.adapters import DOC_TYPE_TO_STEP, STEP_TO_DOC_TYPE
 
         if not doc_types:
-            raise InvalidDocTypesError("document_types must not be empty")
+            # Empty list = fetch every applicable type for the order's survey
+            # type (per CreateResearchJobRequest). Today the survey matrix has
+            # one survey type, so "all applicable" == all requestable types.
+            return list(DOC_TYPE_TO_STEP.keys())
 
         canonical: list[str] = []
         unknown: list[str] = []

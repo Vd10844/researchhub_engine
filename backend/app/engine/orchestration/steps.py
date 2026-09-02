@@ -106,9 +106,6 @@ def _assemble(ctx, d: dict, fs: FetchedSource, outcome: SourceOutcome,
     )
 
 
-_CTX_STACK_REMOVED = None  # noqa: F841
-
-
 def _outcome_for(fs: FetchedSource) -> SourceOutcome:
     if fs.manual_review:
         return SourceOutcome.manual_review

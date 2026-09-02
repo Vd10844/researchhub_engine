@@ -61,8 +61,9 @@ def enqueue_research_job(*, job_id, tenant_id, actor_id) -> None:
 def research_job(self, job_id, tenant_id, actor_id):
     """Process a research job: fetch all requested documents, upload to S3.
 
-    Runs in the Celery worker. One task per job (parallelism happens
-    *inside* the document fetcher via ThreadPoolExecutor).
+    Runs in the Celery worker. One task per job; documents are processed
+    sequentially in the loop below (each call to ``document_fetcher`` is a
+    single-document orchestrator run honoring ``include``).
     """
     service = build_research_service()
     db = SessionLocal()
@@ -161,12 +162,21 @@ def research_job(self, job_id, tenant_id, actor_id):
 
 
 def _fire_callback(job, db):
-    """POST job summary to callback_url (optional delivery; failures logged, not fatal)."""
+    """POST job summary to callback_url (best-effort with retry + backoff).
+
+    At-least-once: retries a few times with exponential backoff before giving
+    up (failures are logged, not fatal — the job itself already reached its
+    terminal status). Successful delivery is recorded via ``callback_delivered``
+    so an external reaper can find and re-send jobs that were never delivered.
+    """
     import logging
+    import time
 
     import httpx
 
     logger = logging.getLogger("researchhub.worker")
+    from app.config import settings
+
     docs = ResearchDocumentRepository.list_for_job(db, job.id)
     payload = {
         "job_id": str(job.id),
@@ -176,7 +186,27 @@ def _fire_callback(job, db):
         "uploaded": job.uploaded_documents,
         "failed": job.failed_documents,
     }
-    try:
-        httpx.post(job.callback_url, json=payload, timeout=10)
-    except Exception as e:  # noqa: BLE001
-        logger.warning("callback delivery failed for job %s: %s", job.id, e)
+    attempts = settings.CALLBACK_RETRY_ATTEMPTS
+    delay = settings.CALLBACK_RETRY_BACKOFF
+    for attempt in range(1, attempts + 1):
+        try:
+            resp = httpx.post(job.callback_url, json=payload, timeout=10)
+            if resp.status_code >= 400:
+                raise RuntimeError(f"callback returned HTTP {resp.status_code}")
+            job.callback_delivered = True
+            ResearchJobRepository.save(db, job)
+            db.commit()
+            return
+        except Exception as e:  # noqa: BLE001
+            if attempt < attempts:
+                logger.warning(
+                    "callback delivery attempt %d/%d failed for job %s: %s",
+                    attempt, attempts, job.id, e,
+                )
+                if settings.CALLBACK_RETRY_SLEEP:
+                    time.sleep(delay)
+                delay *= 2
+            else:
+                logger.error(
+                    "callback delivery exhausted for job %s: %s", job.id, e
+                )

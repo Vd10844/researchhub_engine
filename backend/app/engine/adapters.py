@@ -33,9 +33,11 @@ logger = logging.getLogger("researchhub.adapters")
 # Map orchestrator step keys → the engine's DocumentType string.
 # The engine emits steps keyed by short names (parcel, deed, plat,
 # appraiser, flood, benchmarks). The engine contract uses the parent's
-# DocumentType. Clerk-family steps without an auto-fetch (adjoiners,
-# easements, prior surveys, condo) have no DocumentType yet and are
-# never requested by callers — they stay outside this map.
+# DocumentType. These 6 are the ONLY types the API can request. The other
+# RESIDENTIAL_DOCS steps (adjoiners, easements, prior_survey, condo, glo,
+# zoning) are orchestrated by a direct ``run_research()`` (all-docs path)
+# but have no DocumentType yet and are never requested by callers — they
+# stay outside this map. See docs/regression-matrix.md §2b.
 STEP_TO_DOC_TYPE: dict[str, str] = {
     "parcel": "PARCEL_RECORD",
     "appraiser": "PROPERTY_APPRAISER_TAX_RECORD",

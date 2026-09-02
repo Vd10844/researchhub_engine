@@ -22,7 +22,7 @@ backend/app/engine/
   errors.py             exception hierarchy mapped to HTTP codes
   orchestration/
     context.py          Phase A — resolve_property_context → PropertyContext
-    sources.py          SourceAdapter interface + 11 adapters + ADAPTERS registry
+    sources.py          SourceAdapter interface + 12 adapters + ADAPTERS registry
     steps.py            build_steps — include-aware, per-step fallback + status/provenance
     runner.py           run_research — wires Phase A + Phase B
     folders.py          staging folder + manifest.json/result.json writers
@@ -242,7 +242,7 @@ order_number, search_parcel_id → `PropertyContext`):
 a `WarningBag` (dedup, ordered). `situs` and `land_sqft`/`land_acres` are properties the parcel
 step reads.
 
-### Phase B — `sources.py`: the 11 adapters
+### Phase B — `sources.py`: the 12 adapters
 The interface that replaced the monolith's if/elif chain:
 
 ```python
@@ -254,12 +254,12 @@ class SourceAdapter:
         return FetchedSource(link="", link_label="", summary="")
 ```
 
-`FetchedSource` (`sources.py:49`) — canonical adapter output: `status` (ok/link/empty),
+`FetchedSource` (`sources.py:50`) — canonical adapter output: `status` (ok/link/empty),
 `data`, `summary`, `link`/`link_label`, `downloaded[]`, `saved_file`, `records[]` (manifest),
 `warnings`, `confidence`, and the parcel-only `situs`/`land_sqft`/`land_acres`/`address_match`.
 
 `SourceError(outcome, code, message, retryable)` (`:33`) — the ONLY thing adapters raise.
-`classify_exception` (`:86`) maps arbitrary exceptions to `(outcome, code, message, retryable)`:
+`classify_exception` (`:91`) maps arbitrary exceptions to `(outcome, code, message, retryable)`:
 
 | HTTP / exception | outcome | code |
 |---|---|---|
@@ -269,23 +269,25 @@ class SourceAdapter:
 | Timeout / ConnectionError | `retryable` | `CONNECTION_FAILED` |
 | anything else | `retryable` | `ADAPTER_ERROR` |
 
-The registry (`ADAPTERS`, `:567`) — **11 entries**, 7 concrete + 4 link-only:
+The registry (`ADAPTERS`, `:625`) — **12 entries**, 6 auto-fetch + 4 attempt-fetch +
+2 link-only:
 
 | key | Adapter | Auto-fetch logic |
 |---|---|---|
-| `parcel` | `ParcelAdapter` (:109) | ok only if `arcgis-rest` + parcels + **not** buffered; else `PARCEL_NOT_FOUND` link. Saves `parcel.json`, downloads the record card if able |
-| `appraiser` | `AppraiserAdapter` (:167) | ok if parcel resolved; downloads the county record card (Polk) |
-| `deed` | `DeedAdapter` (:333) | ok if the clerk scrape returned a deed; confidence `medium` |
-| `plat` | `PlatAdapter` (:379) | ok if the clerk scrape returned a plat |
-| `adjoiners`/`easements`/`prior_survey`/`condo` | `_link_only_clerk_adapter(...)` (:421) | always link to clerk official records |
-| `flood` | `FloodAdapter` (:447) | FEMA NFHL zone; ok if zone **or** the composited map exhibit exists (Pillow) |
-| `benchmarks` | `NgsAdapter` (:507) | NOAA NGS radial; ok if marks found (downloads up to 3 datasheets), `empty` if none |
-| `glo` | `GloAdapter` (:550) | always link to BLM GLO |
+| `parcel` | `ParcelAdapter` (:114) | ok only if `arcgis-rest` + parcels + **not** buffered; else `PARCEL_NOT_FOUND` link. Saves `parcel.json`, downloads the record card if able |
+| `appraiser` | `AppraiserAdapter` (:184) | ok if parcel resolved; downloads the county record card (Polk) |
+| `deed` | `DeedAdapter` (:350) | ok if the clerk scrape returned a deed; confidence `medium` |
+| `plat` | `PlatAdapter` (:396) | ok if the clerk scrape returned a plat |
+| `adjoiners`/`easements`/`prior_survey`/`condo` | `_attempt_clerk_adapter(...)` (:438) | attempt the shared clerk scrape; fall back to a clerk official-records link |
+| `flood` | `FloodAdapter` (:477) | FEMA NFHL zone; ok if zone **or** the composited map exhibit exists (Pillow) |
+| `benchmarks` | `NgsAdapter` (:537) | NOAA NGS radial; ok if marks found (downloads up to 3 datasheets), `empty` if none |
+| `glo` | `GloAdapter` (:580) | always link to BLM GLO |
+| `zoning` | `ZoningAdapter` (:597) | always link to county zoning/GIS portal (no single auto-fetch source) |
 
-Shared clutch: `_scrape_documents` (`:281`) runs the **county-clerk Playwright scrape once per
+Shared clutch: `_scrape_documents` (`:298`) runs the **county-clerk Playwright scrape once per
 context** (cached on `ctx._clerk_docs`) so the deed and plat steps only ever open the browser
 once; the plat-book/page and OR book/page cues (`_plat_ref`, `_or_ref`, `_numref`. `_subdivision`)
-are ported verbatim from the POC orchestrator. `register_source(key, adapter)` (`:584`) is the
+are ported verbatim from the POC orchestrator. `register_source(key, adapter)` (`:643`) is the
 test/extension seam.
 
 ### `steps.py`: include-aware assembly + the fallback decision point
@@ -317,7 +319,10 @@ steps/sources.
 `STEP_TO_DOC_TYPE` (`parcel → PARCEL_RECORD`, `appraiser →
 PROPERTY_APPRAISER_TAX_RECORD`, `plat → RECORDED_PLAT_SUBDIVISION_MAP`, `deed →
 DEED_SUBJECT_PARCEL`, `flood → FEMA_FLOOD_ZONE_FIRM`, `benchmarks → NGS_CONTROL`), plus the
-inverse `DOC_TYPE_TO_STEP` (`:39-48`).
+inverse `DOC_TYPE_TO_STEP` (`:49`). These 6 are the **only** types the API can request
+(`CreateResearchJobRequest.document_types`); an empty list resolves to all 6. The remaining
+reference steps (adjoiners, easements, prior_survey, condo, glo, zoning) are reachable only via
+a direct `run_research()` all-docs run — see `docs/regression-matrix.md` §2b.
 
 - `order_provider(order_id, tenant_id)` (`:51`) — delegates to `order_source.order_provider`.
 - `build_research_service()` (`:61`) — the single assembly point: `ResearchService(

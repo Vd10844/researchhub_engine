@@ -1,4 +1,6 @@
-"""Static reference data. POC scope: Florida residential land survey only."""
+"""Static reference data. Residential land survey scope: the research-phase
+document set, the survey matrix, and the source directory used by the engine's
+per-source adapters (``engine/orchestration/sources.py``)."""
 
 # Single survey type in scope for the POC.
 SURVEY_TYPES = [
@@ -72,6 +74,13 @@ RESIDENTIAL_DOCS = [
      "description": "The recorded declaration (with its survey / plot-plan exhibits) that legally "
                     "creates the condominium and defines the units and common elements (FL s.718.104).",
      "guidance": "Search Official Records for the recorded condo declaration and survey exhibits."},
+    {"key": "zoning", "label": "Zoning / setback ordinance", "requirement": "conditional",
+     "source": "gis", "condition": "if setbacks / permitted use affect the survey (most boundary work)",
+     "description": "The zoning classification and applicable setback / land-use ordinances for the "
+                    "parcel — used to check conforming use, buildable area and setback lines shown "
+                    "on the survey.",
+     "guidance": "Search the county/municipal zoning GIS or permitting portal for the parcel's zoning "
+                 "classification and setback ordinance."},
 ]
 
 # Column order matches SURVEY_TYPES names

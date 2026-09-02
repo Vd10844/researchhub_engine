@@ -76,6 +76,3 @@ class DocumentFetchError(ResearchEngineError):
         self.code = code
         self.message = message
         self.retryable = retryable
-
-
-ERROR_MAP = {cls.code: cls for cls in ResearchEngineError.__subclasses__()}

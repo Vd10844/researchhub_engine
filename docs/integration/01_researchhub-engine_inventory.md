@@ -60,16 +60,17 @@ researchhub-engine/
 │   │   └── data/                 # domain registry (POC-accumulated "source of truth")
 │   │       ├── county_platforms.py  # county → appraiser/clerk platform registry (22KB)
 │   │       ├── geography.py          # FIPS/county-name helpers
-│   │       ├── reference.py          # RESIDENTIAL_DOCS checklist (11 doc types)
+│   │       ├── reference.py          # RESIDENTIAL_DOCS checklist (12 doc types)
 │   │       ├── states/*.py           # 50 per-state registry modules (ga/oh/tx largest; mostly data)
 │   │       ├── _counties_raw.json    # 228KB raw county data (source for registry)
 │   │       └── records_links.json    # 103KB deep-link registry
 │   ├── alembic/
 │   │   ├── env.py                # loads Base + engine.models; url from env
-│   │   └── versions/
+│   │   └── versions/             # chain: 0002 → 0001 → 0003 → 0004
 │   │       ├── 0002_dev_base_tables.py  # down_revision=None — dev stand-ins: tenants/orders/files/order_files
 │   │       ├── 0001_research_tables.py  # research_jobs + research_documents (FKs → orders/tenants/files/order_files)
-│   │       └── 0003_cancel_reason.py    # +cancel_reason, enum +reviewed/+archived
+│   │       ├── 0003_cancel_reason.py    # +cancel_reason, enum +reviewed/+archived
+│   │       └── 0004_callback_delivered.py  # +callback_delivered flag for at-least-once delivery
 │   └── app/data/jobs/            # (JOBS_DIR default) runtime scratch
 │
 ├── contracts/                    # GENERATED — do not hand-edit

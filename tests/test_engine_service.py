@@ -7,6 +7,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from app.engine.errors import (
+    JobNotCancellableError,
     JobNotFoundError,
     OrderNotResearchableError,
 )
@@ -116,15 +117,21 @@ def test_create_job_raises_when_order_has_no_address(test_db):
         )
 
 
-def test_create_job_rejects_empty_doc_types(test_db):
+def test_create_job_empty_doc_types_means_all(test_db):
+    """Empty document_types = fetch all applicable types (contract promise)."""
     svc = service_with()
-    from app.engine.errors import InvalidDocTypesError
-
-    with pytest.raises(InvalidDocTypesError):
-        svc.create_job(
-            test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID,
-            order_id=ORDER_ID, doc_types=[], idempotency_key=None,
-        )
+    job = svc.create_job(
+        test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID,
+        order_id=ORDER_ID, doc_types=[], idempotency_key=None,
+    )
+    assert job.requested_doc_types == [
+        "PARCEL_RECORD",
+        "PROPERTY_APPRAISER_TAX_RECORD",
+        "RECORDED_PLAT_SUBDIVISION_MAP",
+        "DEED_SUBJECT_PARCEL",
+        "FEMA_FLOOD_ZONE_FIRM",
+        "NGS_CONTROL",
+    ]
 
 
 # ------------------------------------------------------------------ get / list
@@ -198,7 +205,7 @@ def test_cancel_rejects_terminal_job(test_db):
     ResearchJobRepository.save(test_db, job)
     test_db.commit()
 
-    with pytest.raises(OrderNotResearchableError):
+    with pytest.raises(JobNotCancellableError):
         svc.cancel_job(test_db, tenant_id=TENANT_ID, job_id=job.id)
 
 

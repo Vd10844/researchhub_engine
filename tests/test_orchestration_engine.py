@@ -285,10 +285,8 @@ class TestJobCompletion:
         result = run_research(address="1 Test St")
         assert result.job_state == JobState.completed
         assert result.warnings == []
-        assert [s.key for s in result.steps] == [
-            "parcel", "appraiser", "deed", "plat", "adjoiners", "easements",
-            "prior_survey", "flood", "benchmarks", "glo", "condo",
-        ]
+        from app.data.reference import RESIDENTIAL_DOCS
+        assert [s.key for s in result.steps] == [d["key"] for d in RESIDENTIAL_DOCS]
         # audit artifacts written to the staging folder
         assert (folder / "result.json").is_file()
         assert (folder / "manifest.json").is_file()
@@ -344,3 +342,51 @@ class TestRealAdaptersOffline:
         assert (folder / "result.json").is_file()
         assert (folder / "manifest.json").is_file()
         assert (folder / "documents").is_dir()
+
+
+# ---------------------------------------------------------------------------
+# Fetch-or-link invariant
+# ---------------------------------------------------------------------------
+
+class TestFetchOrLinkInvariant:
+    """Every document in the reference set must either be fetched (ok) or
+    carry a non-empty fallback link. No document is ever left with neither —
+    that is the production contract for 'download if available, else a link'."""
+
+    def test_every_doc_is_fetched_or_linked(self, tmp_path, adapters, monkeypatch):
+        from app.data.reference import RESIDENTIAL_DOCS
+        from app.engine.orchestration import context as ctx_mod
+        from app.engine.orchestration.runner import run_research
+
+        # Use the REAL adapters running against a full test context so the
+        # invariant is exercised by production source code, not fakes.
+        monkeypatch.setattr(ctx_mod, "resolve_property_context",
+                            lambda **kw: make_ctx(tmp_path / "jobs" / "A-1" / "research"))
+        result = run_research(address="1 Test St")
+
+        by_key = {s.key: s for s in result.steps}
+        assert set(by_key) == {d["key"] for d in RESIDENTIAL_DOCS}
+
+        bad = []
+        for key, step in by_key.items():
+            fetched = step.status == StepStatus.ok
+            has_link = bool(step.link)
+            if not fetched and not has_link:
+                bad.append(key)
+        assert not bad, (
+            f"documents with neither fetch nor link: {bad}"
+        )
+
+        # Every step that isn't ok must have a link (link/error/empty all
+        # require a fallback deep-link).
+        for key, step in by_key.items():
+            if step.status != StepStatus.ok:
+                assert step.link, f"{key} status={step.status.value} has no link"
+
+    def test_reference_docs_all_have_an_adapter(self):
+        """Every reference doc is registered — none silently drop to a bare
+        empty step with no source at all."""
+        from app.data.reference import RESIDENTIAL_DOCS
+        from app.engine.orchestration.sources import ADAPTERS
+        missing = [d["key"] for d in RESIDENTIAL_DOCS if d["key"] not in ADAPTERS]
+        assert not missing, f"reference docs with no adapter: {missing}"

@@ -6,7 +6,10 @@ exported as OpenAPI + JSON Schema via ``scripts/export_contracts.py``.
 Design principles:
   - Every field is documented; no ambiguous types.
   - Error responses use a single envelope: ``{ error: { code, message, details? } }``.
-  - Success responses use the parent's envelope: ``{ data: ... }``.
+  - Success responses use the engine's envelope: ``{ data: ... }``. At parent
+    integration this is rewired to the parent's ``StandardResponse``
+    (``{ message, status_code, data }``) via ``UnifiedAPIRoute`` — the field
+    shape below is unchanged either way.
   - Idempotency is supported via ``X-Idempotency-Key`` header.
   - Per-document progress is tracked in ``documents[]`` on the job response.
 """
@@ -306,7 +309,8 @@ class ResearchJobSummary(BaseModel):
 
 
 # ======================================================================
-# ENVELOPE SCHEMAS (matches parent's StandardResponse pattern)
+# ENVELOPE SCHEMAS (engine-local; parent's StandardResponse replaces
+# DataEnvelope at merge — field shapes stay identical)
 # ======================================================================
 
 

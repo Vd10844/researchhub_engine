@@ -6,14 +6,15 @@ version lives in `tests/test_orchestration_regression.py` (54 assertions),
 `tests/test_orchestration_engine.py` (12 scenario tests),
 `tests/test_contract_conformance.py` (141 fixture cases, incl. requirement
 domain / map_links / warnings checks) and `tests/test_execution_scenarios.py`
-(36 worker-path + boundary tests, incl. worker INTERNAL_ERROR, callback
-delivery+failure, provenance/warnings propagation, retry/review/archive
-transitions, SSLError classification).
+(37 worker-path + boundary tests, incl. worker INTERNAL_ERROR, callback
+delivery+failure+retry, provenance/warnings propagation, retry/review/archive
+transitions, SSLError classification, and the idempotency-race IntegrityError
+path).
 Also covered: `tests/test_tenant_isolation.py` (10 cross-tenant + soft-delete
-security tests), `tests/test_auth_dependencies.py` (6 missing/invalid header
+security tests), `tests/test_auth_dependencies.py` (5 missing/invalid header
 401 boundary tests), `tests/test_engine_api.py` (18 API tests, incl.
 idempotency, 422 validation, error-envelope shape, health). Full suite:
-**305 tests**, all offline.
+**306 tests**, all offline.
 
 ## 1. Validation checklist
 
@@ -59,10 +60,27 @@ fixed in source and pinned by a test that reproduces the old behavior:
 Migration chain: `down_revision = "0001_research_tables"` ← `0003_cancel_reason`
 (0001 keeps `down_revision = "0002_dev_base_tables"`).
 
+## 1c. Production-hardening fixes (this session)
+
+Two issues that only surface in real concurrent / at-least-once deployments.
+Each fixed in source and pinned by a regression test:
+
+| # | issue (before) | fix (after) | test |
+|---|---|---|---|
+| P1 | Concurrent duplicate `POST /jobs` with the same idempotency key: both pass the pre-check, the loser hits the unique constraint and bubbles a 500 `IntegrityError` | `create_job` catches `IntegrityError`, rolls back, recovers the winner's job; re-raises `IdempotencyConflictError` (409, `IDEMPOTENCY_CONFLICT`) when nothing to recover | scenarios `test_create_job_idempotency_race_returns_existing` |
+| P2 | Completion callback delivered once, never retried (`fire and forget`); failure silently dropped | `_fire_callback` retries `CALLBACK_RETRY_ATTEMPTS`× with exponential backoff (`CALLBACK_RETRY_BACKOFF`, doubles), records success via new `research_jobs.callback_delivered` (`0004_callback_delivered`) for an external reaper; failure stays non-fatal | scenarios `test_worker_fires_callback_on_completion` (+ `callback_delivered`), `test_worker_callback_failure_is_nonfatal` (+ marker stays false) |
+
+Migration chain addition: `0004_callback_delivered` ← `0003_cancel_reason`.
+Config: `CALLBACK_RETRY_ATTEMPTS`, `CALLBACK_RETRY_BACKOFF`, `CALLBACK_RETRY_SLEEP`
+(offline tests set `CALLBACK_RETRY_SLEEP=false` to skip backoff sleeps).
+
 ## 2. Fixture coverage (the 7 captured POC jobs)
 
 All fixtures are real POC runs re-validated against the new contract on every
-test run. Status distribution across their 11 steps:
+test run. They are **historical snapshots**: each has 11 steps. Since the
+reference doc set grew to **12** (zoning added after `condo`), fixture tests
+assert their keys are a subset of `RESIDENTIAL_DOCS` in reference order rather
+than an exact match. Status distribution across their 11 steps:
 
 | fixture (county / state) | parcel ID | ok | link | empty | warnings |
 |---|---|---|---|---|---|
@@ -79,6 +97,35 @@ fallback**, **`empty`** (ngs/benchmarks), **no-parcel-match with warnings**.
 Not yet in the corpus: an `error` step fixture (POC never emitted one — blocked
 sources were classified through the same link fallback; engine now carries the
 classification additively in `source_outcome`/`error`).
+
+## 2b. Reference doc set + fetch-or-link invariant
+
+`RESIDENTIAL_DOCS` (in `backend/app/data/reference.py`) defines the research
+doc set, now **12** entries. Each key has a registered adapter in
+`ADAPTERS` (`sources.py`), so none silently drops to a bare step.
+
+| key | requirement | source | fetch if available, else link |
+|---|---|---|---|
+| parcel | required | county GIS / STATE_PARCEL | auto-fetch (grade A) or link |
+| appraiser | required | county CAMA (qPublic etc.) | auto-fetch report or link |
+| deed | required | clerk Official Records scrape | auto-fetch or link |
+| plat | required | clerk plat search / county GIS | auto-fetch or link |
+| adjoiners | conditional | clerk deed scrape | attempts shared clerk scrape |
+| easements | conditional | clerk deed scrape | attempts shared clerk scrape |
+| prior_survey | conditional | clerk deed scrape | attempts shared clerk scrape |
+| flood | required | FEMA NFHL | auto-fetch (or link) |
+| benchmarks | conditional | NGS control | auto-fetch (or link) |
+| glo | conditional | Appraiser / GLO | link |
+| condo | conditional | clerk plat scrape | attempts shared clerk scrape |
+| zoning | conditional | appraiser/clerk GIS | link |
+
+**Invariant (new tests `TestFetchOrLinkInvariant`):** every reference doc must
+either be fetched (`ok`) **or** carry a non-empty `link` fallback. No document
+is ever left with neither. The clerk-family row uses `_attempt_clerk_adapter`:
+it *tries* `clerk_scraper.fetch_documents` for the shared `deed`/`plat` source
+key and only falls back to the Official Records deep-link when nothing is
+downloadable (true for nearly all counties today). `zoning` is link-only — no
+single auto-fetchable zoning instrument exists.
 
 ## 3. Field freeze
 

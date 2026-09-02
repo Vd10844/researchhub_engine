@@ -83,13 +83,17 @@ def test_create_job_returns_contract(client):
         assert "doc_type" in doc
 
 
-def test_create_job_rejects_empty_doc_types(client):
+def test_create_job_empty_doc_types_means_all(client):
+    """Empty document_types = fetch all applicable types (contract promise)."""
     r = client.post(
         "/api/v1/research/jobs",
         json={"order_id": ORDER_ID, "document_types": []},
     )
-    assert r.status_code == 422
-    assert r.json()["error"]["code"] == "INVALID_DOC_TYPES"
+    assert r.status_code == 200, r.text
+    data = r.json()["data"]
+    assert data["status"] == "queued"
+    assert data["total_documents"] == 6  # all requestable types
+    assert len(data["documents"]) == 6
 
 
 def test_create_job_missing_order_returns_404(client, monkeypatch):
@@ -130,15 +134,15 @@ def test_get_job_not_found(client):
 
 
 def test_retry_rejects_nonterminal_job(client):
-    """A queued/running job is not retryable — 422 rather than a new job."""
+    """A queued/running job is not retryable — 409 JOB_NOT_RETRYABLE."""
     created = client.post(
         "/api/v1/research/jobs",
         json={"order_id": ORDER_ID, "document_types": ["PARCEL_RECORD", "DEED_SUBJECT_PARCEL"]},
     ).json()["data"]["id"]
 
     r = client.post(f"/api/v1/research/jobs/{created}/retry")
-    assert r.status_code == 422
-    assert r.json()["error"]["code"] == "ORDER_NOT_RESEARCHABLE"
+    assert r.status_code == 409
+    assert r.json()["error"]["code"] == "JOB_NOT_RETRYABLE"
 
 
 # ------------------------------------------------------------------ POST /jobs/{id}/cancel
@@ -315,8 +319,8 @@ def test_cancel_terminal_job_rejected(client, test_db):
     test_db.commit()
 
     r = client.post(f"/api/v1/research/jobs/{created}/cancel")
-    assert r.status_code == 422
-    assert r.json()["error"]["code"] == "ORDER_NOT_RESEARCHABLE"
+    assert r.status_code == 409
+    assert r.json()["error"]["code"] == "JOB_NOT_CANCELLABLE"
 
 
 # ------------------------------------------------------------------ empty list

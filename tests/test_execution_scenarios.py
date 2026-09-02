@@ -553,11 +553,20 @@ def test_worker_fires_callback_on_completion(test_db, monkeypatch):
     assert payload["uploaded"] == 1
     assert payload["failed"] == 0
 
+    # Successful delivery is recorded (at-least-once marker).
+    test_db.expire_all()
+    job = ResearchJobRepository.get(test_db, job.id, TENANT_ID)
+    assert job.callback_delivered is True
+
 
 def test_worker_callback_failure_is_nonfatal(test_db, monkeypatch):
     """A failing callback delivery is logged, not fatal — the job still
-    resolves to its terminal status."""
+    resolves to its terminal status, and the delivered marker stays false."""
+    from app.config import settings
     from app.engine.worker import research_job
+
+    monkeypatch.setattr(settings, "CALLBACK_RETRY_SLEEP", False)
+    monkeypatch.setattr(settings, "CALLBACK_RETRY_ATTEMPTS", 2)
 
     def fake_post(url, json=None, timeout=None):
         raise RuntimeError("callback down")
@@ -574,6 +583,9 @@ def test_worker_callback_failure_is_nonfatal(test_db, monkeypatch):
     test_db.expire_all()
     job = ResearchJobRepository.get(test_db, job.id, TENANT_ID)
     assert job.status == ResearchJobStatus.completed
+
+    # Delivery never succeeded → marker stays false so a reaper can retry.
+    assert job.callback_delivered is False
 
 
 def test_retry_from_cancelled_creates_new_job(test_db):
@@ -599,7 +611,7 @@ def test_retry_from_cancelled_creates_new_job(test_db):
 
 def test_retry_no_failed_docs_is_rejected(test_db):
     """Retrying a job with zero failed documents raises (nothing to redo)."""
-    from app.engine.errors import OrderNotResearchableError
+    from app.engine.errors import JobNotRetryableError
 
     svc = make_service()
     job = svc.create_job(
@@ -610,7 +622,7 @@ def test_retry_no_failed_docs_is_rejected(test_db):
     ResearchJobRepository.save(test_db, job)
     test_db.commit()
 
-    with pytest.raises(OrderNotResearchableError):
+    with pytest.raises(JobNotRetryableError):
         svc.retry_job(test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID, job_id=job.id)
 
 
@@ -782,3 +794,66 @@ def test_step_result_keeps_frozen_fields_plus_additive(tmp_path, adapters):
     assert isinstance(dumped["provenance"], list)
     assert isinstance(dumped["warnings"], list)
     assert dumped["error"] is None
+
+
+# =======================================================================
+# Idempotency race — DB unique constraint fires on concurrent duplicate insert
+# =======================================================================
+
+
+def test_create_job_idempotency_race_returns_existing(test_db, monkeypatch):
+    """Two concurrent requests with the same key: the second hits the unique
+    constraint (uq_research_job_idempotency_per_tenant) and must recover the
+    winner's job, not bubble a 500 IntegrityError."""
+    from app.engine.errors import IdempotencyConflictError
+    from app.engine.repository import ResearchJobRepository
+
+    key = uuid.uuid4()
+    svc = make_service()
+
+    # First request: create normally.
+    first = svc.create_job(
+        test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID,
+        order_id=ORDER_ID, doc_types=[PARCEL], idempotency_key=key,
+    )
+
+    real_get = ResearchJobRepository.get_by_idempotency
+    state = {"miss": True}
+
+    def racing_get(db, idempotency_key, tenant_id):
+        # The pre-check (first call) sees nothing (both concurrent requests
+        # passed it before either committed); every later call delegates to
+        # the real repo so the recovery path can find the winner's row.
+        if state["miss"]:
+            state["miss"] = False
+            return None
+        return real_get(db, idempotency_key, tenant_id)
+
+    monkeypatch.setattr(ResearchJobRepository, "get_by_idempotency", staticmethod(racing_get))
+
+    # Second insert collides on the unique constraint -> IntegrityError is
+    # caught -> the winner's job is recovered and returned.
+    second = svc.create_job(
+        test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID,
+        order_id=ORDER_ID, doc_types=[PARCEL], idempotency_key=key,
+    )
+    assert second.id == first.id
+
+    # Third case: the insert collides with an existing row for a DIFFERENT
+    # already-created key, but recovery also misses (e.g. the winner is
+    # soft-deleted between commit and recovery) -> re-raise as a clean
+    # conflict, never a 500 IntegrityError.
+    other_key = uuid.uuid4()
+    other = svc.create_job(
+        test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID,
+        order_id=ORDER_ID, doc_types=[PARCEL], idempotency_key=other_key,
+    )
+    assert other.id is not None
+    def always_miss(db, idempotency_key, tenant_id):
+        return None
+    monkeypatch.setattr(ResearchJobRepository, "get_by_idempotency", staticmethod(always_miss))
+    with pytest.raises(IdempotencyConflictError):
+        svc.create_job(
+            test_db, tenant_id=TENANT_ID, actor_id=ACTOR_ID,
+            order_id=ORDER_ID, doc_types=[PARCEL], idempotency_key=other_key,
+        )

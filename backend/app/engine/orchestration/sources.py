@@ -432,20 +432,33 @@ class PlatAdapter(SourceAdapter):
         )
 
 
-# -------------------------------------------------------- clerk link-only steps
+# -------------------------------------------------------- clerk docs (attempt → link)
 
 
-def _link_only_clerk_adapter(step_key: str, label: str):
-    class _ClerkLink(SourceAdapter):
+def _attempt_clerk_adapter(step_key: str, label: str, source_key: str):
+    """Clerk-family document: TRY to fetch via the shared clerk scrape, and
+    only fall back to the Official Records deep-link if the source can't
+    produce a document for this family.
+
+    ``source_key`` is the key the shared ``_scrape_documents`` cache uses for
+    this document family (e.g. ``deed`` for the subject deed). Where the county
+    has no scraping adapter there is nothing to download → the link fallback is
+    the honest, one-click path (which is what most counties will show).
+    """
+    class _AttemptClerk(SourceAdapter):
         key_name = step_key
         label_text = label
 
         def fetch(self, ctx, docs_dir) -> FetchedSource:
             doc_url = _clerk_url(ctx, self.key_name)
+            fetched = _scrape_documents(ctx, docs_dir).get(source_key)
+            summary = (f"Open Clerk Official Records — {self.label_text}"
+                       if not fetched else
+                       f"Auto-fetched {self.label_text} — verify the match")
             return FetchedSource(
-                status=StepStatus.link,
+                status=StepStatus.ok if fetched else StepStatus.link,
                 data=ctx.clerk_ref,
-                summary=self.label_text,
+                summary=summary,
                 link=doc_url,
                 link_label=f"Open Clerk Official Records — {self.label_text}",
                 source_url=doc_url,
@@ -455,8 +468,8 @@ def _link_only_clerk_adapter(step_key: str, label: str):
         def fallback(self, ctx, error: ErrorInfo | None = None) -> FetchedSource:
             return self.fetch(ctx, None)
 
-    _ClerkLink.key = step_key
-    return _ClerkLink()
+    _AttemptClerk.key = step_key
+    return _AttemptClerk()
 
 
 # --------------------------------------------------------------- flood
@@ -579,6 +592,34 @@ class GloAdapter(SourceAdapter):
         return self.fetch(ctx, None)
 
 
+# --------------------------------------------------------------- zoning (link-only)
+
+class ZoningAdapter(SourceAdapter):
+    """Zoning / setback ordinance — link-only.
+
+    Zoning maps and setback ordinances live on county/municipal GIS or
+    permitting portals, not in a single auto-fetchable instrument, so today
+    we deep-link to the county appraiser/GIS portal (which carries the zoning
+    parcel search). ``source_url`` stays explicit so a future adapter can
+    replace the link with an auto-fetch without touching the reference set.
+    """
+    key = "zoning"
+
+    def fetch(self, ctx, docs_dir) -> FetchedSource:
+        doc_url = ctx.appraiser_url or ctx.clerk_ref.get("appraiser_url") or ctx.clerk_ref.get("directory_url", "")
+        label = doc_url or "County zoning / GIS portal"
+        return FetchedSource(
+            status=StepStatus.link,
+            summary="Zoning / setback ordinance — search the county zoning/GIS portal",
+            link=doc_url,
+            link_label="Open County Zoning / GIS Portal",
+            source_url=label,
+        )
+
+    def fallback(self, ctx, error: ErrorInfo | None = None) -> FetchedSource:
+        return self.fetch(ctx, None)
+
+
 # ------------------------------------------------------------------- registry
 
 ADAPTERS: dict[str, SourceAdapter] = {
@@ -587,13 +628,14 @@ ADAPTERS: dict[str, SourceAdapter] = {
         AppraiserAdapter(),
         DeedAdapter(),
         PlatAdapter(),
-        _link_only_clerk_adapter("adjoiners", "Deeds — adjoining parcels"),
-        _link_only_clerk_adapter("easements", "Easements / ROW / covenants (CC&Rs)"),
-        _link_only_clerk_adapter("prior_survey", "Prior recorded surveys"),
-        _link_only_clerk_adapter("condo", "Condominium declaration & exhibits"),
+        _attempt_clerk_adapter("adjoiners", "Deeds — adjoining parcels", "deed"),
+        _attempt_clerk_adapter("easements", "Easements / ROW / covenants (CC&Rs)", "deed"),
+        _attempt_clerk_adapter("prior_survey", "Prior recorded surveys", "deed"),
+        _attempt_clerk_adapter("condo", "Condominium declaration & exhibits", "plat"),
         FloodAdapter(),
         NgsAdapter(),
         GloAdapter(),
+        ZoningAdapter(),
     )
 }
 

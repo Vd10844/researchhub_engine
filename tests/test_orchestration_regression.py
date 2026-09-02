@@ -71,9 +71,17 @@ class TestFixtureContractCompatibility:
         assert keys == FROZEN_STEP_KEYS
 
     def test_step_key_order_equals_reference_order(self, fixture):
+        # The POC fixture is a historical snapshot: its step keys must be a
+        # strict subset of RESIDENTIAL_DOCS, appearing in the same relative
+        # order. Steps added to the reference set after the fixture was saved
+        # (e.g. zoning) make the fixture a prefix, not an exact match.
+        ref_keys = [d["key"] for d in RESIDENTIAL_DOCS]
+        ref_idx = {k: i for i, k in enumerate(ref_keys)}
         actual = [s["key"] for s in fixture["steps"]]
-        expected = [d["key"] for d in RESIDENTIAL_DOCS]
-        assert actual == expected
+        assert set(actual) <= set(ref_keys), f"unknown step keys: {set(actual) - set(ref_keys)}"
+        # relative order within the reference set must be preserved
+        idxs = [ref_idx[k] for k in actual]
+        assert idxs == sorted(idxs), "fixture steps out of reference order"
 
     def test_statuses_within_frozen_vocabulary(self, fixture):
         valid = {"ok", "link", "empty", "error"}
@@ -116,7 +124,7 @@ class TestRunnerMatchesReferenceSet:
 
         result = run_research(address="1 Test St")
         assert [s.key for s in result.steps] == [d["key"] for d in RESIDENTIAL_DOCS]
-        assert len(result.steps) == 11
+        assert len(result.steps) == len(RESIDENTIAL_DOCS)
 
 
 def _make_ctx(folder):
@@ -176,5 +184,10 @@ class TestStableFrontendFields:
 
     def test_required_flags_match_poc_fixture_values(self, fixture):
         requirements = {s["key"]: s["requirement"] for s in fixture["steps"]}
+        # Check every reference doc that the (older) POC fixture actually
+        # captured. Steps added to RESIDENTIAL_DOCS after the fixture was
+        # saved (e.g. zoning) are intentionally absent and skipped.
         for d in RESIDENTIAL_DOCS:
+            if d["key"] not in requirements:
+                continue
             assert requirements[d["key"]] == d["requirement"]
