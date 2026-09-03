@@ -7,14 +7,20 @@ the parent's deployment unchanged.
 from __future__ import annotations
 
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# Anchor the .env to the project root (parent of backend/app/) so it is found
+# regardless of the current working directory the process is started from.
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+_ENV_FILE = _PROJECT_ROOT / ".env"
 
 
 class Settings(BaseSettings):
     """Engine configuration. All fields sourced from environment or .env."""
 
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=_ENV_FILE, extra="ignore")
 
     # --- runtime ---------------------------------------------------
     RUN_ENV: str = "local"
@@ -39,6 +45,22 @@ class Settings(BaseSettings):
     COGNITO_CLIENT_ID: str | None = None
     COGNITO_ISSUER: str | None = None
     COGNITO_AUDIENCE: str | None = None
+    COGNITO_CLIENT_SECRET: str | None = None
+
+    # --- rate limiting (per tenant) ------------------------------------
+    RATE_LIMIT_RESEARCH: str = "20/minute"
+
+    # --- database pool sizing ----------------------------------------
+    POOL_SIZE: int = 10
+    MAX_OVERFLOW: int = 20
+    POOL_TIMEOUT: int = 30
+    POOL_RECYCLE: int = 1800
+
+    # --- research job reliability ------------------------------------
+    REAPER_STALE_QUEUED_MINUTES: int = 10
+    REAPER_STALE_RUNNING_MINUTES: int = 30
+    JOB_HARD_TIME_LIMIT: int = 300
+    JOB_SOFT_TIME_LIMIT: int = 240
 
     # --- CORS --------------------------------------------------------
     CORS_ORIGINS: str = "http://localhost:3000"
@@ -63,7 +85,7 @@ class Settings(BaseSettings):
 
     # --- staged research jobs ------------------------------------------
     JOBS_DIR: str = str(
-        (__import__("pathlib").Path(__file__).resolve().parents[2] / "data" / "jobs")
+        __import__("pathlib").Path(__file__).resolve().parents[2] / "data" / "jobs"
     )
 
     @property

@@ -2,6 +2,12 @@ __pycache__/
 *.pyc
 .venv/
 .pytest_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+
+# local runtime secrets — never commit; .env.example is the tracked template
+.env
 
 # local runtime data — never commit
 jobs/

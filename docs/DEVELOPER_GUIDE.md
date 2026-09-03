@@ -30,8 +30,14 @@ It was extracted from the POC (`SurveyResearch` app) with two hard rules:
 
 ```
 backend/app/
-  main.py                    FastAPI app: research router, health, CORS, local create_all
-  config.py                  env-driven settings (DATABASE_URL, REDIS/Celery, JOBS_DIR, ...)
+  main.py                    FastAPI app: research router, health/readiness, CORS,
+                             catch-all error handler (no stack-trace leakage), rate-limit 429
+  config.py                  env-driven settings (DATABASE_URL, REDIS/Celery, JOBS_DIR,
+                             COGNITO_*, RATE_LIMIT_RESEARCH, POOL_*, REAPER_*, JOB_*_TIME_LIMIT)
+  core/
+    logging.py                structlog JSON (prod) / console (dev), configure_logging()
+    middleware.py              RequestIDMiddleware — per-request correlation ID on every log line
+    limiter.py                per-tenant rate limiter (Redis-backed, memory fallback)
   db/                        SQLAlchemy engine/session/mixins + declarative Base
   services/                  BATTLE-TESTED POC modules — do not refactor:
                              geocode.py parcel.py clerk.py clerk_scraper.py appraiser.py
@@ -44,7 +50,7 @@ backend/app/
     service.py               job create/get/retry/cancel, counters, terminal status,
                              doc-type validation/normalization
     router.py                /api/v1/research/* endpoints
-    dependencies.py          header-based tenant/actor (swap for Cognito at integration)
+    dependencies.py          Cognito JWT tenant/actor (header fallback in dev) — see README §Production posture
     mappers.py               ORM → contract models (incl. FileReference)
     adapters.py              production wiring: order_provider, document_fetcher,
                              build_research_service (single seam for the worker+API)
@@ -63,7 +69,7 @@ backend/app/
 scripts/
   export_contracts.py        re-export contracts/openapi.json + schemas (drift-checkable)
   e2e_local.py               FULL E2E: alembic → seed → API+worker → job → verify
-tests/                       236 tests, fully offline except the explicit E2E
+tests/                       309 tests, fully offline except the explicit E2E
 docs/                        the four contract docs + this guide
 contracts/                   frozen OpenAPI + per-schema JSON (re-export only via script)
 docker-compose.yml           db (postgres:15), redis, api, worker
@@ -122,7 +128,7 @@ Three bugs this newest code fixes (found by code review and the E2E):
 # venv (Python 3.14)
 python -m venv .venv && .venv/Scripts/pip install -r requirements.txt
 
-# unit + regression suite (236 tests, offline, ~1s)
+# unit + regression suite (309 tests, offline, ~1s)
 .venv/Scripts/python.exe -m pytest tests -q
 
 # plain API against a local Postgres (create_all in RUN_ENV=local)
@@ -170,15 +176,24 @@ the job still completes. (Last run: `completed`, NGS uploaded a real
 |---|---|---|---|
 | 1 | `order_provider` reads dev `orders` | `engine/order_source.py` | parent `app/modules/orders` (Order+OrderAddress) |
 | 2 | `File`/`OrderFile` stand-in | `engine/evidence_source.py` | parent evidence module (same columns/names) |
-| 3 | tenant/actor from headers | `engine/dependencies.py` | Cognito deps from `app/modules/identity` |
+| 3 | Cognito JWT auth **wired** — set `COGNITO_*` env vars with parent pool | `engine/dependencies.py` + `config.py` | parent Cognito pool ID, client ID, issuer, audience |
 | 4 | alembic base shim `0002` | `0002_dev_base_tables.py` | drop at parent merge (tables already exist); keep `0001`; `0003` (cancel_reason + enum values) requires the table names from `0001` |
 | 5 | `doc_types` vs source registry | `service._validate_doc_types` | validate against the live catalog at startup (TODO remains) |
 | 6 | Celery `--pool=solo` | E2E only | default prefork pool on Linux workers in prod |
 
-**Genuine production hardening:**
-- Reliable Redis-broker distribution (compose provides it; the E2E proves the
-  round-trip; scale-out needs the `_RUNS`-less, DB-only status path already in
-  place).
+**Production hardening — completed:**
+- Cognito JWT auth (RS256/HS256) wired in `dependencies.py`, switched by env.
+- Real health/readiness checks (`/api/health`, `/api/health/live`).
+- Per-tenant rate limiting (`core/limiter.py`, Redis-backed).
+- Structured logging + per-request correlation ID (`core/logging.py`,
+  `core/middleware.py`).
+- Catch-all error handler (no stack-trace leakage).
+- Worker hardening: retries (3× backoff+jitter), hard/soft time limits,
+  orphan-reaper beat task (5 min).
+- Production Dockerfile (non-root, HEALTHCHECK, multi-stage).
+- CI workflow: ruff + mypy + pytest + contract-freeze gate.
+
+**Still remaining:**
 - Real-world fixture capture for `error`-status steps (none of the 7 POC
   fixtures emitted one; the engine classifies blocked/broken/retryable
   additively — capture one from the user's VPN'd machine for CI).

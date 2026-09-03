@@ -5,12 +5,14 @@ middleware (via ``X-Tenant-ID``) — never from request params.
 """
 from __future__ import annotations
 
+from datetime import datetime, timedelta, timezone
 from uuid import UUID
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.engine.models import ResearchDocument, ResearchJob
+from app.engine.schemas import ResearchJobStatus
 
 
 class ResearchJobRepository:
@@ -83,6 +85,22 @@ class ResearchJobRepository:
         db.add(job)
         db.flush()
         return job
+
+    @staticmethod
+    def list_stale_queued(db: Session, minutes: int) -> list[ResearchJob]:
+        """Jobs still in ``queued`` longer than ``minutes`` — orphaned if a
+        crash happened between DB commit and Celery enqueue."""
+        cutoff = datetime.now(timezone.utc) - timedelta(minutes=minutes)
+        return list(
+            db.scalars(
+                select(ResearchJob).where(
+                    ResearchJob.status == ResearchJobStatus.queued,
+                    ResearchJob.created_at.isnot(None),
+                    ResearchJob.created_at < cutoff,
+                    ResearchJob.deleted_at.is_(None),
+                )
+            )
+        )
 
 
 class ResearchDocumentRepository:

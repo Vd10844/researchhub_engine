@@ -51,7 +51,7 @@ def _county_from_coords(lat: float, lon: float) -> tuple[str, str, str]:
         c = j.get("result", {}).get("geographies", {}).get("Counties", [])
         if c:
             return c[0].get("BASENAME", ""), c[0].get("GEOID", ""), c[0].get("STATE", "")
-    except Exception:  # noqa: BLE001 — best effort; caller handles the empty county
+    except Exception:
         pass
     return "", "", ""
 
@@ -65,7 +65,7 @@ def _arcgis(address: str):
         if cands and cands[0].get("score", 0) >= 80:
             c = cands[0]
             return c["location"]["y"], c["location"]["x"], c.get("address", address)
-    except Exception:  # noqa: BLE001
+    except Exception:
         pass
     return None
 
@@ -77,7 +77,7 @@ def _nominatim(address: str):
                                  "countrycodes": "us"})
         if j:
             return float(j[0]["lat"]), float(j[0]["lon"]), j[0].get("display_name", address)
-    except Exception:  # noqa: BLE001
+    except Exception:
         pass
     return None
 

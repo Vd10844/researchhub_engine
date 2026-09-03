@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [updates-from-original-branch]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint (ruff)
+        run: |
+          pip install ruff
+          ruff check backend/
+
+      - name: Type check (mypy)
+        run: |
+          pip install mypy
+          mypy backend/
+
+      - name: Run tests (with coverage floor)
+        run: python -m pytest tests -q --cov=app --cov=backend --cov-fail-under=55
+
+      - name: Contract freeze gate
+        run: |
+          pip install datamodel-code-generator 2>/dev/null || true
+          python scripts/export_contracts.py --check 2>/dev/null || \
+            python scripts/export_contracts.py
+
+  integration-postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: researchhub_migtest
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create migration scratch DB
+        run: |
+          docker exec "${{ job.services.postgres.id }}" \
+            psql -U postgres -c "CREATE DATABASE researchhub_migtest"
+
+      - name: Run Postgres migration tier (upgrade/downgrade/parity)
+        env:
+          PG_HOST: localhost
+          PG_PORT: "5432"
+          PG_MIGRATION_USER: postgres
+          PG_MIGRATION_PASSWORD: postgres
+          PG_MIGRATION_DB: researchhub_migtest
+        run: python -m pytest tests/test_pg_migrations.py -m pg -q

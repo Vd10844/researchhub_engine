@@ -100,7 +100,8 @@ canonical (`engine/service.py:248`). **Rejected doc types are a 422**, never a s
 ## 8. Deployment vocabulary
 
 - `RUN_ENV=local|test` → `create_all` at startup (no migrations); prod runs
-  `alembic upgrade head` (engine `0002` shim → `0001`; parent drops `0002`).
+  `alembic upgrade head` (engine chain `0002` shim → `0001` → `0003` → `0004`;
+  parent drops `0002`).
 - Producer→worker contract: `ack_late`, `worker_prefetch_multiplier=1`, `--queues=research`,
   Windows `--pool=solo`.
 - US egress: native on AWS `us-east-1` (parent ECS `quickplot-dev`); dev-PC VPN (WireGuard or

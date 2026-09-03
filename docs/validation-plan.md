@@ -3,12 +3,12 @@
 Companion to `docs/regression-matrix.md`, `docs/api-contract-freeze.md`,
 `docs/source-contract.md`, and `docs/job-lifecycle.md`. Those docs freeze the
 contract and prove the orchestration refactor preserved POC behavior. This doc
-answers the next question: **what the 236-test suite does *not* yet exercise,
+answers the next question: **what the 309-test suite does *not* yet exercise,
 and how to close each gap.**
 
 ## Where the suite stands today
 
-The current 236 tests are strong at what they cover: contract conformance
+The current 309 tests are strong at what they cover: contract conformance
 (106 fixture cases), the API surface (TestClient), the service state machine,
 `classify_exception`, terminal-status resolution, and the Celery task *body*
 run in-process. That is excellent unit- and contract-level coverage.
@@ -29,7 +29,7 @@ Everything outside the pure Python control flow is faked:
 Two structural gaps compound this:
 
 - **There is no CI in the repo.** No `.github/workflows/`. The freeze docs say
-  the 236 tests and `export_contracts.py` are "part of CI" and "must exit 0,"
+  the 309 tests and `export_contracts.py` are "part of CI" and "must exit 0,"
   but nothing enforces that automatically. The gate is documented, not wired.
 - **The only real-infra path is a manual script** (`scripts/e2e_local.py`) that
   a human runs on demand. It is good, but it is not a gate and it is not asserted
@@ -68,7 +68,7 @@ Add the same assertion at the **HTTP layer** with a second set of
 `X-Tenant-Id`/`X-Actor-Id` headers, so the router's dependency wiring is proven
 too, not just the service. Parametrize across all five endpoints.
 
-### 0.2 A Postgres-backed test tier
+### 0.2 A Postgres-backed test tier  ✅ DONE
 
 The SQLite substitution hides real bugs: JSONB predicate queries, the enum
 `ALTER TYPE ... ADD VALUE` from `0003_cancel_reason`, `SELECT ... FOR UPDATE`
@@ -99,7 +99,7 @@ Mark these `@pytest.mark.pg` and run them as a separate job:
 (`test_execution_scenarios.py`) and the counters/terminal-status tests on real
 Postgres — those are where SQLite most flatters you.
 
-### 0.3 Migration round-trip + model/migration parity
+### 0.3 Migration round-trip + model/migration parity  ✅ DONE
 
 `e2e_local.py` runs `alembic upgrade head` once. Nothing tests **downgrade**, or
 that the ORM models still match the migration chain (the classic drift bug: a
@@ -170,7 +170,7 @@ This is where the untested surface is largest and the production failures will
 actually come from. External sites change HTML, add WAFs, rotate URLs — and your
 suite would stay green through all of it.
 
-### 1.1 Recorded-response tests for each source adapter
+### 1.1 Recorded-response tests for each source adapter  ✅ DONE
 
 Don't hit the live network in CI (flaky, rate-limited, WAF'd). **Record once,
 replay forever.** Capture a real HTTP exchange per source and per interesting
@@ -207,7 +207,7 @@ Also add a parse-level regression: feed each saved source payload through the
 adapter and pin the extracted fields, so a refactor of the 34 KB
 `clerk_scraper.py` can't silently change what it pulls out.
 
-### 1.2 S3 / storage tests with `moto`
+### 1.2 S3 / storage tests with `moto`  ✅ DONE
 
 `file_storage` is a `MagicMock`, so the upload path, the re-hash-at-upload
 (provenance sha256), and the "S3 upload error → doc `failed`" branch from
@@ -252,7 +252,7 @@ def test_every_state_module_imports_and_is_well_formed(mod):
 def test_county_platforms_registry_is_consistent(): ...   # no dup keys, required fields present
 ```
 
-### 1.4 Clerk scraper (Playwright)
+### 1.4 Clerk scraper (Playwright)  ✅ DONE
 
 The Playwright deed/plat scraper needs a browser and is entirely untested.
 Two layers:
@@ -282,7 +282,7 @@ SQLite + `StaticPool` can't test the races that matter in production:
 - **Cancel-vs-complete race** on real row locking, not the `expire_all()`
   simulation the current thread test uses.
 
-### 2.2 Negative / malformed API inputs
+### 2.2 Negative / malformed API inputs  ✅ DONE
 
 The suite tests empty `document_types` (nice) but not the rest of the hostile
 surface: malformed UUID in the path, missing `X-Tenant-Id`/`X-Actor-Id`,
@@ -290,7 +290,7 @@ unknown `doc_type` enum value, unknown/extra body fields, wrong content-type,
 oversized payload. Each should return the `ErrorEnvelope` shape with a
 `ResearchErrorCode`, never a traceback. Parametrize it.
 
-### 2.3 `callback_url` delivery
+### 2.3 `callback_url` delivery  ✅ DONE
 
 `job-lifecycle.md` §8 promises an optional job-summary POST on completion, with
 "delivery failures logged, not fatal." Untested. Add a test with a `respx`-mocked
@@ -331,7 +331,7 @@ address and alerts on a *parse* regression (not on an expected WAF fallback) is
 the only thing that catches source drift before your users do. This is the
 production-validation counterpart to the offline cassette tests in 1.1.
 
-### 2.8 Measure coverage and set a floor
+### 2.8 Measure coverage and set a floor  ✅ DONE
 
 You can't manage what you don't measure. Run:
 

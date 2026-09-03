@@ -53,7 +53,7 @@ The proof that the whole contract works on **real infra** — not mocks:
 
 1. picks a free API port (`e2e_local.py:42`), starts uvicorn and a **real** Celery worker
    (`--pool=solo`) with an env pointing at Postgres on port **5433** and the stock Redis;
-2. runs `alembic upgrade head` on Postgres (proving the 0002→0001 chain);
+2. runs `alembic upgrade head` on Postgres (proving the full 0002→0001→0003→0004 chain);
 3. seeds a tenant + order via the dev `orders` stand-in;
 4. `POST /api/v1/research/jobs` → worker consumes over Redis → polling
    `GET /jobs/{id}` until terminal;
@@ -64,7 +64,7 @@ Port 5433 vs the compose default 5432 is the `dc.e2e.yml` override from the sand
 (Native Postgres on 5432 had an unknown password; the Docker `db` runs on 5433 for E2E).
 The sandbox's expected degradations (FEMA/clerk TLS-reset/403) are deliberate — each source
 falls back to a link/retryable error, the job reaches a terminal state, and the evidence set is
-still defensible. Last run: job `a097690c…` → `completed`, 6 fetched / 1 uploaded / 0 failed.
+still defensible. Last run: job `ed46501f…` → `completed`, 6 fetched / 1 uploaded / 0 failed.
 
 ## 3. Production — AWS us-east-1 (from `mapperty-reference`'s `deploy-dev.yml`)
 

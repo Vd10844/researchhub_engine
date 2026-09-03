@@ -63,9 +63,9 @@ ResearchHub/
 │       ├─ orchestration/         #     context.py · sources.py · steps.py · runner.py · folders.py
 │       ├─ order_source.py        #   dev `orders` stand-in
 │       └─ evidence_source.py     #   dev `files`/`order_files` stand-in
-│   ├─ backend/alembic/           #   0002 base shim → 0001 research tables
+│   ├─ backend/alembic/           #   0002 → 0001 → 0003 → 0004 migration chain
 │   ├─ scripts/                   #   export_contracts.py · e2e_local.py
-│   └─ tests/                     #   202 offline tests
+│   └─ tests/                     #   1097 offline tests (+ `-m pg` integration tier)
 └─ mapperty-reference/            # PARENT — AWS us-east-1, Cognito, real orders/evidence/identity
     └─ app/modules/               #   orders (stub) · evidence (gap) · identity · survey · admin …
 ```

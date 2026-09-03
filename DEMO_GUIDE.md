@@ -36,6 +36,29 @@ Results stored in Database:
 
 ---
 
+## Production posture (beyond this local demo)
+
+The local walkthrough below uses header auth (`X-Tenant-Id`/`X-Actor-Id`) —
+that is the **dev fallback**. The same binary runs in production mode by
+setting `COGNITO_*` env vars, plus the operational layer documented in
+`README.md` §Production posture:
+
+- **Auth** — `Authorization: Bearer` Cognito JWT (RS256/HS256) when
+  `COGNITO_*` is set; header fallback in dev. One codebase, two modes.
+- **Health** — `GET /api/health` (DB `SELECT 1` + Redis `PING`, 200/503) and
+  `GET /api/health/live`.
+- **Rate limit** — `POST /jobs` is limited per tenant (default 20/min),
+  Redis-backed; over-limit returns `429`.
+- **Observability** — structlog JSON + per-request `Request-ID`.
+- **Worker** — retries (3×, backoff+jitter), time limits, and a 5-min reaper
+  that fails stuck jobs.
+- **Extra documents only** — the router exposes five endpoints
+  (`POST /jobs`, `GET /jobs/{id}`, `POST /jobs/{id}/retry`, `POST /jobs/{id}/cancel`,
+  `GET /jobs`). The `review`/`archive` sign-off transitions exist on the **service layer**
+  as methods, not as HTTP endpoints — the parent UI wires them at integration.
+
+---
+
 ## Step 1: Setup Environment
 
 ### 1a. Activate Virtual Environment

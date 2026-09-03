@@ -14,6 +14,7 @@ At parent integration, these models and the repository reads are swapped for
 from __future__ import annotations
 
 import uuid
+from typing import ClassVar
 
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -25,7 +26,7 @@ class File(Base, TimestampMixin, SoftDeleteMixin):
     """Stand-in for the parent's evidence ``files`` table."""
 
     __tablename__ = "files"
-    __versioned__: dict = {}
+    __versioned__: ClassVar[dict] = {}
 
     filename: Mapped[str] = mapped_column(nullable=False)
     content_key: Mapped[str | None] = mapped_column(
@@ -40,7 +41,7 @@ class OrderFile(Base, TimestampMixin, SoftDeleteMixin):
     """Stand-in for the parent's evidence ``order_files`` join table."""
 
     __tablename__ = "order_files"
-    __versioned__: dict = {}
+    __versioned__: ClassVar[dict] = {}
 
     order_id: Mapped[uuid.UUID] = mapped_column(
         nullable=False, index=True, comment="Order this file belongs to."

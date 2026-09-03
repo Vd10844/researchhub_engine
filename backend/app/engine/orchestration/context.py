@@ -69,7 +69,7 @@ class PropertyContext:
     job_number: str = ""
     order: str = ""
     name: str = ""                                      # job-level folder name
-    folder: Path = None                                 # research staging dir
+    folder: Path | None = None                          # research staging dir
     survey_type: str = "Residential Land Survey"
 
     # --- shared cross-document artifacts (cached, best-effort) --------------
@@ -169,6 +169,20 @@ def resolve_property_context(
     lat, lon = geo.get("lat"), geo.get("lon")
     provider = geo.get("provider", "census")
 
+    # Coordinates are required by every downstream resolver; fail fast with a clear
+    # message rather than letting a None propagate deep into the pipeline.
+    if lat is None or lon is None:
+        raise ValueError(
+            f"Geocoder '{geo.get('provider', 'census')}' returned no usable coordinates for '{address}'."
+        )
+    try:
+        lat_f = float(lat)
+        lon_f = float(lon)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(
+            f"Geocoder '{geo.get('provider', 'census')}' returned invalid coordinates for '{address}'."
+        ) from exc
+
     reg = lookup(fips) or {}
     appraiser_url = (reg.get("appraiser_url") or STATE_APPRAISER.get(state_abbr)
                      or netronline(state_abbr, cname))
@@ -182,8 +196,8 @@ def resolve_property_context(
     ctx = PropertyContext(
         address=address,
         matched_address=geo.get("matched_address", address),
-        lat=lat,
-        lon=lon,
+        lat=lat_f,
+        lon=lon_f,
         state=state_abbr,
         state_fips=geo.get("state_fips", ""),
         county=cname,
@@ -197,9 +211,9 @@ def resolve_property_context(
     # ---- Phase 2: parcel resolution (parcel ID keys the whole job) ---------
     try:
         p = preresolved or parcel_svc.resolve(
-            fips, state_abbr, cname, lat, lon, address=ctx.matched_address
+            fips, state_abbr, cname, lat_f, lon_f, address=ctx.matched_address
         )
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:
         p = {"method": "error", "error": str(e), "hints": {}}
 
     ctx.parcel_hints = p.get("hints", {})

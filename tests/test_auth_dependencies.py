@@ -96,10 +96,31 @@ def test_unit_direct_call_missing():
     from app.engine.dependencies import get_actor_id, get_tenant_id
     from fastapi import HTTPException
 
+    # In local mode (no Cognito configured) the actor/tenant come from headers.
+    # Passing explicit None for request/credentials/x_*_id exercises the
+    # missing-header 401 path without FastAPI's Header default objects leaking in.
     with pytest.raises(HTTPException) as e1:
-        get_actor_id(None)
+        get_actor_id(None, None, None)
     assert e1.value.status_code == 401
+    assert "Missing X-Actor-Id" in str(e1.value.detail)
 
     with pytest.raises(HTTPException) as e2:
-        get_tenant_id("bad")
+        get_tenant_id(None, None, None)
     assert e2.value.status_code == 401
+    assert "Missing X-Tenant-Id" in str(e2.value.detail)
+
+
+def test_unit_invalid_header_401():
+    """Invalid header values are rejected with 401 (local mode)."""
+    from app.engine.dependencies import get_actor_id, get_tenant_id
+    from fastapi import HTTPException
+
+    with pytest.raises(HTTPException) as e:
+        get_actor_id(None, None, "not-a-uuid")
+    assert e.value.status_code == 401
+    assert "Invalid X-Actor-Id" in str(e.value.detail)
+
+    with pytest.raises(HTTPException) as e:
+        get_tenant_id(None, None, "nope")
+    assert e.value.status_code == 401
+    assert "Invalid X-Tenant-Id" in str(e.value.detail)

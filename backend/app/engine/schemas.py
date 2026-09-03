@@ -24,10 +24,8 @@ from pydantic import BaseModel, Field
 
 from app.engine.contracts import (
     Confidence,
-    ErrorInfo,
     ProvenanceRecord,
     SourceOutcome,
-    StepStatus,
 )
 
 T = TypeVar("T")
@@ -147,6 +145,14 @@ class CreateResearchJobRequest(BaseModel):
     idempotency_key: UUID | None = Field(
         default=None,
         description="Client-generated idempotency key. Auto-generated if not provided.",
+    )
+    callback_url: str | None = Field(
+        default=None,
+        description=(
+            "Optional HTTPS URL to POST a job summary to when the job reaches a "
+            "terminal state. Delivered at-least-once with retry + backoff; "
+            "delivery failures are logged, never fatal to the job."
+        ),
     )
 
 

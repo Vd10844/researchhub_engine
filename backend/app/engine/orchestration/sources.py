@@ -18,10 +18,8 @@ touching the runner.
 """
 from __future__ import annotations
 
-import pathlib
 import re
 from dataclasses import dataclass, field
-from typing import Callable
 
 import requests
 
@@ -144,7 +142,7 @@ class ParcelAdapter(SourceAdapter):
         try:
             from app.services import downloader
             fn = downloader.save_parcel_record(ctx.folder, p, ctx.doc_meta)
-        except Exception:  # noqa: BLE001 — saving the exhibit is best-effort
+        except Exception:
             fn = None
         if fn:
             records.append({"file": f"documents/{fn}",
@@ -207,7 +205,7 @@ class AppraiserAdapter(SourceAdapter):
                 from app.services import downloader
                 fn = downloader.save_appraiser_record(
                     ctx.folder, ctx.parcel["parcels"][0], ctx.doc_meta, ctx.appraiser_url)
-            except Exception:  # noqa: BLE001
+            except Exception:
                 fn = None
             if fn:
                 records.append({"file": f"documents/{fn}", "source": ctx.appraiser_url})
@@ -309,7 +307,7 @@ def _scrape_documents(ctx, docs_dir) -> dict:
             try:
                 ctx.appr = appraiser_svc.fetch(
                     ctx.county_fips, ctx.parcel_id, docs_dir)
-            except Exception:  # noqa: BLE001
+            except Exception:
                 ctx.appr = {}
 
         if (ctx.parcel_ok and clerk_scraper.has_adapter(ctx.county_fips)
@@ -339,9 +337,9 @@ def _scrape_documents(ctx, docs_dir) -> dict:
                 try:
                     docs = clerk_scraper.fetch_documents(
                         ctx.county_fips, docs_dir, plat=plat_arg, deed=deed_arg)
-                except Exception:  # noqa: BLE001
+                except Exception:
                     docs = {}
-    except Exception:  # noqa: BLE001 — never let the shared prep break the pipeline
+    except Exception:
         docs = {}
     ctx._clerk_docs = docs
     return docs
@@ -489,13 +487,13 @@ class FloodAdapter(SourceAdapter):
             mp = downloader.save_flood_map(ctx.folder, ctx.lat, ctx.lon, f, ctx.doc_meta)
             if mp:
                 records.append({"file": f"documents/{mp}", "source": fema.NFHL})
-        except Exception:  # noqa: BLE001
+        except Exception:
             mp = None
         if has:
             fn = None
             try:
                 fn = downloader.save_flood_report(ctx.folder, f, ctx.doc_meta, map_file=mp)
-            except Exception:  # noqa: BLE001
+            except Exception:
                 fn = None
             if fn:
                 records.append({"file": f"documents/{fn}", "source": fema.NFHL})
@@ -547,7 +545,7 @@ class NgsAdapter(SourceAdapter):
             dls = downloader.download_ngs_datasheets(ctx.folder, b.get("marks"), limit=3)
             for fn in dls:
                 records.append({"file": f"documents/{fn}", "source": ngs.RADIAL})
-        except Exception:  # noqa: BLE001
+        except Exception:
             dls = []
         summ = ngs.summarize(b)
         if dls:

@@ -71,7 +71,8 @@ exactly, additive ones like `completed_utc`/`job_state`/`docs_dir`/`survey_type`
 
 ## 2. The wire contract — `schemas.py`
 
-**Enums:** `ResearchJobStatus` (`queued running completed partial failed cancelling cancelled`),
+**Enums:** `ResearchJobStatus` (`queued running completed partial failed cancelling cancelled
+reviewed archived`),
 `ResearchDocStatus` (`queued fetching fetched uploading uploaded failed skipped`),
 `ResearchErrorCode` (client 4xx / per-document / system 5xx — full list at `schemas.py:81`).
 
@@ -112,15 +113,19 @@ upload — plain UUID columns *here*; **FKs are restored at parent integration**
 ### The base tables and the alembic chain
 
 ```
-0002_dev_base_tables.py   (down_revision=None)  tenants · orders · files · order_files   ← dev shim
-0001_research_tables.py   (down_revision=0002)  research_jobs · research_documents       ← FKs onto the shim
+0002_dev_base_tables.py     (down_revision=None)      tenants · orders · files · order_files         ← dev shim
+0001_research_tables.py     (down_revision=0002)      research_jobs · research_documents             ← FKs onto the shim
+0003_cancel_reason.py       (down_revision=0001)      research_jobs.cancel_reason                    ← cancel `reason`
+0004_callback_delivered.py  (down_revision=0003)      research_jobs.callback_delivered               ← callback-delivery flag
 ```
 
 `0002` comes **first** because `0001`'s `order_id → orders.id`, `tenant_id → tenants.id`,
 `file_id → files.id`, `order_file_id → order_files.id` FKs need those tables to exist on a fresh
 database. At parent integration: **drop `0002`**, retarget `0001.down_revision` onto the parent's
 chain, and the FKs point at the parent's real tables. Run `alembic upgrade head` from the **repo
-root** (`alembic.ini` → `script_location = backend/alembic`).
+root** (`alembic.ini` → `script_location = backend/alembic`). `0003` adds the optional cancel
+`reason`; `0004` records whether a callback was delivered so the worker can back off without
+hammering the callback URL.
 
 Dev quick-path: `RUN_ENV=local` triggers `Base.metadata.create_all` at startup instead
 (`backend/app/main.py`), so SQLite/laptop development never needs a migration run.
@@ -387,7 +392,7 @@ The engine never builds blob paths itself; it calls:
 
 Keys are tenant-scoped: `{tenant_id}/{order_id}/{doc_type}<ext>`.
 
-## 14. Contract discipline & the tests (202 offline)
+## 14. Contract discipline & the tests (1097, all green)
 
 - `scripts/export_contracts.py` re-exports `contracts/openapi.json` + `contracts/schemas/*.json`
   and exits 1 if no paths were written — CI-checks contract drift.
@@ -395,10 +400,15 @@ Keys are tenant-scoped: `{tenant_id}/{order_id}/{doc_type}<ext>`.
   `RUN_ENV=test`, `CELERY_TASK_ALWAYS_EAGER=true`) and patches SQLite's JSONB compiler so the
   Postgres-flavored models run in-memory. Fixtures: `engine`, `test_db` (fresh per test — imports
   models/order_source/evidence_source to register tables), `client` (overrides `get_db`/auth).
-- Coverage (collected counts): contract conformance (106, parametrized over the 7 POC
-  fixtures), API endpoints (8), service (11), evidence linkage (5), order source (6),
-  orchestration engine (12), orchestration regression (54) = **202 collected**, ~2 s, no
-  network.
+- The suite: **1097 tests collected** (up from 202), ~3 s, no network, plus an
+  **integration-postgres** tier (`pytest tests -m pg` → `tests/test_pg_migrations.py`) that runs
+  the real `0001…0004` alembic chain against a live Postgres in CI.
+- Extra tiers added with the hardening pass: contract-drift, data-registry, negative-inputs,
+  callback delivery, S3 storage (moto), clerk-scraper parsing (respx/responses), and
+  source-adapter classification — see `docs/validation-plan.md` for the mapping.
+- **Static gates are enforced in CI**: `ruff` (backend + tests), `mypy` (99 source files,
+  `[tool.mypy]` in `pyproject.toml`), and `pytest --cov=app --cov=backend --cov-fail-under=55`
+  (measured **~62%**, above the 55% floor).
 - The regression files pin the 11-step order, the frozen vocabulary, and every stable field —
   a schema change that breaks them is a contract break by definition.
 
@@ -417,9 +427,11 @@ Keys are tenant-scoped: `{tenant_id}/{order_id}/{doc_type}<ext>`.
 ## 16. Known hardenings (honest list)
 
 - No real-world `error`-status fixture was ever captured (none of the 7 POC fixtures emitted
-  one) — the classification logic is unit-tested, but a captured production `error` fixture
+  one) — the classification logic is unit-tested (see `tests/test_source_adapters.py` +
+  `test_api_negative_inputs.py`), but a captured production `error` fixture
   would let regressions fail loudly.
-- S3 storage backend exists but is not end-to-end smoke-tested here (needs AWS creds).
+- S3 storage backend is smoke-tested against `moto` (`tests/test_storage_s3.py`, no AWS creds),
+  but not against a real bucket here.
 - Redis distribution through multiple uvicorn workers is exercised only by the single-worker E2E;
   the seam for scale-out is `worker.py` (`enqueue_research_job` / the task itself) and nothing
   else.

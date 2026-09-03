@@ -26,6 +26,18 @@
       ],
       "title": "Idempotency Key",
       "description": "Client-generated idempotency key. Auto-generated if not provided."
+    },
+    "callback_url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Callback Url",
+      "description": "Optional HTTPS URL to POST a job summary to when the job reaches a terminal state. Delivered at-least-once with retry + backoff; delivery failures are logged, never fatal to the job."
     }
   },
   "type": "object",

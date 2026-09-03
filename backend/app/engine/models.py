@@ -5,7 +5,7 @@ into the parent's Postgres. They follow the parent's conventions:
   - UUID primary key (via Base)
   - TenantMixin, AuditMixin, TimestampMixin where appropriate
   - SQLAlchemy 2.0 ``Mapped[]`` style
-  - ``__versioned__: dict = {}`` for sqlalchemy-history
+  - ``__versioned__: ClassVar[dict] = {}`` for sqlalchemy-history
 
 The tables:
   - ``research_jobs`` — one row per research run (created by POST /research/jobs)
@@ -15,11 +15,10 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, ClassVar
 
 from sqlalchemy import (
     Boolean,
-    CheckConstraint,
     ForeignKey,
     Integer,
     String,
@@ -34,14 +33,12 @@ from app.db.base import Base
 from app.db.mixins import AuditMixin, SoftDeleteMixin, TenantMixin, TimestampMixin
 from app.engine.contracts import (
     Confidence,
-    JobState,
     SourceOutcome,
 )
 from app.engine.schemas import ResearchDocStatus, ResearchJobStatus
 
 if TYPE_CHECKING:
-    from app.modules.evidence.models import File
-    from app.modules.orders.models import Order
+    pass
 
 
 # ------------------------------------------------------------------ models
@@ -62,7 +59,7 @@ class ResearchJob(
     """
 
     __tablename__ = "research_jobs"
-    __versioned__: dict = {}
+    __versioned__: ClassVar[dict] = {}
 
     __table_args__ = (
         # One active (non-deleted) job per idempotency key per tenant.
@@ -209,7 +206,7 @@ class ResearchJob(
     # `order` → parent's Order model is removed; re-added during integration.
     # `file`  → parent's File model is removed; re-added during integration.
 
-    documents: Mapped[list["ResearchDocument"]] = relationship(
+    documents: Mapped[list[ResearchDocument]] = relationship(
         back_populates="job",
         cascade="all, delete-orphan",
         passive_deletes=True,
@@ -224,7 +221,7 @@ class ResearchDocument(Base, TimestampMixin, SoftDeleteMixin):
     """
 
     __tablename__ = "research_documents"
-    __versioned__: dict = {}
+    __versioned__: ClassVar[dict] = {}
 
     __table_args__ = (
         # One active document row per job per doc_type.
@@ -389,4 +386,4 @@ class ResearchDocument(Base, TimestampMixin, SoftDeleteMixin):
 
     # --- relationships -----------------------------------------------
 
-    job: Mapped["ResearchJob"] = relationship(back_populates="documents")
+    job: Mapped[ResearchJob] = relationship(back_populates="documents")

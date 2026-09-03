@@ -17,6 +17,7 @@ degrades to a no-op.
 from __future__ import annotations
 
 import base64
+import contextlib
 import io
 import pathlib
 import re
@@ -58,7 +59,7 @@ def available() -> bool:
     try:
         import playwright  # noqa: F401
         return True
-    except Exception:  # noqa: BLE001
+    except Exception:
         return False
 
 
@@ -101,15 +102,13 @@ class _NewVision:
             # Identify images by the hi_res KEY, not size — index/cover pages can be tiny
             # (a 20 KB page 1 was being dropped by the old 50 KB gate).
             if body.get("doc_pages"):
-                try:
+                with contextlib.suppress(TypeError, ValueError):
                     self.doc_pages = int(body["doc_pages"])
-                except (TypeError, ValueError):
-                    pass
             b64 = body.get("hi_res") or body.get("largeimage") or ""
             if isinstance(b64, str) and len(b64) > 1000:
                 self.captured.append((int(body.get("pg_num") or 0),
                                       base64.b64decode(b64)))
-        except Exception:  # noqa: BLE001 — anything we can't decode just isn't captured
+        except Exception:
             pass
 
     def open(self, url: str):
@@ -171,7 +170,7 @@ class _NewVision:
             before = len(self.captured)
             try:
                 nxt.first.click()
-            except Exception:  # noqa: BLE001
+            except Exception:
                 break
             w = 0
             while len(self.captured) == before and w < 10000:
@@ -232,7 +231,8 @@ def _pick_deed(rows: list[dict], subdivision: str) -> dict | None:
     cand = [r for r in deeds if matches(r)]
     if not cand:
         return None
-    recent = lambda rs: max(rs, key=lambda r: str(r.get("rec_date") or ""))
+    def recent(rs: list[dict]) -> dict:
+        return max(rs, key=lambda r: str(r.get("rec_date") or ""))
     grantee = [r for r in cand if str(r.get("party_code", "")).upper() == "R"]
     return recent(grantee) if grantee else recent(cand)
 
@@ -256,13 +256,13 @@ def _save_pdf(images: list[bytes], out_path: pathlib.Path) -> str | None:
     """Combine captured PNG page images into a single multi-page PDF."""
     try:
         from PIL import Image
-    except Exception:  # noqa: BLE001
+    except Exception:
         return None
     pages = []
     for raw in images:
         try:
             pages.append(Image.open(io.BytesIO(raw)).convert("RGB"))
-        except Exception:  # noqa: BLE001
+        except Exception:
             continue
     if not pages:
         return None
@@ -424,6 +424,7 @@ def _fetch_manatee(base, out_dir, plat, deed, result):
     and each document page as a free JPEG (InstrumentResultJpgAsync). Fetch the pages for the
     matching instrument and combine them into a PDF. No Playwright required."""
     import io as _io
+
     import requests
     from PIL import Image
     requests.packages.urllib3.disable_warnings()  # county cert chain is often incomplete
@@ -512,7 +513,7 @@ class _Volusia:
     def _wire(self, page):
         try:
             c = self.ctx.new_cdp_session(page)
-        except Exception:  # noqa: BLE001
+        except Exception:
             return
         c.send("Fetch.enable",
                {"patterns": [{"urlPattern": "*load_Redact*", "requestStage": "Response"}]})
@@ -524,13 +525,11 @@ class _Volusia:
                 body = base64.b64decode(r["body"]) if r.get("base64Encoded") else r["body"].encode()
                 if body[:4] == b"%PDF":
                     self.captured["body"] = body
-            except Exception:  # noqa: BLE001
+            except Exception:
                 pass
             finally:
-                try:
+                with contextlib.suppress(Exception):
                     c.send("Fetch.continueRequest", {"requestId": rid})
-                except Exception:  # noqa: BLE001
-                    pass
 
         c.on("Fetch.requestPaused", on_paused)
 
@@ -559,16 +558,14 @@ class _Volusia:
         try:
             vp.bring_to_front()
             vp.wait_for_load_state("networkidle")
-        except Exception:  # noqa: BLE001
+        except Exception:
             pass
         for _ in range(20):
             if self.captured.get("body"):
                 break
             vp.wait_for_timeout(1000)
-        try:
+        with contextlib.suppress(Exception):
             vp.close()
-        except Exception:  # noqa: BLE001
-            pass
         return self.captured.get("body")
 
     def _submit(self):
@@ -715,7 +712,7 @@ def fetch_documents(county_fips: str, out_dir: pathlib.Path,
     if ma_url:
         try:
             _fetch_manatee(ma_url, out_dir, plat, deed, result)
-        except Exception as e:  # noqa: BLE001 — best-effort; caller keeps deep-links
+        except Exception as e:
             result["error"] = f"{type(e).__name__}: {e}"[:200]
         return result
     if not available():
@@ -730,7 +727,7 @@ def fetch_documents(county_fips: str, out_dir: pathlib.Path,
     # Headless Chromium occasionally dies mid-navigation; retry ONLY that (a deterministic
     # failure won't fix itself and would just double the runtime).
     last = ""
-    for attempt in range(2):
+    for _ in range(2):
         try:
             if ty_url:
                 _fetch_tyler(ty_url, out_dir, plat, deed, headless, result)
@@ -739,7 +736,7 @@ def fetch_documents(county_fips: str, out_dir: pathlib.Path,
             else:
                 _fetch_once(nv_url, out_dir, plat, deed, headless, result)
             return result
-        except Exception as e:  # noqa: BLE001 — best-effort; caller keeps deep-links
+        except Exception as e:
             last = f"{type(e).__name__}: {e}"[:200]
             if "TargetClosed" not in type(e).__name__ and "closed" not in str(e).lower():
                 break

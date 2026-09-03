@@ -18,28 +18,42 @@ Companion docs (read together):
 
 ## 1. The frozen surface
 
-`router.py` registers one APIRouter: `prefix="/api/v1/research"`. These five
+`router.py` registers one APIRouter: `prefix="/api/v1/research"`. These seven
 endpoints are the contract — no path or verb may be removed or renamed.
 
 | method | path | request | response (200) | errors |
 |---|---|---|---|---|
-| POST | `/jobs` | `CreateResearchJobRequest` | `DataEnvelope[ResearchJob]` | 404, 409, 422 |
+| POST | `/jobs` | `CreateResearchJobRequest` | `DataEnvelope[ResearchJob]` | 404, 409, 422, 429 |
 | GET | `/jobs/{job_id}` | — | `DataEnvelope[ResearchJob]` | 404 |
 | POST | `/jobs/{job_id}/retry` | `RetryResearchJobRequest` (optional) | `DataEnvelope[ResearchJob]` | 404, 409 |
 | POST | `/jobs/{job_id}/cancel` | `CancelJobRequest` (optional) | `DataEnvelope[ResearchJob]` | 404, 409 |
+| POST | `/jobs/{job_id}/review` | — | `DataEnvelope[ResearchJob]` | 404 |
+| POST | `/jobs/{job_id}/archive` | — | `DataEnvelope[ResearchJob]` | 404 |
 | GET | `/orders/{order_id}/jobs` | — | `DataEnvelope[list[ResearchJobSummary]]` | 404 |
 
-`retry` creates a **new job**; the original row is never mutated.
+`retry` creates a **new job**; the original row is never mutated. `review` and
+`archive` are the human sign-off moves (`completed|partial → reviewed →
+archived`) — they expose the service-level `mark_reviewed` / `archive_job`
+moves over HTTP and are **additive** under §7 rule 3.
 
 ## 2. Envelope and header rules
 
 - **Success:** `{ "data": … }` (`DataEnvelope[T]`). **Failure:** `{ "error":
   { code, message, details? } }` (`ErrorEnvelope`) — a single error shape
   everywhere, `code` from `ResearchErrorCode`, `message` never a traceback.
-- **Tenant/actor:** `X-Tenant-Id` and `X-Actor-Id` headers (self-asserted,
-  placeholders until Cognito auth lands — deliberate engine choice, distinct
-  from the POC/QuickPlot `X-Org-Id`/`X-Actor`). Every query paths through the
+- **Tenant/actor:** resolved by `engine/dependencies.py` in two modes, switched
+  purely by environment variables. When `COGNITO_*` is configured (production),
+  the `Authorization: Bearer` token is validated as an AWS Cognito JWT
+  (RS256/HS256, issuer + audience checked); tenant comes from the
+  `custom:tenant_id` claim, actor from `sub`. Otherwise (local/dev) it falls
+  back to the self-asserted `X-Tenant-Id` / `X-Actor-Id` headers — distinct
+  from the POC/QuickPlot `X-Org-Id`/`X-Actor`. Every query paths through the
   tenant scope first.
+- **Rate limiting:** `POST /jobs` is rate-limited per tenant (default
+  `20/minute`, `RATE_LIMIT_RESEARCH`), Redis-backed in production with an
+  in-memory fallback so it works from a single process. Over-limit creates
+  return **429** (code `RATE_LIMIT_EXCEEDED`). Not a contract violation — it is
+  a protection layer on job creation only.
 - **Idempotency:** `X-Idempotency-Key` on `POST /jobs`. A duplicate
   `(tenant_id, key)` returns the existing job (409 `IDEMPOTENCY_CONFLICT` only
   when tenant resolution is ambiguous). Server generates a key when absent.
@@ -154,7 +168,7 @@ each is in `docs/regression-matrix.md` §1b:
 frozen vocabulary must treat the exported schemas as the contract, and must
 not require additive fields.
 
-The full gate checklist: engine unit suite green (236 tests), `pytest
+The full gate checklist: engine unit suite green (309 tests), `pytest
 tests/test_contract_conformance.py` green, `export_contracts.py` exit 0,
 `docs/regression-matrix.md` counts match the suite.
 

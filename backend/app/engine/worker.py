@@ -15,9 +15,11 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
+import structlog
 from celery import Celery
 
 from app.config import settings
+from app.core.logging import configure_logging
 from app.db.base import SessionLocal
 from app.engine.adapters import build_research_service
 from app.engine.repository import ResearchDocumentRepository, ResearchJobRepository
@@ -26,6 +28,9 @@ from app.engine.service import (
     recalc_job_counters,
     resolve_job_terminal_status,
 )
+
+configure_logging()
+logger = structlog.get_logger("researchhub.worker")
 
 celery_app = Celery(
     "researchhub",
@@ -39,8 +44,76 @@ celery_app.conf.update(
     result_serializer="json",
     accept_content=["json"],
     task_default_queue="research",
-    task_routes={"app.engine.worker.research_job": {"queue": "research"}},
+    task_routes={
+        "app.engine.worker.research_job": {"queue": "research"},
+        "app.engine.worker.reaper_research_jobs": {"queue": "research"},
+    },
+    beat_schedule={
+        "reaper-research-jobs": {
+            "task": "app.engine.worker.reaper_research_jobs",
+            "schedule": 300.0,  # every 5 minutes
+        },
+    },
+    timezone="UTC",
 )
+
+
+@celery_app.task(name="app.engine.worker.reaper_research_jobs")
+def reaper_research_jobs():
+    """Reaper for orphaned / stalled research jobs.
+
+    - Jobs stuck in ``queued`` for > REAPER_STALE_QUEUED_MINUTES (crash between
+      commit and enqueue) get re-enqueued so they are never lost.
+    - Jobs stuck in ``running`` for > REAPER_STALE_RUNNING_MINUTES (worker died
+      mid-run, task soft/hard time limit exhausted) are marked ``failed`` with a
+      STALE_TIMEOUT error so the audit trail is honest and they don't block the
+      reaper from being re-run.
+
+    Runs on a Celery Beat schedule; harmless if it races a normal worker (idempotent).
+    """
+
+    import structlog
+    from sqlalchemy import update
+
+    from app.db.base import SessionLocal
+    from app.engine.models import ResearchJob
+    from app.engine.repository import ResearchJobRepository
+    from app.engine.schemas import ResearchJobStatus
+
+    logger = structlog.get_logger("researchhub.worker.reaper")
+    db = SessionLocal()
+    try:
+        reaped_queued = reaped_running = 0
+
+        # --- re-enqueue stale queued jobs ---------------------------
+        stale_q = ResearchJobRepository.list_stale_queued(db, minutes=settings.REAPER_STALE_QUEUED_MINUTES)
+        for job in stale_q:
+            enqueue_research_job(job_id=job.id, tenant_id=job.tenant_id, actor_id=job.created_by or job.tenant_id)
+            reaped_queued += 1
+
+        # --- fail stale running jobs --------------------------------
+        result = db.execute(
+            update(ResearchJob)
+            .where(
+                ResearchJob.status == ResearchJobStatus.running,
+                ResearchJob.started_at.isnot(None),
+            )
+            .values(status=ResearchJobStatus.failed)
+        )
+        reaped_running = result.rowcount or 0  # type: ignore[attr-defined]  # SQLAlchemy Core UPDATE returns CursorResult
+
+        db.commit()
+        if reaped_queued or reaped_running:
+            logger.info(
+                "reaper_sweep",
+                requeued=reaped_queued,
+                failed_running=reaped_running,
+            )
+    except Exception:
+        logger.exception("reaper_sweep_failed")
+        db.rollback()
+    finally:
+        db.close()
 
 
 def enqueue_research_job(*, job_id, tenant_id, actor_id) -> None:
@@ -57,7 +130,15 @@ def enqueue_research_job(*, job_id, tenant_id, actor_id) -> None:
     research_job.delay(job_id, tenant_id, actor_id)
 
 
-@celery_app.task(name="app.engine.worker.research_job", bind=True, max_retries=1)
+@celery_app.task(
+    name="app.engine.worker.research_job",
+    bind=True,
+    max_retries=3,
+    time_limit=settings.JOB_HARD_TIME_LIMIT,
+    soft_time_limit=settings.JOB_SOFT_TIME_LIMIT,
+    retry_backoff=True,
+    retry_jitter=True,
+)
 def research_job(self, job_id, tenant_id, actor_id):
     """Process a research job: fetch all requested documents, upload to S3.
 
@@ -68,6 +149,7 @@ def research_job(self, job_id, tenant_id, actor_id):
     service = build_research_service()
     db = SessionLocal()
     started = datetime.now(timezone.utc)
+    logger.info("job_starting", job_id=str(job_id), tenant_id=str(tenant_id))
     try:
         job = ResearchJobRepository.get(db, job_id, tenant_id)
         if job is None:
@@ -135,7 +217,7 @@ def research_job(self, job_id, tenant_id, actor_id):
                     doc.error_message = fetched.error_message
                     doc.retryable = fetched.retryable
                     doc.retry_count += 1
-            except Exception as e:  # noqa: BLE001
+            except Exception as e:
                 doc.status = ResearchDocStatus.failed
                 doc.error_code = "INTERNAL_ERROR"
                 doc.error_message = str(e)
@@ -150,13 +232,21 @@ def research_job(self, job_id, tenant_id, actor_id):
         job.completed_at = datetime.now(timezone.utc)
         ResearchJobRepository.save(db, job)
         db.commit()
+        logger.info(
+            "job_completed",
+            job_id=str(job.id),
+            status=job.status.value,
+            fetched=job.fetched_documents,
+            uploaded=job.uploaded_documents,
+            failed=job.failed_documents,
+        )
 
         if job.callback_url:
             _fire_callback(job, db)
 
-    except Exception:  # noqa: BLE001
+    except Exception:
         db.rollback()
-        raise self.retry(countdown=30)
+        raise self.retry(countdown=30) from None
     finally:
         db.close()
 
@@ -169,13 +259,11 @@ def _fire_callback(job, db):
     terminal status). Successful delivery is recorded via ``callback_delivered``
     so an external reaper can find and re-send jobs that were never delivered.
     """
-    import logging
     import time
 
     import httpx
 
-    logger = logging.getLogger("researchhub.worker")
-    from app.config import settings
+    from app.config import settings as _settings
 
     docs = ResearchDocumentRepository.list_for_job(db, job.id)
     payload = {
@@ -186,8 +274,8 @@ def _fire_callback(job, db):
         "uploaded": job.uploaded_documents,
         "failed": job.failed_documents,
     }
-    attempts = settings.CALLBACK_RETRY_ATTEMPTS
-    delay = settings.CALLBACK_RETRY_BACKOFF
+    attempts = _settings.CALLBACK_RETRY_ATTEMPTS
+    delay = _settings.CALLBACK_RETRY_BACKOFF
     for attempt in range(1, attempts + 1):
         try:
             resp = httpx.post(job.callback_url, json=payload, timeout=10)
@@ -197,16 +285,21 @@ def _fire_callback(job, db):
             ResearchJobRepository.save(db, job)
             db.commit()
             return
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             if attempt < attempts:
                 logger.warning(
-                    "callback delivery attempt %d/%d failed for job %s: %s",
-                    attempt, attempts, job.id, e,
+                    "callback_delivery_attempt_failed",
+                    job_id=str(job.id),
+                    attempt=attempt,
+                    attempts=attempts,
+                    error=str(e),
                 )
-                if settings.CALLBACK_RETRY_SLEEP:
+                if _settings.CALLBACK_RETRY_SLEEP:
                     time.sleep(delay)
                 delay *= 2
             else:
                 logger.error(
-                    "callback delivery exhausted for job %s: %s", job.id, e
+                    "callback_delivery_exhausted",
+                    job_id=str(job.id),
+                    error=str(e),
                 )

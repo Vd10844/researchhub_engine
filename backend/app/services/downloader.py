@@ -14,8 +14,8 @@ import io
 import math
 import pathlib
 
-from .http import _session
 from ..config import HTTP_TIMEOUT
+from .http import _session
 
 NGS_DATASHEET = "https://geodesy.noaa.gov/cgi-bin/ds_mark.prl"  # ?PidBox=<PID> -> datasheet HTML
 
@@ -169,7 +169,7 @@ def _font(size: int):
     try:
         from PIL import ImageFont
         return ImageFont.truetype("arial.ttf", size)
-    except Exception:  # noqa: BLE001 — fall back to the bitmap default
+    except Exception:
         from PIL import ImageFont
         return ImageFont.load_default()
 
@@ -183,7 +183,7 @@ def save_flood_map(folder, lat: float, lon: float, flood: dict, meta: dict,
     """
     try:
         from PIL import Image, ImageDraw
-    except Exception:  # noqa: BLE001 — Pillow missing; caller keeps the FIRM deep-link
+    except Exception:
         return None
     try:
         cx, cy = _merc(lon, lat)
@@ -218,7 +218,7 @@ def save_flood_map(folder, lat: float, lon: float, flood: dict, meta: dict,
         out = docs_dir(folder) / "Flood_Map.png"
         img.convert("RGB").save(out)
         return "Flood_Map.png"
-    except Exception:  # noqa: BLE001 — best-effort exhibit; a miss just isn't saved
+    except Exception:
         return None
 
 
@@ -302,8 +302,8 @@ def save_appraiser_record(folder, attrs: dict, meta: dict, appraiser_url: str = 
 _ZONE_DESC = {
     "A": "1% annual-chance (100-year) floodplain — no base flood elevation determined",
     "AE": "1% annual-chance (100-year) floodplain with base flood elevations",
-    "AH": "Shallow flooding, 1–3 ft ponding (1% annual-chance)",
-    "AO": "Shallow flooding, 1–3 ft sheet flow (1% annual-chance)",
+    "AH": "Shallow flooding, 1-3 ft ponding (1% annual-chance)",
+    "AO": "Shallow flooding, 1-3 ft sheet flow (1% annual-chance)",
     "AR": "Temporarily increased risk while a flood-control system is restored",
     "A99": "Area protected by a flood-control system under construction",
     "V": "Coastal high-hazard area with wave action (1% annual-chance)",
@@ -331,7 +331,7 @@ def _flood_risk(flood: dict) -> tuple:
 def _img_data_uri(path: pathlib.Path) -> str:
     try:
         return "data:image/png;base64," + base64.b64encode(path.read_bytes()).decode()
-    except Exception:  # noqa: BLE001
+    except Exception:
         return ""
 
 
@@ -410,6 +410,6 @@ def download_ngs_datasheets(folder, marks, limit: int = 3) -> list[str]:
             fn = f"NGS_datasheet_{pid}.html"
             (dd / fn).write_bytes(r.content)
             saved.append(fn)
-        except Exception:  # noqa: BLE001 — best-effort; a miss just isn't saved
+        except Exception:
             continue
     return saved

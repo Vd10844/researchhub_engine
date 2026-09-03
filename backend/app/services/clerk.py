@@ -5,8 +5,8 @@ adapter (Acclaim / Landmark / Eagle) - stubbed here with a clear extension point
 the app returns the correct official-records search URL plus the book/page/legal hints
 pulled from parcel data, so a human (or a future adapter) can retrieve the images in one click.
 """
+from ..data.county_platforms import PLATFORM_LABEL, STATE_DEED, STATE_PLAT, lookup, netronline
 from . import clerk_scraper
-from ..data.county_platforms import lookup, netronline, PLATFORM_LABEL, STATE_DEED, STATE_PLAT
 
 
 def references(county_fips: str, state_abbr: str, county_name: str,

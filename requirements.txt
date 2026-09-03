@@ -22,6 +22,15 @@ redis==5.0.7
 # --- S3 -------------------------------------------------------------------
 boto3>=1.34
 
+# --- Auth (Cognito JWT validation) -----------------------------------------
+python-jose[cryptography]>=3.3
+
+# --- Observability ----------------------------------------------------------
+structlog>=24.0
+
+# --- Rate limiting -----------------------------------------------------------
+limits>=3.11.0
+
 # --- Engine-only (parent does NOT use these) ------------------------------
 pillow>=11.0                # flood map compositing
 playwright>=1.40            # clerk deed/plat scraper (python -m playwright install chromium)
@@ -29,3 +38,7 @@ playwright>=1.40            # clerk deed/plat scraper (python -m playwright inst
 # --- test only ------------------------------------------------------------
 pytest>=8.0
 httpx>=0.27                 # fastapi.testclient transport
+pytest-cov>=5.0             # coverage measurement + CI floor (validation-plan 2.8)
+moto>=5.0                   # in-memory AWS for S3 storage tests (validation-plan 1.2)
+respx>=0.21                 # mock httpx for callback-delivery tests (validation-plan 2.3)
+responses>=0.25             # mock requests for source-adapter tests (validation-plan 1.1)

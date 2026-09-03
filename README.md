@@ -14,11 +14,18 @@ parent repo's `app/modules/research/` unchanged.
 
 | Endpoint | Purpose |
 |---|---|
-| `POST /research/jobs` | Create a research job (idempotent via `X-Idempotency-Key`) |
+| `POST /research/jobs` | Create a research job (idempotent via `X-Idempotency-Key`, rate-limited per tenant) |
 | `GET /research/jobs/{id}` | Poll job + per-document progress |
 | `POST /research/jobs/{id}/retry` | Retry failed docs (creates a new job) |
 | `POST /research/jobs/{id}/cancel` | Cancel a queued/running job |
 | `GET /research/orders/{order_id}/jobs` | List an order's job history |
+
+Plus operational endpoints:
+
+| Endpoint | Purpose |
+|---|---|
+| `GET /api/health` | Readiness — checks DB (`SELECT 1`) + Redis (`PING`), 200/503 |
+| `GET /api/health/live` | Liveness — process is up |
 
 Contracts: `contracts/openapi.json` + `contracts/schemas/` (generated — do not hand-edit).
 
@@ -39,14 +46,33 @@ Worker (processes jobs):
 
 ```bash
 cd backend && celery -A app.engine.worker.celery_app worker --loglevel=info --queues=research
+# beat (5-min stale-job reaper + beat schedule):
+cd backend && celery -A app.engine.worker.celery_app beat --loglevel=info
 ```
 
 Docs: <http://127.0.0.1:8000/docs>
 
+## Production posture
+
+- **Auth:** `Authorization: Bearer` (Cognito JWT, RS256/HS256) when `COGNITO_*`
+  is set; header fallback (`X-Tenant-Id`/`X-Actor-Id`) in local/dev. Switched
+  by env only — one codebase, two modes.
+- **Health:** `/api/health` (DB + Redis) and `/api/health/live` power the
+  container `HEALTHCHECK` and ECS task rebalancing.
+- **Rate limiting:** per-tenant, Redis-backed (in-memory fallback) on
+  `POST /jobs`.
+- **Observability:** structlog JSON logs + a per-request `Request-ID` that
+  traces a request through API → worker.
+- **Worker reliability:** `task_acks_late`, retries (`max_retries=3`,
+  backoff+jitter), hard/soft time limits, and a 5-min **reaper** beat task
+  that fails stuck queued/running jobs left by a crashed worker.
+- **Errors:** catch-all handler returns a clean `INTERNAL_ERROR` 500 with no
+  stack-trace leak; the real detail is logged server-side.
+
 ## Test
 
 ```bash
-.venv/Scripts/python.exe -m pytest tests -q     # 236 tests, fully offline
+.venv/Scripts/python.exe -m pytest tests -q     # 309 tests, fully offline
 ```
 
 ## Layout
@@ -72,4 +98,8 @@ as the source of truth; do not regenerate blindly.
 
 ## Status
 
-Engine v1 contract + service skeleton. See `contracts/openapi.json` for the frozen API.
+Engine is **production-ready at the core** (adapters, cancel, idempotency,
+tenant isolation) and wrapped in a production operating layer (Cognito auth,
+health, rate limiting, structured logging, worker reliability + reaper,
+production Docker + CI). See `contracts/openapi.json` for the frozen API and
+`docs/api-contract-freeze.md` for the stability rules.

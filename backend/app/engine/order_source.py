@@ -19,7 +19,7 @@ models; the signature ``(order_id, tenant_id) -> OrderData`` stays.
 from __future__ import annotations
 
 import uuid
-from datetime import datetime
+from typing import ClassVar
 
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -32,7 +32,7 @@ class Order(Base, TimestampMixin, AuditMixin, SoftDeleteMixin):
     """Stand-in for the parent's orders table (dev/standalone E2E)."""
 
     __tablename__ = "orders"
-    __versioned__: dict = {}
+    __versioned__: ClassVar[dict] = {}
 
     tenant_id: Mapped[uuid.UUID] = mapped_column(
         nullable=False, index=True, comment="Tenant isolation key."
@@ -60,7 +60,7 @@ class Tenant(Base, TimestampMixin):
     """Stand-in for the parent's tenants table (dev/standalone E2E)."""
 
     __tablename__ = "tenants"
-    __versioned__: dict = {}
+    __versioned__: ClassVar[dict] = {}
 
 
 def order_provider(order_id: uuid.UUID, tenant_id: uuid.UUID) -> OrderData | None:

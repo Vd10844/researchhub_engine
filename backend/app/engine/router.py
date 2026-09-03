@@ -8,12 +8,12 @@ Endpoints:
   GET    /research/orders/{order_id}/jobs  — list jobs for an order
 
 All endpoints require:
-  - ``Authorization`` header (JWT from Cognito)
+  - ``Authorization`` header (JWT from Cognito, validated in production)
   - ``X-Tenant-ID`` header (resolved by auth middleware)
   - ``X-Idempotency-Key`` header (optional, for POST /jobs)
 
-Auth deps currently resolve from headers via a shared placeholder — swap the
-implemantation once Cognito wiring lands (see ``app/engine/dependencies.py``).
+Auth deps resolve the actor + tenant from the Cognito JWT in production and
+fall back to headers in local dev (see ``app/engine/dependencies.py``).
 """
 from __future__ import annotations
 
@@ -22,9 +22,9 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Header
 from sqlalchemy.orm import Session
 
+from app.core.limiter import rate_limit
 from app.db.base import get_db
 from app.engine.dependencies import get_actor_id, get_tenant_id
-from app.engine.errors import ResearchEngineError
 from app.engine.mappers import to_job_schema, to_job_summary_schema
 from app.engine.schemas import (
     CancelJobRequest,
@@ -61,16 +61,19 @@ def get_service(db: Session = Depends(get_db)) -> ResearchService:
         404: {"model": ErrorEnvelope, "description": "Order not found"},
         409: {"model": ErrorEnvelope, "description": "Idempotency conflict"},
         422: {"model": ErrorEnvelope, "description": "Invalid document types"},
+        429: {"model": ErrorEnvelope, "description": "Rate limit exceeded"},
     },
     summary="Create a research job",
     description=(
         "Starts auto-fetching documents for an order. "
         "Accepts a list of document types (from the source registry). "
-        "Returns the created job with per-document status."
+        "Returns the created job with per-document status. "
+        "Rate-limited per tenant."
     ),
+    dependencies=[Depends(rate_limit)],
 )
 async def create_research_job(
-    request: CreateResearchJobRequest,
+    payload: CreateResearchJobRequest,
     x_idempotency_key: UUID | None = Header(default=None, alias="X-Idempotency-Key"),
     actor_id: UUID = Depends(get_actor_id),
     tenant_id: UUID = Depends(get_tenant_id),
@@ -81,10 +84,10 @@ async def create_research_job(
         db,
         tenant_id=tenant_id,
         actor_id=actor_id,
-        order_id=request.order_id,
-        doc_types=request.document_types,
+        order_id=payload.order_id,
+        doc_types=payload.document_types,
         idempotency_key=x_idempotency_key,
-        callback_url=None,  # callback_url is not part of v1 contract
+        callback_url=payload.callback_url if payload.callback_url else None,
     )
     return DataEnvelope(data=to_job_schema(db, job))
 
@@ -198,3 +201,4 @@ async def list_order_jobs(
 ):
     jobs = service.list_order_jobs(db, tenant_id=tenant_id, order_id=order_id)
     return DataEnvelope(data=[to_job_summary_schema(j) for j in jobs])
+

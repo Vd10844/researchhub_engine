@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
-from typing import Optional
 
 from sqlalchemy import TIMESTAMP, ForeignKey, func
 from sqlalchemy.dialects.postgresql import UUID
@@ -35,11 +34,11 @@ class AuditMixin:
     """created_by / updated_by UUID columns (no FK — audit trail survives user deletion)."""
 
     @declared_attr
-    def created_by(cls) -> Mapped[Optional[uuid.UUID]]:
+    def created_by(cls) -> Mapped[uuid.UUID | None]:
         return mapped_column(UUID(as_uuid=True), nullable=True)
 
     @declared_attr
-    def updated_by(cls) -> Mapped[Optional[uuid.UUID]]:
+    def updated_by(cls) -> Mapped[uuid.UUID | None]:
         return mapped_column(UUID(as_uuid=True), nullable=True)
 
 
@@ -61,7 +60,7 @@ class SoftDeleteMixin:
     """Soft delete via deleted_at timestamp."""
 
     @declared_attr
-    def deleted_at(cls) -> Mapped[Optional[datetime]]:
+    def deleted_at(cls) -> Mapped[datetime | None]:
         return mapped_column(TIMESTAMP(timezone=True), nullable=True, index=True)
 
     @property

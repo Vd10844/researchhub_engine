@@ -9,7 +9,7 @@ Centralization guarantees:
 """
 from __future__ import annotations
 
-from typing import Iterable
+from collections.abc import Iterable
 
 from app.data.reference import RESIDENTIAL_DOCS
 from app.engine.contracts import (
@@ -64,11 +64,11 @@ def _run_one(ctx, d: dict, adapter: SourceAdapter, docs_dir) -> StepResult:
         if e.message:
             error.message = e.message
         return _assemble(ctx, d, fs, e.outcome, error, Confidence.none)
-    except Exception as e:  # noqa: BLE001 — adapters never let errors escape a step
+    except Exception as e:
         outcome, code, message, retryable = classify_exception(e)
         try:
             fs = adapter.fallback(ctx)
-        except Exception:  # noqa: BLE001 — last-resort empty step
+        except Exception:
             fs = FetchedSource(link="", link_label="", summary="Couldn't reach this source.")
         error = ErrorInfo(code=code, message=message, retryable=retryable)
         return _assemble(ctx, d, fs, outcome, error, Confidence.none)

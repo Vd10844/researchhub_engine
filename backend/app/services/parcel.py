@@ -13,8 +13,8 @@ import json
 import math
 import re
 
+from ..data.county_platforms import STATE_PARCEL, lookup, netronline
 from .http import get_json
-from ..data.county_platforms import lookup, netronline, STATE_PARCEL
 
 
 def _norm(k: str) -> str:
@@ -290,7 +290,7 @@ def _out_fields(layer_url: str) -> str:
         # independent), so reordering the field list never changes which field it picks.
         kept.sort(key=_field_rank)
         return ",".join(kept[:40]) if kept else "*"
-    except Exception:  # noqa: BLE001
+    except Exception:
         return "*"
 
 
@@ -366,15 +366,15 @@ def _arcgis_layer_url(service: str, layer_hint: str) -> tuple:
         svc = service.rstrip("/")
         try:
             name = get_json(svc, {"f": "json"}).get("name")
-        except Exception:  # noqa: BLE001
+        except Exception:
             name = None
         return f"{svc}/query", name
     meta = get_json(service, {"f": "json"})
     layers = meta.get("layers", [])
-    cands = [l for l in layers
-             if layer_hint in l.get("name", "").lower()
-             or "parcel" in l.get("name", "").lower()
-             or "property" in l.get("name", "").lower()]
+    cands = [layer for layer in layers
+             if layer_hint in layer.get("name", "").lower()
+             or "parcel" in layer.get("name", "").lower()
+             or "property" in layer.get("name", "").lower()]
     if not cands:
         return None, None
     return f"{service}/{cands[0]['id']}/query", cands[0].get("name")
@@ -466,7 +466,7 @@ def _enrich_one(attrs: dict, cfg: dict) -> None:
             for k, fv in feats[0].get("attributes", {}).items():
                 if attrs.get(k) in (None, "", " "):
                     attrs[k] = fv
-    except Exception:  # noqa: BLE001
+    except Exception:
         pass
 
 
@@ -493,7 +493,7 @@ def resolve(county_fips: str, state_abbr: str, county_name: str,
                         matched = _addr_match(address, sfn(chosen)) is True
                     return _finish(result, chosen, cands, buffered, matched, address,
                                    url.rsplit("/query", 1)[0], layer_name, situs_fn=sfn)
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             result["arcgis_error"] = str(e)
 
     # 2) statewide FeatureServer (covers every county in the state) ---------------
@@ -512,7 +512,7 @@ def resolve(county_fips: str, state_abbr: str, county_name: str,
                         matched = _addr_match(address, situs_of(chosen)) is True
                     result["parcel_source_label"] = svc.get("label", "")
                     return _finish(result, chosen, cands, buffered, matched, address, u)
-            except Exception as e:  # noqa: BLE001
+            except Exception as e:
                 result["statewide_error"] = str(e)
 
     # 3) fallback: appraiser / directory link ------------------------------------
@@ -548,7 +548,7 @@ def _id_fields(layer_url: str, override) -> list:
             nn = _norm(n)
             return next((i for i, c in enumerate(_ID_CANDIDATES) if c in nn), len(_ID_CANDIDATES))
         return sorted(names, key=rank)
-    except Exception:  # noqa: BLE001
+    except Exception:
         return []
 
 
@@ -596,7 +596,7 @@ def _query_by_id(layer_url: str, parcel_id: str, override) -> dict | None:
                     q = get_json(f"{layer_url}/query", {
                         "where": where, "outFields": _out_fields(layer_url),
                         "returnGeometry": "true", "outSR": "4326", "f": "json"})
-                except Exception:  # noqa: BLE001
+                except Exception:
                     continue
                 feats = q.get("features", [])
                 if feats:
@@ -620,7 +620,7 @@ def resolve_by_id(state_abbr: str, parcel_id: str, county_fips: str = "") -> dic
             if u:
                 services.append((u.rsplit("/query", 1)[0], name or reg.get("county", ""),
                                  reg.get("id_fields"), _situs_fn(reg), reg.get("related")))
-        except Exception:  # noqa: BLE001
+        except Exception:
             pass
     svc = STATE_PARCEL.get(state_abbr)
     if svc:

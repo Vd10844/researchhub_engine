@@ -16,10 +16,7 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass, field
 
-from pydantic import BaseModel, Field
-
 from app.engine.errors import (
-    DocumentFetchError,
     IdempotencyConflictError,
     InvalidDocTypesError,
     JobNotCancellableError,
@@ -188,7 +185,7 @@ class ResearchService:
                 existing = ResearchJobRepository.get_by_idempotency(db, idempotency_key, tenant_id)
                 if existing:
                     return existing
-            raise IdempotencyConflictError("A job with this idempotency key already exists")
+            raise IdempotencyConflictError("A job with this idempotency key already exists") from None
 
         db.refresh(job)
         if self.enqueue is not None:
@@ -222,10 +219,11 @@ class ResearchService:
 
         failed = ResearchDocumentRepository.list_failed(db, job_id)
         failed_types = [d.doc_type for d in failed]
-        if doc_types is None:
-            doc_types = failed_types
-        else:
-            doc_types = [t for t in doc_types if t in failed_types]
+        doc_types = (
+            failed_types
+            if doc_types is None
+            else [t for t in doc_types if t in failed_types]
+        )
 
         if not doc_types:
             raise JobNotRetryableError("No failed documents to retry")
@@ -327,8 +325,8 @@ class ResearchService:
                 unknown.append(t)
         if unknown:
             raise InvalidDocTypesError(
-                "unsupported document_types: %s (supported: %s)"
-                % (", ".join(sorted(unknown)), ", ".join(sorted(DOC_TYPE_TO_STEP)))
+                "unsupported document_types: "
+                f"{', '.join(sorted(unknown))} (supported: {', '.join(sorted(DOC_TYPE_TO_STEP))})"
             )
         # Deduplicate (an alias + its canonical form resolve to one document)
         # while preserving first-occurrence order.

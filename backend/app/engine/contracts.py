@@ -10,10 +10,9 @@ keep their meaning; new engine-internal classification rides alongside in
 from __future__ import annotations
 
 import enum
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field
-
 
 # ------------------------------------------------------------------- enums
 
@@ -100,8 +99,8 @@ class ProvenanceRecord(BaseModel):
     retrieved_utc: str = Field(default="", description="ISO-8601 timestamp of the retrieval")
     attempt: int = Field(default=1, description="Which attempt succeeded (1-based)")
     fallback_chain: list[str] = Field(default_factory=list, description="Ordered list of source_ids tried before success")
-    file: Optional[str] = Field(default=None, description="Relative path of saved artifact within the job folder")
-    sha256: Optional[str] = Field(default=None, description="SHA-256 digest of the saved artifact (if any)")
+    file: str | None = Field(default=None, description="Relative path of saved artifact within the job folder")
+    sha256: str | None = Field(default=None, description="SHA-256 digest of the saved artifact (if any)")
 
 
 class ErrorInfo(BaseModel):
@@ -137,15 +136,15 @@ class StepResult(BaseModel):
     link: str = Field(default="", description="Fallback deep-link when auto-fetch is not available")
     link_label: str = Field(default="", description="Display text for the link button")
     source_url: str = Field(default="", description="Primary source URL for this document type")
-    saved_file: Optional[str] = Field(default=None, description="Relative filename of a generated metadata file (e.g. parcel.json)")
+    saved_file: str | None = Field(default=None, description="Relative filename of a generated metadata file (e.g. parcel.json)")
     data: Any = Field(default=None, description="Raw data payload (source-specific, not for direct rendering)")
     downloaded: list[str] = Field(default_factory=list, description="Filenames of downloaded documents (inside documents/ folder)")
 
     # --- frozen POC step-specific (only parcel step uses these) ---
-    situs: Optional[str] = Field(default=None)
-    land_sqft: Optional[float] = Field(default=None)
-    land_acres: Optional[float] = Field(default=None)
-    address_match: Optional[bool] = Field(default=None)
+    situs: str | None = Field(default=None)
+    land_sqft: float | None = Field(default=None)
+    land_acres: float | None = Field(default=None)
+    address_match: bool | None = Field(default=None)
 
     # --- additive (engine v1 new fields, backward-compatible) ---
     source_outcome: SourceOutcome = Field(
@@ -164,7 +163,7 @@ class StepResult(BaseModel):
         default_factory=list,
         description="Per-step warnings surfaced to the user (e.g. 'buffered match, verify location')",
     )
-    error: Optional[ErrorInfo] = Field(
+    error: ErrorInfo | None = Field(
         default=None,
         description="Structured error when status == 'error'",
     )
@@ -185,8 +184,8 @@ class ResearchResult(BaseModel):
     county: str = Field(default="")
     county_fips: str = Field(default="")
     state: str = Field(default="")
-    lat: Optional[float] = Field(default=None)
-    lon: Optional[float] = Field(default=None)
+    lat: float | None = Field(default=None)
+    lon: float | None = Field(default=None)
     name: str = Field(default="", description="Job folder name")
     geocoder: str = Field(default="", description="Which geocoder matched: census | arcgis | nominatim")
     map_links: list[dict] = Field(default_factory=list)
@@ -195,7 +194,7 @@ class ResearchResult(BaseModel):
     warnings: list[str] = Field(default_factory=list)
 
     # --- additive (engine v1) ---
-    completed_utc: Optional[str] = Field(
+    completed_utc: str | None = Field(
         default=None,
         description="ISO-8601 timestamp when the pipeline finished (new)",
     )
@@ -203,7 +202,7 @@ class ResearchResult(BaseModel):
         default=JobState.completed,
         description="Persisted lifecycle state of this job (new)",
     )
-    docs_dir: Optional[str] = Field(
+    docs_dir: str | None = Field(
         default=None,
         description="Additive: research staging directory containing documents/ (internal)",
     )

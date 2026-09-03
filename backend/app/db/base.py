@@ -20,6 +20,13 @@ def _make_engine(url: str):
         kwargs["connect_args"] = {"check_same_thread": False}
         if ":memory:" in url:
             kwargs["poolclass"] = StaticPool
+        return create_engine(url, **kwargs)
+    kwargs.update(
+        pool_size=settings.POOL_SIZE,
+        max_overflow=settings.MAX_OVERFLOW,
+        pool_timeout=settings.POOL_TIMEOUT,
+        pool_recycle=settings.POOL_RECYCLE,
+    )
     return create_engine(url, **kwargs)
 
 

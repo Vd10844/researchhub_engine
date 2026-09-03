@@ -7,17 +7,20 @@ are the single place that translation happens.
 """
 from __future__ import annotations
 
-from uuid import UUID
-
 from sqlalchemy.orm import Session
 
 from app.engine.models import ResearchDocument, ResearchJob
 from app.engine.repository import ResearchDocumentRepository
 from app.engine.schemas import (
     FileReference,
-    ResearchDocument as ResearchDocumentSchema,
-    ResearchJob as ResearchJobSchema,
+    ResearchErrorCode,
     ResearchJobSummary,
+)
+from app.engine.schemas import (
+    ResearchDocument as ResearchDocumentSchema,
+)
+from app.engine.schemas import (
+    ResearchJob as ResearchJobSchema,
 )
 
 
@@ -51,6 +54,14 @@ def _s3_key(doc: ResearchDocument) -> str:
     return f"orders/{doc.order_id}/research/{doc.file_id}/{doc.link_label or 'document.pdf'}"
 
 
+def _to_error_code(value: str) -> ResearchErrorCode | None:
+    """Map a stored error_code string to the contract enum, tolerating legacy values."""
+    try:
+        return ResearchErrorCode(value)
+    except ValueError:
+        return None
+
+
 def to_document_schema(db: Session, doc: ResearchDocument) -> ResearchDocumentSchema:
     return ResearchDocumentSchema(
         id=doc.id,
@@ -64,7 +75,7 @@ def to_document_schema(db: Session, doc: ResearchDocument) -> ResearchDocumentSc
         link_label=doc.link_label or "",
         provenance=doc.provenance or [],
         warnings=doc.warnings or [],
-        error_code=doc.error_code,
+        error_code=_to_error_code(doc.error_code) if doc.error_code else None,
         error_message=doc.error_message,
         retryable=doc.retryable,
         retry_count=doc.retry_count or 0,
@@ -93,8 +104,8 @@ def to_job_schema(
         completed_at=job.completed_at,
         created_at=job.created_at,
         updated_at=job.updated_at,
-        created_by=job.created_by,
-        error_code=job.error_code,
+        created_by=job.created_by or job.tenant_id,
+        error_code=_to_error_code(job.error_code) if job.error_code else None,
         error_message=job.error_message,
         cancel_reason=job.cancel_reason,
     )

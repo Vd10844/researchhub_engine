@@ -73,15 +73,15 @@ def fetch(county_fips: str, strap: str, out_dir: pathlib.Path) -> dict:
             if r.ok and r.content[:4] == b"%PDF" and len(r.content) > 2000:
                 (out_dir / "Property_MappingWorksheet.pdf").write_bytes(r.content)
                 result["docs"].append("Property_MappingWorksheet.pdf")
-        except Exception:  # noqa: BLE001 — best-effort extra doc
+        except Exception:
             pass
-    except Exception:  # noqa: BLE001 — unreachable (no split-tunnel) or site down
+    except Exception:
         return result
 
     # Official Property Record Card PDF (the report exports a PDF via a browser download).
     try:
         from playwright.sync_api import sync_playwright
-    except Exception:  # noqa: BLE001
+    except Exception:
         return result
     try:
         with sync_playwright() as p:
@@ -98,6 +98,6 @@ def fetch(county_fips: str, strap: str, out_dir: pathlib.Path) -> dict:
                     result["doc"] = out.name
             finally:
                 br.close()
-    except Exception:  # noqa: BLE001 — keep the plat_ref even if the PDF export fails
+    except Exception:
         pass
     return result

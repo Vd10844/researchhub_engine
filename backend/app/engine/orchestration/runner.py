@@ -57,6 +57,12 @@ def run_research(job_number: str = "", address: str = "",
         {"label": "Search address on Google", "url": f"https://www.google.com/search?q={_q}"},
     ]
 
+    # ctx.folder is populated during context resolution; guard the None case so
+    # a regression surfaces as a clear error instead of an AttributeError.
+    folder = ctx.folder
+    if folder is None:
+        raise RuntimeError("research staging folder was not initialized before running steps")
+
     result = ResearchResult(
         job_number=ctx.job_number,
         order=ctx.order,
@@ -71,8 +77,8 @@ def run_research(job_number: str = "", address: str = "",
         name=ctx.name,
         geocoder=ctx.geocoder,
         map_links=map_links,
-        folder=str(ctx.folder.parent),        # frozen semantic: job-level folder
-        docs_dir=str(ctx.folder),             # additive: research staging dir (has documents/)
+        folder=str(folder.parent),        # frozen semantic: job-level folder
+        docs_dir=str(folder),             # additive: research staging dir (has documents/)
         steps=steps,
         warnings=list(ctx.warnings),
         completed_utc=ctx_mod.now_utc(),

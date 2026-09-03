@@ -1,9 +1,9 @@
-import sys
 import os
+import sys
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config, pool
 from alembic import context
+from sqlalchemy import engine_from_config, pool
 
 # -------------------------------
 # ADD PROJECT PATH
@@ -36,8 +36,8 @@ if config.config_file_name is not None:
 # -------------------------------
 # IMPORT DB + MODELS
 # -------------------------------
-from app.db.base import Base  # noqa: E402
-import app.engine.models  # noqa: E402,F401  (register tables)
+import app.engine.models
+from app.db.base import Base
 
 target_metadata = Base.metadata
 

@@ -59,7 +59,7 @@ def check_url(url: str, timeout: int = 12) -> dict:
                 "error": "TLS reset (often an antivirus/web-filter intercepting HTTPS)"}
     except requests.exceptions.Timeout:
         return {"url": url, "status": None, "verdict": "offline", "error": "timed out"}
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:
         return {"url": url, "status": None, "verdict": "offline",
                 "error": type(e).__name__}
 

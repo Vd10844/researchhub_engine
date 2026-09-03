@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Research Engine",
-    "description": "Automated land-survey research: parcel, deed, plat, flood, control.",
-    "version": "0.1.0"
+    "description": "Automated land-survey research: parcel, deed, plat, flood, control. Production-ready.",
+    "version": "0.2.0"
   },
   "paths": {
     "/api/v1/research/jobs": {
@@ -12,8 +12,13 @@
           "research"
         ],
         "summary": "Create a research job",
-        "description": "Starts auto-fetching documents for an order. Accepts a list of document types (from the source registry). Returns the created job with per-document status.",
+        "description": "Starts auto-fetching documents for an order. Accepts a list of document types (from the source registry). Returns the created job with per-document status. Rate-limited per tenant.",
         "operationId": "create_research_job_api_v1_research_jobs_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "X-Idempotency-Key",
@@ -115,6 +120,16 @@
                 }
               }
             }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
           }
         }
       }
@@ -127,6 +142,11 @@
         "summary": "Get research job status",
         "description": "Returns the job metadata and per-document progress. Poll this endpoint to track job completion.",
         "operationId": "get_research_job_api_v1_research_jobs__job_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "job_id",
@@ -213,6 +233,11 @@
         "summary": "Retry failed documents",
         "description": "Creates a new research job with the failed document types from the original job. The original job is not mutated.",
         "operationId": "retry_research_job_api_v1_research_jobs__job_id__retry_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "job_id",
@@ -326,6 +351,11 @@
         "summary": "Cancel a research job",
         "description": "Cancels a running/queued job. In-flight documents complete their current step; queued documents are skipped.",
         "operationId": "cancel_research_job_api_v1_research_jobs__job_id__cancel_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "job_id",
@@ -439,6 +469,11 @@
         "summary": "List research jobs for an order",
         "description": "Returns a compact listing of research jobs for the given order, newest first. Use GET /jobs/{id} for a job's per-document detail.",
         "operationId": "list_order_jobs_api_v1_research_orders__order_id__jobs_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "order_id",
@@ -509,8 +544,26 @@
     },
     "/api/health": {
       "get": {
-        "summary": "Health",
+        "summary": "Liveness + dependency probes",
+        "description": "Return 200 only if the process is up and its dependencies are reachable.\n\nProbes Postgres (SELECT 1) and Redis (PING). A 503 means the app is running\nbut cannot process jobs \u2014 signal for the orchestrator to stop routing traffic.",
         "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health/live": {
+      "get": {
+        "summary": "Liveness only",
+        "description": "Cheap liveness \u2014 the process is up (does not probe dependencies).",
+        "operationId": "liveness_api_health_live_get",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -584,6 +637,18 @@
             ],
             "title": "Idempotency Key",
             "description": "Client-generated idempotency key. Auto-generated if not provided."
+          },
+          "callback_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Callback Url",
+            "description": "Optional HTTPS URL to POST a job summary to when the job reaches a terminal state. Delivered at-least-once with retry + backoff; delivery failures are logged, never fatal to the job."
           }
         },
         "type": "object",
@@ -1308,6 +1373,12 @@
           "type"
         ],
         "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
       }
     }
   }

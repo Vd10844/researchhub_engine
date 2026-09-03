@@ -1,0 +1,54 @@
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+exclude = [
+    "backend/alembic/versions/*.py",
+    ".venv",
+    "data",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF", "S110"]
+ignore = [
+    "E501",  # line length enforced by ruff format / config
+    "B008",  # FastAPI-idiomatic Depends()/Header() in argument defaults
+    "S110",  # try/except/pass in storage exists()-style probes is intentional
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["B", "E402"]
+"backend/alembic/**/*.py" = ["E402", "F401"]
+"backend/app/engine/orchestration/sources.py" = ["E402"]
+"backend/app/services/clerk_scraper.py" = ["E402"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.pytest.ini_options]
+markers = [
+    "pg: Postgres-backed tests. Run with -m pg against a live Postgres (validation-plan 0.2/0.3).",
+]
+addopts = ""
+
+[tool.mypy]
+python_version = "3.10"
+warn_unused_configs = true
+ignore_missing_imports = true      # boto3 / celery / jose ship no stubs
+check_untyped_defs = true
+disallow_untyped_defs = false
+
+# External-data parsing (ArcGIS REST / Census / scraped JSON) and the generated
+# state county registries are typed as `Any` at the network boundary by design.
+# Keep the strict checks everywhere else (notably the engine core) — these only
+# relax the noisy `Any`-JSON / untyped-registry codes in those two packages.
+[[tool.mypy.overrides]]
+module = ["app.services.*", "app.data.*"]
+disable_error_code = [
+    "index",
+    "union-attr",
+    "attr-defined",
+    "var-annotated",
+    "assignment",
+    "arg-type",
+]

@@ -19,14 +19,11 @@ import logging
 from pathlib import Path
 from uuid import UUID
 
-from sqlalchemy.orm import Session
-
-from app.config import settings
-from app.engine.contracts import Confidence, StepStatus
-from app.engine.order_source import order_provider as _db_order_provider
+from app.engine.contracts import StepStatus
 from app.engine.orchestration.runner import run_research
-from app.engine.service import FetchedDocument, OrderData, ResearchService
+from app.engine.order_source import order_provider as _db_order_provider
 from app.engine.schemas import ResearchDocStatus, ResearchErrorCode
+from app.engine.service import FetchedDocument, OrderData, ResearchService
 
 logger = logging.getLogger("researchhub.adapters")
 
@@ -95,7 +92,7 @@ def build_document_fetcher():
         result = run_research(
             job_number="",
             address=order.address_line_1,
-            survey_type=order.survey_type or None,
+            survey_type=order.survey_type or "Residential Land Survey",
             include=include_steps,
             selected_state=order.state or "",
             selected_county_fips=order.county or "",
@@ -167,7 +164,7 @@ def _upload_artifact(doc: FetchedDocument, downloaded: list[str],
             doc.order_file_id = order_file_id
             doc.status = ResearchDocStatus.uploaded
             return
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             logger.warning("blob upload failed for %s: %s", filename, e)
             doc.status = ResearchDocStatus.failed
             doc.error_code = ResearchErrorCode.S3_UPLOAD_FAILED

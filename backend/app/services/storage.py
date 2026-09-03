@@ -40,7 +40,7 @@ def build_key(org_id: str, order_id: str, document_id: str, filename: str) -> st
     blob and overwrote each other — including locked ones. Guard against a repeat.
     """
     if not document_id or document_id == "None":
-        raise ValueError("build_key needs a real document id (got %r)" % (document_id,))
+        raise ValueError(f"build_key needs a real document id (got {document_id!r})")
     ext = pathlib.PurePath((filename or "").replace("\\", "/")).suffix[:12]
     safe_ext = "".join(c for c in ext if c.isalnum() or c == ".")
     return f"{org_id}/{order_id}/{document_id}{safe_ext}"
@@ -91,13 +91,13 @@ class LocalStorage:
             self._p(key).unlink()
         except FileNotFoundError:
             pass
-        except Exception:  # noqa: BLE001
+        except Exception:
             pass
 
     def exists(self, key: str) -> bool:
         try:
             return self._p(key).is_file()
-        except Exception:  # noqa: BLE001
+        except Exception:
             return False
 
     def local_path(self, key: str) -> pathlib.Path | None:
@@ -119,7 +119,7 @@ class S3Storage:
     name = "s3"
 
     def __init__(self):
-        import boto3  # noqa: PLC0415 — optional dependency, only for the s3 backend
+        import boto3
 
         self.bucket = os.environ["QP_S3_BUCKET"]
         self.prefix = os.environ.get("QP_S3_PREFIX", "quickplot").strip("/")
@@ -145,7 +145,7 @@ class S3Storage:
         try:
             self.client.head_object(Bucket=self.bucket, Key=self._k(key))
             return True
-        except Exception:  # noqa: BLE001
+        except Exception:
             return False
 
     def local_path(self, key: str) -> pathlib.Path | None:
@@ -158,11 +158,14 @@ class S3Storage:
 
 
 def _make() -> Storage:
+    import structlog
+
+    logger = structlog.get_logger("researchhub.storage")
     if BACKEND == "s3":
         try:
             return S3Storage()
-        except Exception as e:  # noqa: BLE001 — never let storage config kill startup
-            print(f"[storage] s3 backend unavailable ({e}); falling back to local")
+        except Exception as e:
+            logger.warning("s3_backend_unavailable_falling_back_to_local", error=str(e))
     return LocalStorage()
 
 
