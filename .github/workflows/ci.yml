@@ -69,11 +69,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Create migration scratch DB
-        run: |
-          docker exec "${{ job.services.postgres.id }}" \
-            psql -U postgres -c "CREATE DATABASE researchhub_migtest"
-
       - name: Run Postgres migration tier (upgrade/downgrade/parity)
         env:
           PG_HOST: localhost

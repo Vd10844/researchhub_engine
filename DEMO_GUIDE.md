@@ -1,5 +1,13 @@
 # ResearchHub Engine - Interactive Demo Guide
 
+> **Local config note:** the engine's Postgres is published on **port 5433**
+> (`.env` -> `DATABASE_URL=...localhost:5433`), because 5432 is owned by a
+> separate local Postgres. Every `psql` command below uses `-p 5433`. In
+> `RUN_ENV=local` the API also runs `create_all()` on startup, so migrations
+> are a belt-and-suspenders step, not a hard requirement. Fetched blobs land
+> under **`evidence/_qp/<tenant>/<order>/`** by default (override with
+> `QP_STORAGE_ROOT`).
+
 ## Architecture Overview
 
 ```
@@ -31,7 +39,7 @@ Polling GET /api/v1/research/jobs/{id}
 Results stored in Database:
     ├─ research_jobs (1 row per job)
     ├─ research_documents (6 rows per job, one per document type)
-    └─ Files stored in: data/e2e_evidence/{tenant_id}/{order_id}/
+    └─ Files stored in: evidence/_qp/{tenant_id}/{order_id}/
 ```
 
 ---
@@ -78,15 +86,18 @@ Wait for health checks:
 docker compose ps
 
 # Or manually test:
-psql -U postgres -h localhost -d researchhub -c "SELECT 1;"
+psql -U postgres -h localhost -p 5433 -d researchhub -c "SELECT 1;"
 redis-cli ping
 ```
 
 ### 1c. Apply Database Migrations
 ```powershell
+# Run from the PROJECT ROOT (that's where alembic.ini lives).
 cd e:\DPR\2026\Q2\August\ResearchHub\researchhub-engine
 alembic upgrade head
 ```
+> In `RUN_ENV=local` the API's startup already runs `create_all()`, so if
+> alembic errors here you can still run the demo once the API is up.
 
 ---
 
@@ -256,8 +267,8 @@ Status: partial | Uploaded: 2/6 | Failed: 1
 ### 6a. View the Job Metadata
 
 ```powershell
-# Connect to PostgreSQL
-psql -U postgres -h localhost -d researchhub
+# Connect to PostgreSQL (engine DB is on port 5433)
+psql -U postgres -h localhost -p 5433 -d researchhub
 
 # List all research jobs
 SELECT 
@@ -311,16 +322,16 @@ ORDER BY doc_type;
 
 ### 7a. Local Storage Location
 ```powershell
-# Files are stored in: data/e2e_evidence/
-ls -Recurse "e:\DPR\2026\Q2\August\ResearchHub\researchhub-engine\data\e2e_evidence\" | 
+# Files are stored under the blob root (default QP_STORAGE_ROOT = evidence\_qp)
+ls -Recurse "e:\DPR\2026\Q2\August\ResearchHub\researchhub-engine\evidence\_qp\" | 
   Select-Object FullName, Length | 
   Format-Table -AutoSize
 ```
 
 **Structure:**
 ```
-data/e2e_evidence/
-└── c0000000-0000-0000-0000-000000000001/        # TENANT_ID
+evidence/_qp/
+└── c0000000-0000-0000-0000-000000000001/        # TENANT_ID (org_id)
     └── 12345678-1234-1234-1234-123456789012/    # ORDER_ID
         ├── DEED_SUBJECT_PARCEL.pdf              # Downloaded document
         ├── PARCEL_RECORD.pdf
@@ -334,7 +345,7 @@ data/e2e_evidence/
 
 ```powershell
 # Get file_id from research_documents
-$PDF_PATH = "e:\DPR\2026\Q2\August\ResearchHub\researchhub-engine\data\e2e_evidence\c0000000-0000-0000-0000-000000000001\12345678-1234-1234-1234-123456789012\PARCEL_RECORD.pdf"
+$PDF_PATH = "e:\DPR\2026\Q2\August\ResearchHub\researchhub-engine\evidence\_qp\c0000000-0000-0000-0000-000000000001\12345678-1234-1234-1234-123456789012\PARCEL_RECORD.pdf"
 
 # Open with default viewer
 Start-Process $PDF_PATH
@@ -424,7 +435,7 @@ Write-Host "New job created: $($new_job.data.id)"
 docker compose down
 
 # Clear local evidence files (optional)
-Remove-Item -Recurse "e:\DPR\2026\Q2\August\ResearchHub\researchhub-engine\data\e2e_evidence\*"
+Remove-Item -Recurse "e:\DPR\2026\Q2\August\ResearchHub\researchhub-engine\evidence\_qp\*"
 ```
 
 ---
@@ -469,7 +480,7 @@ Remove-Item -Recurse "e:\DPR\2026\Q2\August\ResearchHub\researchhub-engine\data\
 
 ### File Storage Structure
 ```
-Local filesystem (data/e2e_evidence) or S3 (QP_S3_BUCKET in prod):
+Local filesystem (evidence/_qp) or S3 (QP_S3_BUCKET in prod):
 └── {org_id}/{order_id}/
     ├── PARCEL_RECORD.pdf                    (actual document)
     ├── DEED_SUBJECT_PARCEL.pdf

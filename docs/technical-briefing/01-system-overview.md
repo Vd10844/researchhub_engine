@@ -168,6 +168,35 @@ US egress (needed because FEMA & county portals geo-block non-US IPs) is answere
 `05-deployment-egress.md`. Short version: **the parent is already on AWS us-east-1, so it's
 native — no VPN needed in production**; the POC's VPN was a developer-machine workaround.
 
+## Libraries & Versions (as of build)
+
+The engine is a Python FastAPI service with the following key dependencies (pinned in `requirements.txt`):
+
+| Category | Package | Version |
+|---|---|---|
+| **FastAPI framework** | `fastapi` | `0.111.0` |
+| | `uvicorn` | `0.30.0` |
+| **Data validation** | `pydantic` | `2.10.0` |
+| | `pydantic-settings` | `2.3.4` |
+| **Database & ORM** | `sqlalchemy` | `2.0.46` |
+| | `alembic` | `1.13.2` |
+| | `psycopg2-binary` | `2.9.10` |
+| **HTTP client** | `httpx` | `0.28.1` |
+| | `requests` | `2.32.5` |
+| **Queue / worker** | `celery` | `5.4.0` |
+| | `redis` | `5.0.7` |
+| **S3 storage** | `boto3` | `1.43.88` |
+| **Auth (Cognito JWT)** | `python-jose[cryptography]` | `>=3.3` |
+| **Observability** | `structlog` | `>=24.0` |
+| **Rate limiting** | `limits` | `>=3.11.0` |
+| **Engine-only extras** | `Pillow` | `>=11.0` (flood-map compositing) |
+| | `playwright` | `>=1.40` (clerk deed/plat scraper) |
+| **Test only** | `pytest` | `>=8.0` |
+| | `pytest-cov` | `>=5.0` (coverage floor 55%) |
+| | `moto` | `>=5.0` (S3 storage mock in CI) |
+| | `respx` | `>=0.21` (HTTP mock for callback tests) |
+| | `responses` | `>=0.25` (mock requests for adapter tests) |
+
 ---
 Next: `02-engine-deep-dive.md` (backend) · `03-frontend-deep-dive.md` (frontend) ·
 `04-data-sources-registry.md` (data) · `05-deployment-egress.md` (hosting) ·

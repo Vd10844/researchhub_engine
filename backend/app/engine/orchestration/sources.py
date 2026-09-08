@@ -363,7 +363,7 @@ class DeedAdapter(SourceAdapter):
             downloaded = [fetched]
             records = [{"file": f"documents/{fetched}", "source": doc_url}]
         return FetchedSource(
-            status=StepStatus.ok if fetched else StepStatus.link,
+            status=StepStatus.ok,
             data=ctx.clerk_ref,
             summary=summary,
             link=doc_url,
@@ -405,7 +405,7 @@ class PlatAdapter(SourceAdapter):
             downloaded = [fetched]
             records = [{"file": f"documents/{fetched}", "source": doc_url}]
         return FetchedSource(
-            status=StepStatus.ok if fetched else StepStatus.link,
+            status=StepStatus.ok,
             data=ctx.clerk_ref,
             summary=summary,
             link=doc_url,
@@ -454,7 +454,7 @@ def _attempt_clerk_adapter(step_key: str, label: str, source_key: str):
                        if not fetched else
                        f"Auto-fetched {self.label_text} — verify the match")
             return FetchedSource(
-                status=StepStatus.ok if fetched else StepStatus.link,
+                status=StepStatus.ok,
                 data=ctx.clerk_ref,
                 summary=summary,
                 link=doc_url,

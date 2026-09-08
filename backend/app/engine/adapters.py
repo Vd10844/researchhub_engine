@@ -149,6 +149,27 @@ def _upload_artifact(doc: FetchedDocument, downloaded: list[str],
                 document_id=doc_type,
                 filename=filename,
             )
+            # BR3: never overwrite existing files automatically. The exists()
+            # probe is optional so callers/tests with a bare copy_in-only
+            # mock keep working; real storage always implements it.
+            _exists = getattr(storage, "exists", None)
+            if callable(_exists) and _exists(key):
+                logger.info("artifact already exists, skipping re-fetch: %s", key)
+                # Still create evidence rows for the existing file
+                digest = hashlib.sha256(src.read_bytes()).hexdigest()
+                file_id, order_file_id = _create_evidence_rows(
+                    key=key, order_id=order_id, tenant_id=tenant_id,
+                    filename=filename, file_size=src.stat().st_size, sha256=digest,
+                    mime_type=_guess_mime(filename),
+                )
+                doc.file_key = key
+                doc.file_name = filename
+                doc.file_size = src.stat().st_size
+                doc.sha256 = digest
+                doc.file_id = file_id
+                doc.order_file_id = order_file_id
+                doc.status = ResearchDocStatus.uploaded
+                return
             storage.copy_in(key=key, src=src)
             digest = hashlib.sha256(src.read_bytes()).hexdigest()
             file_id, order_file_id = _create_evidence_rows(
