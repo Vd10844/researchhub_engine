@@ -168,7 +168,7 @@ each is in `docs/regression-matrix.md` §1b:
 frozen vocabulary must treat the exported schemas as the contract, and must
 not require additive fields.
 
-The full gate checklist: engine unit suite green (309 tests), `pytest
+The full gate checklist: engine unit suite green (1108 tests), `pytest
 tests/test_contract_conformance.py` green, `export_contracts.py` exit 0,
 `docs/regression-matrix.md` counts match the suite.
 

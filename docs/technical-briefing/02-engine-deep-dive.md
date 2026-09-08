@@ -392,7 +392,7 @@ The engine never builds blob paths itself; it calls:
 
 Keys are tenant-scoped: `{tenant_id}/{order_id}/{doc_type}<ext>`.
 
-## 14. Contract discipline & the tests (1097, all green)
+## 14. Contract discipline & the tests (1108, all green)
 
 - `scripts/export_contracts.py` re-exports `contracts/openapi.json` + `contracts/schemas/*.json`
   and exits 1 if no paths were written — CI-checks contract drift.
@@ -400,9 +400,12 @@ Keys are tenant-scoped: `{tenant_id}/{order_id}/{doc_type}<ext>`.
   `RUN_ENV=test`, `CELERY_TASK_ALWAYS_EAGER=true`) and patches SQLite's JSONB compiler so the
   Postgres-flavored models run in-memory. Fixtures: `engine`, `test_db` (fresh per test — imports
   models/order_source/evidence_source to register tables), `client` (overrides `get_db`/auth).
-- The suite: **1097 tests collected** (up from 202), ~3 s, no network, plus an
+- The suite: **1108 tests collected** (up from 202), ~45 s, no network, plus an
   **integration-postgres** tier (`pytest tests -m pg` → `tests/test_pg_migrations.py`) that runs
   the real `0001…0004` alembic chain against a live Postgres in CI.
+- `tests/test_conformance_acceptance.py` (**13 tests**) is the QA-facing, story-conformance
+  (AC-keyed) suite — one class per AC (AC1 Auto-Fetch All, AC2 individual retrieval, AC9 open-source
+  links, AC11 partial-success, AC13 recovery), fully offline.
 - Extra tiers added with the hardening pass: contract-drift, data-registry, negative-inputs,
   callback delivery, S3 storage (moto), clerk-scraper parsing (respx/responses), and
   source-adapter classification — see `docs/validation-plan.md` for the mapping.

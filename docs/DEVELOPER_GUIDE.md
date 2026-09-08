@@ -69,7 +69,7 @@ backend/app/
 scripts/
   export_contracts.py        re-export contracts/openapi.json + schemas (drift-checkable)
   e2e_local.py               FULL E2E: alembic → seed → API+worker → job → verify
-tests/                       309 tests, fully offline except the explicit E2E
+tests/                       1108 tests, fully offline except the explicit E2E
 docs/                        the four contract docs + this guide
 contracts/                   frozen OpenAPI + per-schema JSON (re-export only via script)
 docker-compose.yml           db (postgres:15), redis, api, worker
@@ -128,7 +128,7 @@ Three bugs this newest code fixes (found by code review and the E2E):
 # venv (Python 3.14)
 python -m venv .venv && .venv/Scripts/pip install -r requirements.txt
 
-# unit + regression suite (309 tests, offline, ~1s)
+# unit + regression suite (1108 tests, offline)
 .venv/Scripts/python.exe -m pytest tests -q
 
 # plain API against a local Postgres (create_all in RUN_ENV=local)

@@ -72,7 +72,7 @@ Docs: <http://127.0.0.1:8000/docs>
 ## Test
 
 ```bash
-.venv/Scripts/python.exe -m pytest tests -q     # 309 tests, fully offline
+.venv/Scripts/python.exe -m pytest tests -q     # 1108 tests, fully offline (1 pre-existing redis-related failure)
 ```
 
 ## Layout
@@ -85,7 +85,7 @@ backend/app/
   db/          SQLAlchemy base + mixins (UUID PKs, tenant/audit/timestamp/soft-delete)
 alembic/       database migrations (0002 base shim → 0001 research tables → 0003 cancel/enum)
 contracts/     generated OpenAPI + JSON Schemas consumed by FE/BE teams
-tests/         offline conformance + API + service tests
+tests/         offline conformance + AC-keyed acceptance + API + service tests
 docker-compose.yml  Postgres + Redis + api + worker
 Dockerfile     production container
 ```

@@ -13,8 +13,9 @@ path).
 Also covered: `tests/test_tenant_isolation.py` (10 cross-tenant + soft-delete
 security tests), `tests/test_auth_dependencies.py` (5 missing/invalid header
 401 boundary tests), `tests/test_engine_api.py` (18 API tests, incl.
-idempotency, 422 validation, error-envelope shape, health). Full suite:
-**306 tests**, all offline.
+idempotency, 422 validation, error-envelope shape, health) and
+`tests/test_conformance_acceptance.py` (13 AC-keyed acceptance tests — AC1/2/9/11/13).
+Full suite: **1108 tests**, all offline.
 
 ## 1. Validation checklist
 

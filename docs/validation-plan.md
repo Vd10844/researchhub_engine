@@ -8,7 +8,7 @@ and how to close each gap.**
 
 ## Where the suite stands today
 
-The current 309 tests are strong at what they cover: contract conformance
+The core 1108-test suite is strong at what it covers: contract conformance
 (106 fixture cases), the API surface (TestClient), the service state machine,
 `classify_exception`, terminal-status resolution, and the Celery task *body*
 run in-process. That is excellent unit- and contract-level coverage.
@@ -29,7 +29,7 @@ Everything outside the pure Python control flow is faked:
 Two structural gaps compound this:
 
 - **There is no CI in the repo.** No `.github/workflows/`. The freeze docs say
-  the 309 tests and `export_contracts.py` are "part of CI" and "must exit 0,"
+  the 1108 tests and `export_contracts.py` are "part of CI" and "must exit 0,"
   but nothing enforces that automatically. The gate is documented, not wired.
 - **The only real-infra path is a manual script** (`scripts/e2e_local.py`) that
   a human runs on demand. It is good, but it is not a gate and it is not asserted
@@ -37,6 +37,29 @@ Two structural gaps compound this:
 
 Net: the *shape* of the system is very well tested; the *behavior against real
 Postgres, real S3, and real/recorded source responses* is not tested at all.
+
+---
+
+## AC-keyed acceptance suite  ✅ DONE
+
+`tests/test_conformance_acceptance.py` is the QA-facing, story-conformance suite.
+It keys one test class per acceptance criterion (AC1 Auto-Fetch All, AC2
+individual retrieval, AC9 open-source link + label, AC11 partial-success
+preservation, AC13 session recovery) and runs **fully offline** — pre-resolved
+`PropertyContext`, network-touching adapters (FEMA / NGS) replaced by fakes, no
+Postgres, no broker. Runs in < 1s:
+
+    pytest tests/test_conformance_acceptance.py -v
+
+AC status asserted by the suite (at time of writing):
+
+| AC | Behavior | Suite status |
+|---|---|---|
+| AC1 | Address + parcel ID → all 9 story sources present with valid status | PASS |
+| AC2 | Individual retrieval | PARTIAL — 6/9 requestable via `STEP_TO_DOC_TYPE`; adjoiners/easements/prior_survey/zoning orchestrated but not yet on the public `DocumentType` enum |
+| AC9 | Every source carries an open-source link + label | PASS |
+| AC11 | Partial failure keeps successes, marks failures | PASS |
+| AC13 | State/recovery reconstructable (statuses, counts, refs) | PASS |
 
 ---
 
